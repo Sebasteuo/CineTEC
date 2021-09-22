@@ -1,0 +1,26 @@
+<!-- Codigo tomado de: https://stackoverflow.com/questions/45951341/cant-toggle-navbar-in-bootstrap-4-in-angular -->
+<nav class="navbar navbar-expand-lg navbar-dark bike-nav">
+    <a class="navbar-brand">TECBank</a>
+    <button class="navbar-toggler d-lg-none" type="button" (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed" aria-controls="navbarsExampleDefault" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" [ngbCollapse]="isCollapsed">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/Cuentas_Cliente">Cuentas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/Tarjetas_Cliente">Tarjetas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/Prestamos_Cliente">Préstamos</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <button (click)="logout()"class="btn btn-secondary my-2 my-sm-0 log-btn">Cerrar sesión</button>
+        </form>
+    </div>
+</nav>
+<div class="line"></div>

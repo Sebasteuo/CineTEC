@@ -1,0 +1,19 @@
+<!--/ Nav Star /-->
+<div *ngIf="logged">
+    <div *ngIf="showadmin">
+        <app-navigation-admin></app-navigation-admin>
+    </div>
+
+    <div *ngIf="showclient">
+        <app-navigation-client></app-navigation-client>
+    </div>
+</div>
+
+<div *ngIf="!logged">
+    <!-- Se crea barra de navegación-->
+    <nav class="navbar navbar-expand-lg navbar-dark bike-nav">
+        <a class="navbar-brand">CineTEC</a>
+    </nav>
+    <div class="line"></div>
+</div>
+<!--/ Nav End /-->

@@ -1,0 +1,184 @@
+<app-navigation></app-navigation>
+<div class=" d-flex justify-content-center">
+    <aside class="col-lg" style="margin: 5% 5% 5% 5%;">
+        <div class="card">
+            <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Administración de Clientes</h4>
+                <hr>
+                <div class="row">
+                    <!-- table -->
+                    <div class="col-md-4 table-responsive">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <article class="card-body">
+                                <div class="form">
+                                    <form #form autocomplete="off">
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Nombre: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newClient.nombre"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Primer Apellido: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Primer Apellido" [(ngModel)]="newClient.apellido1"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Segundo Apellido: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Segundo Apellido" [(ngModel)]="newClient.apellido2"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Cédula: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Cédula" [(ngModel)]="newClient.cedula"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Edad: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Edad" [(ngModel)]="newClient.edad"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Fecha de Nacimiento: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="newClient.fechaDeNacimiento"
+                            (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" 
+                            dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Fecha de Nacimiento" 
+                            [ngModelOptions]="{standalone: true}" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Teléfono: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Teléfono" [(ngModel)]="newClient.telefono"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        
+                                       
+                                        <div class="col form-groupform-group">
+                                            <button class="btn btn-primary btn-block" (click)="add()">Agregar</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </article>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Employee data -->
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+
+                                    <div class=table-wrapper>
+                                        <table class="table table-hover bike-table">
+                                            <thead>
+                                                <!-- Columnas para los datos mostrados de los clientes-->
+                                                <tr>
+                                                    <th>Cedula</th>
+                                                    <th>Nombre</th>
+                                                    <th>Primer Apellido</th>
+                                                    <th>Segundo Apellido</th>
+                                                    <th>Teléfono</th>
+                                                    <th>Fecha de Nacimiento</th>
+                                                    <th>Edad</th>
+                                                    
+                                                    <th colspan="2"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let client of this.clients"> <!-- ngFor repite una sección del código HTML, por cada cliente hace una nueva fila en la tabla-->
+                                                    <td>{{client.cedula}}</td>
+                                                    <!-- ngIF es una condicional para que se muestre una linea de HTML según una condición-->
+                                                    <td *ngIf='editingID != client.cedula'>{{client.nombre}}</td>
+                                                    <td *ngIf='editingID == client.cedula'><input value="{{selectedClient.nombre}}"
+                                                        [(ngModel)]="selectedClient.nombre" class="form-control"></td>
+
+                                                    <td *ngIf='editingID != client.cedula'>{{client.apellido1}}</td>
+                                                    <td *ngIf='editingID == client.cedula'><input value="{{selectedClient.apellido1}}"
+                                                        [(ngModel)]="selectedClient.apellido1" class="form-control"></td>
+                                                        
+                                                    <td *ngIf='editingID != client.cedula'>{{client.apellido2}}</td>
+                                                    <td *ngIf='editingID == client.cedula'><input value="{{selectedClient.apellido2}}"
+                                                        [(ngModel)]="selectedClient.apellido2" class="form-control"></td>
+
+                                                    <td *ngIf='editingID != client.cedula'>{{client.telefono}}</td>
+                                                    <td *ngIf='editingID == client.cedula'><input value="{{selectedClient.telefono}}"
+                                                        [(ngModel)]="selectedClient.telefono" class="form-control"></td>
+
+
+                                                        <td *ngIf='editingID != client.cedula'>{{client.fechaDeNacimiento}}</td>
+                                                        <td *ngIf='editingID == client.cedula'><input value="{{selectedClient.fechaDeNacimiento}}"
+                                                            [(ngModel)]="selectedClient.fechaDeNacimiento" class="form-control"></td>
+
+
+
+                                               
+
+                                                        
+
+                                                    <th scope="row">
+                                                        <button *ngIf='editingID != client.cedula' (click)="edit(client)" class="btn-icon" placement="top"
+                                                            ngbTooltip="Editar">
+                                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                                        </button>
+                                                        <button *ngIf='editingID == client.cedula' (click)="submit()" class="btn-icon" placement="top"
+                                                            ngbTooltip="Aceptar">
+                                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                                        </button>
+                                                    </th>
+                                                    <th scope="row">
+                                                        <button (click)="delete(client.cedula)" class="btn-icon" placement="top"
+                                                            ngbTooltip="Eliminar">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- card.// -->
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </article>
+        </div> <!-- card.// -->
+    </aside> <!-- col.// -->
+</div> <!-- row.// -->
+
+<!--container end.//-->

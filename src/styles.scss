@@ -1,1 +1,136 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import '~ngx-toastr/toastr';
+@import 'flatpickr/dist/flatpickr.css';
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+/* Color Theme Swatches in Hex */
+$Bank-1-hex: #3C851B;
+$Bank-2-hex: #1998ff;
+$Bank-3-hex: #0E8F94;
+$Bank-4-hex: #6FCCD6;
+$Bank-5-hex: #29568a;
+
+
+
+
+body {
+    background-color: #ededed;
+}
+
+.line {
+    background-color: $Bank-2-hex;
+    height          : 5px;
+    width           : 100%;
+}
+
+.bike-nav {
+    background-color: $Bank-5-hex;
+}
+
+.bike-table {
+    thead {
+        background-color: scale-color($Bank-4-hex, $lightness: 10%);
+        color           : white;
+        text-align: center;
+    }
+
+    tbody{
+        text-align: center;
+    }
+
+    tfoot {
+        background-color: scale-color($Bank-4-hex, $lightness: 30%);
+        color           : white;
+        text-align: center;
+    }
+}
+
+.btn-outline-primary {
+    border-color: $Bank-2-hex !important;
+    color       : $Bank-2-hex;
+
+    &:hover {
+        background-color: $Bank-2-hex !important;
+        color           : white;
+    }
+
+}
+
+.dropdown-item {
+    &:hover {
+        background-color: white !important;
+        color           : black;
+    }
+}
+
+.dropdown-toggle {
+    background-color: white;
+    color           : $Bank-2-hex;
+
+    &:visited {
+        background-color: $Bank-2-hex !important;
+        color           : white;
+    }
+
+    &:hover {
+        background-color: $Bank-2-hex !important;
+        color           : white;
+    }
+
+    &:focus {
+        background-color: $Bank-2-hex !important;
+        color           : white;
+    }
+
+    &:active {
+        background-color: $Bank-2-hex !important;
+        color           : white;
+    }
+}
+
+.btn-primary {
+    background-color: $Bank-2-hex !important;
+    border-color    : transparent;
+
+    &:hover {
+        background-color: scale-color($Bank-2-hex, $lightness: -15%) !important;
+        color           : white;
+        border-color    : transparent;
+    }
+}
+
+.btn-icon {
+    background-color: transparent;
+    border          : transparent;
+}
+
+/* this is for clicked or active tabs */
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    background-color: scale-color($Bank-4-hex, $lightness: -5%);
+    color      : $Bank-3-hex;
+    font-size  : 15px;
+    font-weight: bold;
+}
+
+/* this is for normal tabs */
+.nav-tabs .nav-link {
+    //background-color: white;
+    background-color: scale-color($Bank-4-hex, $lightness: 45%);
+    color           : $Bank-3-hex;
+    font-size       : 15px;
+    font-weight     : bold;
+}
+
+.ng-autocomplete {
+    width    : 100%;
+    max-width: 300px;
+    display  : table;
+    margin   : 0 auto;
+}
+
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

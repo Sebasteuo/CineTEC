@@ -1,0 +1,172 @@
+<app-navigation></app-navigation>
+<div class=" d-flex justify-content-center">
+    <aside class="col-lg" style="margin: 5% 5% 5% 5%;">
+        <div class="card">
+            <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Administración de Películas</h4>
+                <hr>
+                <div class="row">
+                    <!-- table -->
+                    <div class="col-md-4 table-responsive">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <article class="card-body">
+                                <div class="form">
+                                    <form #form autocomplete="off">
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Nombre: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newMovie.nombre"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Director: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Director" [(ngModel)]="newMovie.director"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Clasificación: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Clasificación" [(ngModel)]="newMovie.clasificacion"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Duración: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Duración" [(ngModel)]="newMovie.duracion"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Imagen: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Imagen" [(ngModel)]="newMovie.imagen"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Protagonistas: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Protagonistas" [(ngModel)]="newMovie.protagonistas"
+                                                    required>
+                         
+                                            </div>
+                                        </div>
+
+                                       
+                                        <div class="col form-groupform-group">
+                                            <button class="btn btn-primary btn-block" (click)="add()">Agregar</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </article>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Employee data -->
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+
+                                    <div class=table-wrapper>
+                                        <table class="table table-hover bike-table">
+                                            <thead>
+                                                <!-- Columnas para los datos mostrados de los Moviees-->
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Director</th>
+                                                    <th>Protagonistas</th>
+                                                    <th>Duración</th>
+                                                    <th>Imagen</th>
+                                                    <th>Clasificación</th>
+                                                    
+                                                    <th colspan="2"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let Movie of this.Movies"> <!-- ngFor repite una sección del código HTML, por cada Moviee hace una nueva fila en la tabla-->
+                                                    <td>{{Movie.id}}</td>
+                                                    <!-- ngIF es una condicional para que se muestre una linea de HTML según una condición-->
+                                                    <td *ngIf='editingID != Movie.id'>{{Movie.nombre}}</td>
+                                                    <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.nombre}}"
+                                                        [(ngModel)]="selectedMovie.nombre" class="form-control"></td>
+
+                                                    <td *ngIf='editingID != Movie.id'>{{Movie.director}}</td>
+                                                    <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.director}}"
+                                                        [(ngModel)]="selectedMovie.director" class="form-control"></td>
+                                                        
+                                                    <td *ngIf='editingID != Movie.id'>{{Movie.protagonistas}}</td>
+                                                    <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.protagonistas}}"
+                                                        [(ngModel)]="selectedMovie.protagonistas" class="form-control"></td>
+
+                                                    <td *ngIf='editingID != Movie.id'>{{Movie.imagen}}</td>
+                                                    <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.imagen}}"
+                                                        [(ngModel)]="selectedMovie.imagen" class="form-control"></td>
+
+
+                                                        <td *ngIf='editingID != Movie.id'>{{Movie.clasificacion}}</td>
+                                                        <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.clasificacion}}"
+                                                            [(ngModel)]="selectedMovie.clasificacion" class="form-control"></td>
+
+
+
+                                               
+
+                                                        
+
+                                                    <th scope="row">
+                                                        <button *ngIf='editingID != Movie.id' (click)="edit(Movie)" class="btn-icon" placement="top"
+                                                            ngbTooltip="Editar">
+                                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                                        </button>
+                                                        <button *ngIf='editingID == Movie.id' (click)="submit()" class="btn-icon" placement="top"
+                                                            ngbTooltip="Aceptar">
+                                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                                        </button>
+                                                    </th>
+                                                    <th scope="row">
+                                                        <button (click)="delete(Movie.id)" class="btn-icon" placement="top"
+                                                            ngbTooltip="Eliminar">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- card.// -->
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </article>
+        </div> <!-- card.// -->
+    </aside> <!-- col.// -->
+</div> <!-- row.// -->
+
+<!--container end.//-->
