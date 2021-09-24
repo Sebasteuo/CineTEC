@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientsComponent } from './Administracion/clients/clients.component';
+import { EmpleadoComponent } from './Administracion/empleado/empleado.component';
 import { LocationsComponent } from './Administracion/locations/locations.component';
 import { MoviesComponent } from './Administracion/movies/movies.component';
 import { ProyeccionesComponent } from './Administracion/proyecciones/proyecciones.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'Restricciones', component: RestriccionesComponent}, // Se hacen navegables y  los componentes
   { path: 'Sucursales', component: LocationsComponent}, // Se hacen navegables y  los componentes
   { path: 'Peliculas', component: MoviesComponent}, // Se hacen navegables y  los componentes
+  { path: 'Empleados', component: EmpleadoComponent}, // Se hacen navegables y  los componentes
 
 ];
 

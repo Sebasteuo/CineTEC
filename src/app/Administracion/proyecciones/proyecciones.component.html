@@ -1,1 +1,140 @@
-<p>proyecciones works!</p>
+<app-navigation></app-navigation>
+<div class=" d-flex justify-content-center">
+    <aside class="col-lg" style="margin: 5% 5% 5% 5%;">
+        <div class="card">
+            <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Administración de Proyecciones</h4>
+                <hr>
+                <div class="row">
+                    <!-- table -->
+                    <div class="col-md-4 table-responsive">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <article class="card-body">
+                                <div class="form">
+                                    <form #form autocomplete="off">
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Película: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Película" [(ngModel)]="newproyeccion.pelicula"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Sala: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Sala" [(ngModel)]="newproyeccion.sala"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Hora: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="selectedproyeccion.hora"
+                                    (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" 
+                                    dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Hora de Proyección" [enableTime] = "true"
+                                    [ngModelOptions]="{standalone: true}" />
+                                            </div>
+                                        </div>
+                                       
+
+
+                                       
+                                        <div class="col form-groupform-group">
+                                            <button class="btn btn-primary btn-block" (click)="add()">Agregar</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </article>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Employee data -->
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+
+                                    <div class=table-wrapper>
+                                        <table class="table table-hover bike-table">
+                                            <thead>
+                                                <!-- Columnas para los datos mostrados de los proyecciones-->
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Película</th>
+                                                    <th>Sala</th>
+                                                    <th>Hora</th>
+                                                   
+                                                    
+                                                    <th colspan="2"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let proyeccion of this.proyeccions"> <!-- ngFor repite una sección del código HTML, por cada proyeccione hace una nueva fila en la tabla-->
+                                                    <td>{{proyeccion.ID}}</td>
+                                                    <!-- ngIF es una condicional para que se muestre una linea de HTML según una condición-->
+                                                    <td *ngIf='editingID != proyeccion.ID'>{{proyeccion.pelicula}}</td>
+                                                    <td *ngIf='editingID == proyeccion.ID'><input value="{{selectedproyeccion.pelicula}}"
+                                                        [(ngModel)]="selectedproyeccion.pelicula" class="form-control"></td>
+
+                                                    <td *ngIf='editingID != proyeccion.ID'>{{proyeccion.sala}}</td>
+                                                    <td *ngIf='editingID == proyeccion.ID'><input value="{{selectedproyeccion.sala}}"
+                                                        [(ngModel)]="selectedproyeccion.sala" class="form-control"></td>
+                                                        
+                                                    <td *ngIf='editingID != proyeccion.ID'>{{proyeccion.hora}}</td>
+                                                    <td *ngIf='editingID == proyeccion.ID'><div class="col form-group">
+                                                        <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="selectedproyeccion.hora"
+                                    (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" 
+                                    dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Hora de Proyección" [enableTime] = "true"
+                                    [ngModelOptions]="{standalone: true}" />
+                                                    </div></td>
+
+
+
+
+                                               
+
+                                                        
+
+                                                    <th scope="row">
+                                                        <button *ngIf='editingID != proyeccion.ID' (click)="edit(proyeccion)" class="btn-icon" placement="top"
+                                                            ngbTooltip="Editar">
+                                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                                        </button>
+                                                        <button *ngIf='editingID == proyeccion.ID' (click)="submit()" class="btn-icon" placement="top"
+                                                            ngbTooltip="Aceptar">
+                                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                                        </button>
+                                                    </th>
+                                                    <th scope="row">
+                                                        <button (click)="delete(proyeccion.ID)" class="btn-icon" placement="top"
+                                                            ngbTooltip="Eliminar">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- card.// -->
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </article>
+        </div> <!-- card.// -->
+    </aside> <!-- col.// -->
+</div> <!-- row.// -->
+
+<!--container end.//-->

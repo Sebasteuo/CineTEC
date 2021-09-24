@@ -19,6 +19,7 @@ import { ProyeccionesComponent } from './Administracion/proyecciones/proyeccione
 import { ToastrModule } from 'ngx-toastr';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import localeEs from '@angular/common/locales/es';
+import { EmpleadoComponent } from './Administracion/empleado/empleado.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import localeEs from '@angular/common/locales/es';
     LoginComponent,
     WelcomeComponent,
     RestriccionesComponent,
-    ProyeccionesComponent
+    ProyeccionesComponent,
+    EmpleadoComponent
   ],
   imports: [
     BrowserModule,

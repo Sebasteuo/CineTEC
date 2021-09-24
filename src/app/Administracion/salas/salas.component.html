@@ -1,1 +1,147 @@
-<p>salas works!</p>
+<app-navigation></app-navigation>
+<div class=" d-flex justify-content-center">
+    <aside class="col-lg" style="margin: 5% 5% 5% 5%;">
+        <div class="card">
+            <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Administración de Salas</h4>
+                <hr>
+                <div class="row">
+                    <!-- table -->
+                    <div class="col-md-4 table-responsive">
+                        <div class="card" style="margin-bottom: 10px;">
+                            <article class="card-body">
+                                <div class="form">
+                                    <form #form autocomplete="off">
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Sucursal: </label>
+                                                
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Sucursal" [(ngModel)]="newsala.sucursal"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Cantidad de Columnas: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Cantidad de Columnas" [(ngModel)]="newsala.columnas"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Cantidad de Filas: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Cantidad de Filas" [(ngModel)]="newsala.filas"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Capacidad: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Capacidad" [(ngModel)]="newsala.capacidad"
+                                                    required>
+                                            </div>
+                                        </div>
+                                       
+
+
+                                       
+                                        <div class="col form-groupform-group">
+                                            <button class="btn btn-primary btn-block" (click)="add()">Agregar</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </article>
+                        </div>
+
+                    </div>
+                    <div class="col-md-8">
+                        <!-- Employee data -->
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+
+                                    <div class=table-wrapper>
+                                        <table class="table table-hover bike-table">
+                                            <thead>
+                                                <!-- Columnas para los datos mostrados de los salaes-->
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Sucursal</th>
+                                                    <th>Cantidad de Columnas</th>
+                                                    <th>Cantidad de Filas</th>
+                                                    <th>Capacidad</th>
+                                                    
+                                                    <th colspan="2"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let sala of this.salas"> <!-- ngFor repite una sección del código HTML, por cada salae hace una nueva fila en la tabla-->
+                                                    <td>{{sala.id}}</td>
+                                                    <!-- ngIF es una condicional para que se muestre una linea de HTML según una condición-->
+                                                    <td *ngIf='editingID != sala.id'>{{sala.sucursal}}</td>
+                                                    <td *ngIf='editingID == sala.id'><input value="{{selectedsala.sucursal}}"
+                                                        [(ngModel)]="selectedsala.sucursal" class="form-control"></td>
+
+                                                    <td *ngIf='editingID != sala.id'>{{sala.filas}}</td>
+                                                    <td *ngIf='editingID == sala.id'><input value="{{selectedsala.filas}}"
+                                                        [(ngModel)]="selectedsala.filas" class="form-control"></td>
+                                                        
+                                                    <td *ngIf='editingID != sala.id'>{{sala.columnas}}</td>
+                                                    <td *ngIf='editingID == sala.id'><input value="{{selectedsala.columnas}}"
+                                                        [(ngModel)]="selectedsala.columnas" class="form-control"></td>
+
+                                                        <td *ngIf='editingID != sala.id'>{{sala.capacidad}}</td>
+                                                        <td *ngIf='editingID == sala.id'><input value="{{selectedsala.capacidad}}"
+                                                            [(ngModel)]="selectedsala.capacidad" class="form-control"></td>
+
+
+                                               
+
+                                                        
+
+                                                    <th scope="row">
+                                                        <button *ngIf='editingID != sala.id' (click)="edit(sala)" class="btn-icon" placement="top"
+                                                            ngbTooltip="Editar">
+                                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                                        </button>
+                                                        <button *ngIf='editingID == sala.id' (click)="submit()" class="btn-icon" placement="top"
+                                                            ngbTooltip="Aceptar">
+                                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                                        </button>
+                                                    </th>
+                                                    <th scope="row">
+                                                        <button (click)="delete(sala.id)" class="btn-icon" placement="top"
+                                                            ngbTooltip="Eliminar">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- card.// -->
+                        <br />
+                        <br />
+                    </div>
+                </div>
+            </article>
+        </div> <!-- card.// -->
+    </aside> <!-- col.// -->
+</div> <!-- row.// -->
+
+<!--container end.//-->
