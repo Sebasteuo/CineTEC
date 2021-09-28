@@ -1,0 +1,107 @@
+<app-navigation></app-navigation>
+<div class=" d-flex justify-content-center">
+    <aside class="col-lg" style="margin: 5% 5% 5% 5%;">
+        <div class="card">
+            <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Mi cuenta</h4>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+
+
+                        <div class="d-flex">
+                            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-pills" orientation="vertical">
+                                <li ngbNavItem="top">
+                                    <a ngbNavLink>Selección de Película</a>
+                                    <ng-template ngbNavContent>
+                                        <div class=row>
+                                            <div class="col-md-12">
+                                                <article class="card-body">
+                                                    <div class="form">
+                                                        <form #form autocomplete="off">
+                                                            <div class="form-row">
+                                                                <div class="col form-group">
+                                                                    <label>Seleccione la Sucursal </label>
+                                                                </div>
+                                                                <div class="col form-group">
+                                                                    <div ngbDropdown class="d-inline-block">
+                                                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                                                            ngbDropdownToggle>{{selectedLocation}}</button>
+                                                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                                            <button *ngFor="let location of locations" ngbDropdownItem
+                                                                                (click)="selectLocation(location.nombreCine, location.id)">{{location.nombreCine}}</button>
+                                                                       
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="col form-group">
+                                                                    <label>Seleccione la Película </label>
+                                                                </div>
+                                                                <div class="col form-group">
+                                                                    <div ngbDropdown class="d-inline-block">
+                                                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                                                            ngbDropdownToggle>{{selectedMovie}}</button>
+                                                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                                            <button *ngFor="let movie of movies" ngbDropdownItem
+                                                                                (click)="selectMovie(movie.nombre, movie.id)">{{movie.nombre}}</button>
+                                                                       
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="col form-group">
+                                                                    <label>Seleccione la tanda</label>
+                                                                </div>
+                                                                <div class="col form-group">
+                                                                    <div ngbDropdown class="d-inline-block">
+                                                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                                                            ngbDropdownToggle>{{selectedProyeccion}}</button>
+                                                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                                            <button *ngFor="let proyeccion of proyecciones" ngbDropdownItem
+                                                                                (click)="selectProyeccion(proyeccion.hora, proyeccion.ID)">{{proyeccion.hora}}</button>
+                                                                       
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                           
+                                                            <label>
+                                                                En la siguiente pestaña seleccione los asientos
+                                                            </label>
+        
+    
+        
+                                                        </form>
+                                                    </div>
+                                                </article> 
+                                            </div>
+
+
+                                        </div>
+
+                                    </ng-template>
+                                </li>
+                                <li ngbNavItem="middle">
+                                    <a ngbNavLink>Selección de asientos</a>
+                                    <ng-template ngbNavContent>
+                                        <article class="card-body">
+                                            <div class="form">
+                                                
+                                            </div>
+                                        </article>
+                                    </ng-template>
+                                </li>
+
+                            </ul>
+
+                            <div [ngbNavOutlet]="nav" class="ml-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </aside>
+</div>

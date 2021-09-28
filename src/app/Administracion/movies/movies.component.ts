@@ -21,7 +21,10 @@ newMovie: Movie={
   duracion:"",
   clasificacion:"",
   imagen:"",
-  id:0
+  id:0,
+  priceChildren:0,
+  priceAdult:0,
+  priceGoldenCitizen:0
  
   
 }
@@ -33,7 +36,10 @@ selectedMovie: Movie={
   duracion:"",
   clasificacion:"",
   imagen:"",
-  id:0
+  id:0,
+  priceChildren:0,
+  priceAdult:0,
+  priceGoldenCitizen:0
 }
 Movies: Movie[]=[]
 editingID: number | undefined = 0;
@@ -70,7 +76,10 @@ add(){
   duracion:"",
   clasificacion:"",
   imagen:"",
-  id:0
+  id:0,
+  priceChildren:0,
+  priceAdult:0,
+  priceGoldenCitizen:0
   }
 }
 

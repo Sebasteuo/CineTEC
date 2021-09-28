@@ -20,6 +20,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import localeEs from '@angular/common/locales/es';
 import { EmpleadoComponent } from './Administracion/empleado/empleado.component';
+import { RegistroComponent } from './Others/registro/registro.component';
+import { CompraComponent } from './Cliente/compra/compra.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { EmpleadoComponent } from './Administracion/empleado/empleado.component'
     WelcomeComponent,
     RestriccionesComponent,
     ProyeccionesComponent,
-    EmpleadoComponent
+    EmpleadoComponent,
+    RegistroComponent,
+    CompraComponent
   ],
   imports: [
     BrowserModule,

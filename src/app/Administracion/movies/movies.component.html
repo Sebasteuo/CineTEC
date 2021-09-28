@@ -7,7 +7,7 @@
                 <hr>
                 <div class="row">
                     <!-- table -->
-                    <div class="col-md-4 table-responsive">
+                    <div class="col-md-3">
                         <div class="card" style="margin-bottom: 10px;">
                             <article class="card-body">
                                 <div class="form">
@@ -70,6 +70,38 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Precio Niño: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Precio para Niño" [(ngModel)]="newMovie.priceChildren"
+                                                    required>
+                         
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Precio Adulto: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Precio de Adulto" [(ngModel)]="newMovie.priceAdult"
+                                                    required>
+                         
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Precio Ciudadano de Oro: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Precio para Ciudadano de Oro" [(ngModel)]="newMovie.priceGoldenCitizen"
+                                                    required>
+                         
+                                            </div>
+                                        </div>
                                        
                                         <div class="col form-groupform-group">
                                             <button class="btn btn-primary btn-block" (click)="add()">Agregar</button>
@@ -81,7 +113,7 @@
                         </div>
 
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <!-- Employee data -->
                         <div class="card">
 
@@ -100,7 +132,9 @@
                                                     <th>Duración</th>
                                                     <th>Imagen</th>
                                                     <th>Clasificación</th>
-                                                    
+                                                    <th>Precio Niño</th>
+                                                    <th>Precio Adulto</th>
+                                                    <th>Precio Ciudadanos de Oro</th>
                                                     <th colspan="2"></th>
                                                 </tr>
                                             </thead>
@@ -129,6 +163,20 @@
                                                         <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.clasificacion}}"
                                                             [(ngModel)]="selectedMovie.clasificacion" class="form-control"></td>
 
+
+                                                            <td *ngIf='editingID != Movie.id'>{{Movie.priceChildren}}</td>
+                                                        <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.priceChildren}}"
+                                                            [(ngModel)]="selectedMovie.priceChildren" class="form-control"></td>
+
+
+                                                            <td *ngIf='editingID != Movie.id'>{{Movie.priceAdult}}</td>
+                                                        <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.priceAdult}}"
+                                                            [(ngModel)]="selectedMovie.priceAdult" class="form-control"></td>
+
+
+                                                            <td *ngIf='editingID != Movie.id'>{{Movie.priceGoldenCitizen}}</td>
+                                                        <td *ngIf='editingID == Movie.id'><input value="{{selectedMovie.priceGoldenCitizen}}"
+                                                            [(ngModel)]="selectedMovie.priceGoldenCitizen" class="form-control"></td>
 
 
                                                

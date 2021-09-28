@@ -39,8 +39,6 @@ export class SalaManagementService {
 
     await this.http.get(environment.api + "/aforo").toPromise().then(res => {
       this.aforo = res as number
-      
-
 
     })
 

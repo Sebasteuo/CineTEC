@@ -6,5 +6,8 @@ export class Movie {
     director: string | undefined
     clasificacion: string | undefined
     id: number | undefined
+    priceChildren: number | undefined
+    priceAdult: number | undefined
+    priceGoldenCitizen: number | undefined
 }
 
