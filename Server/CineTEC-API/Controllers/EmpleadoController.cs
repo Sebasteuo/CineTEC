@@ -12,7 +12,7 @@ namespace CineTEC_API.Controllers
   [ApiController]
   public class EmpleadoController : ControllerBase
   {
-
+    private string cadenaDeConexion = "PostgreSQLConnection";
     private readonly IConfiguration _configuration;
 
     public EmpleadoController(IConfiguration configuration)
@@ -25,11 +25,11 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select cedulaempleado, nombreempleado1
+          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, usuario, numerotelefono, edad, fechaingreso, contrasenna
           from empleado
           ";
       DataTable table = new DataTable();
-      string sqlDataSource = _configuration.GetConnectionString("PostgreSQLConnection");
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
       NpgsqlDataReader myReader;
       using (NpgsqlConnection myCon=new NpgsqlConnection(sqlDataSource))
       {
@@ -50,12 +50,12 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(int id)
     {
       string query = @"
-          select cedulaempleado, nombre
+          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, usuario, numerotelefono, edad, fechaingreso, contrasenna
           from empleado
           where cedulaempleado = @eid
           ";
       DataTable table = new DataTable();
-      string sqlDataSource = _configuration.GetConnectionString("PostgreSQLConnection");
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
       NpgsqlDataReader myReader;
       using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
       {
@@ -77,18 +77,27 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Empleado empleado)
     {
       string query = @"
-          insert into empleado(nombre)
-          values (@nombre)
+          insert into empleado(cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, usuario, numerotelefono, edad, fechaingreso, contrasenna)
+          values (@cedulaempleado, @nombreempleado1, @nombreempleado2, @apellidoempleado1, @apellidoempleado2, @usuario, @numerotelefono, @edad, @fechaingreso, @contrasenna)
           ";
       DataTable table = new DataTable();
-      string sqlDataSource = _configuration.GetConnectionString("PostgreSQLConnection");
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
       NpgsqlDataReader myReader;
       using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
       {
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@nombre",empleado.nombre);
+          myComand.Parameters.AddWithValue("@cedulaempleado", empleado.cedulaempleado);
+          myComand.Parameters.AddWithValue("@nombreempleado1",empleado.nombreempleado1);
+          myComand.Parameters.AddWithValue("@nombreempleado2", empleado.nombreempleado2);
+          myComand.Parameters.AddWithValue("@apellidoempleado1", empleado.apellidoempleado1);
+          myComand.Parameters.AddWithValue("@apellidoempleado2", empleado.apellidoempleado2);
+          myComand.Parameters.AddWithValue("@usuario", empleado.usuario);
+          myComand.Parameters.AddWithValue("@numerotelefono", empleado.numerotelefono);
+          myComand.Parameters.AddWithValue("@edad", empleado.edad);
+          myComand.Parameters.AddWithValue("@fechaingreso", empleado.fechaingreso);
+          myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -104,19 +113,36 @@ namespace CineTEC_API.Controllers
     {
       string query = @"
           update empleado
-          set nombre = @nombre
-          where eid = @eid
+          set cedulaempleado = @cedulaempleado,
+              nombreempleado1 = @nombreempleado1,
+              nombreempleado2 = @nombreempleado2,
+              apellidoempleado1 = @apellidoempleado1,
+              apellidoempleado2 = @apellidoempleado2,
+              usuario = @usuario,
+              numerotelefono = @numerotelefono,
+              edad = @edad,
+              fechaingreso = @fechaingreso,
+              contrasenna = @contrasenna
+          where cedulaempleado = @cedulaempleado
           ";
       DataTable table = new DataTable();
-      string sqlDataSource = _configuration.GetConnectionString("PostgreSQLConnection");
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
       NpgsqlDataReader myReader;
       using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
       {
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@eid", empleado.eid);
-          myComand.Parameters.AddWithValue("@nombre", empleado.nombre);
+          myComand.Parameters.AddWithValue("@cedulaempleado", empleado.cedulaempleado);
+          myComand.Parameters.AddWithValue("@nombreempleado1", empleado.nombreempleado1);
+          myComand.Parameters.AddWithValue("@nombreempleado2", empleado.nombreempleado2);
+          myComand.Parameters.AddWithValue("@apellidoempleado1", empleado.apellidoempleado1);
+          myComand.Parameters.AddWithValue("@apellidoempleado2", empleado.apellidoempleado2);
+          myComand.Parameters.AddWithValue("@usuario", empleado.usuario);
+          myComand.Parameters.AddWithValue("@numerotelefono", empleado.numerotelefono);
+          myComand.Parameters.AddWithValue("@edad", empleado.edad);
+          myComand.Parameters.AddWithValue("@fechaingreso", empleado.fechaingreso);
+          myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -132,17 +158,17 @@ namespace CineTEC_API.Controllers
     {
       string query = @"
           delete from empleado
-          where eid = @eid
+          where cedulaempleado = @cedulaempleado
           ";
       DataTable table = new DataTable();
-      string sqlDataSource = _configuration.GetConnectionString("PostgreSQLConnection");
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
       NpgsqlDataReader myReader;
       using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
       {
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@eid", id);
+          myComand.Parameters.AddWithValue("@cedulaempleado", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
