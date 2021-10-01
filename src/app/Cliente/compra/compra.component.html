@@ -89,6 +89,11 @@
                                     <ng-template ngbNavContent>
                                         <article class="card-body">
                                             <div class="form">
+                                                <div class= "row" *ngFor="let fila of rows; index as i;">
+                                                    <div class= "col" *ngFor="let column of columns; index as j;">
+                                                    <img class="seat" src= "../assets/Img/asiento.png">
+                                                </div>
+                                                </div>
                                                 
                                             </div>
                                         </article>

@@ -25,7 +25,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select eid, nombre
+          select cedulaempleado, nombreempleado1
           from empleado
           ";
       DataTable table = new DataTable();
@@ -50,9 +50,9 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(int id)
     {
       string query = @"
-          select eid, nombre
+          select cedulaempleado, nombre
           from empleado
-          where eid = @eid
+          where cedulaempleado = @eid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString("PostgreSQLConnection");

@@ -25,6 +25,7 @@ export class CompraComponent implements OnInit {
   columnas:  Number | undefined = 0
   aforo:  Number | undefined = 0
   capacity: Number = 0
+  rows: Number[] = []
 
   currentProyeccion: Proyeccion = {
     ID: 0,
@@ -57,6 +58,7 @@ export class CompraComponent implements OnInit {
   movies: Movie[] = []
   proyecciones: Proyeccion[] = []
   seats: number[] = []
+  columns: number[] = []
 
 
   constructor(private compraService: CompraManagementService, private proyeccionService: ProyeccionManagementService,
@@ -65,7 +67,8 @@ export class CompraComponent implements OnInit {
   ngOnInit(): void {
 
     this.compraService.getLocations().then(res => this.locations = res)
-
+    this.rows= Array(4).fill(1)
+    this.columns = Array(6).fill(1)
   }
 
 
@@ -74,11 +77,16 @@ export class CompraComponent implements OnInit {
   }
 
   loadProyecciones(id: number | undefined) {
-    this.compraService.getProyecciones(id as unknown as number).then(res => this.proyecciones = res)
+    this.compraService.getProyecciones(id as unknown as number).then(res => {this.proyecciones = res
+    })
+
   }
 
   loadSeats(id: number | undefined) {
-    this.compraService.getSeats(id as unknown as number).then(res => this.seats = res)
+    this.compraService.getSeats(id as unknown as number).then(res => {this.seats = res
+    //this.rows= Array(this.currentSala.filas).fill(1)
+   
+    })
   }
 
   selectLocation(nombre: string | undefined, id: number | undefined) {

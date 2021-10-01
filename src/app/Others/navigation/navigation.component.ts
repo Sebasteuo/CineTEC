@@ -16,10 +16,10 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     //this.logged = this.loggedIn();
     this.logged=true;
-    this.showadmin = this.isAdmin();
-    //this.showadmin = true;
-    //this.showclient = this.isClient();
-    this.showclient = true;
+    //this.showadmin = this.isAdmin();
+    this.showadmin = true;
+    this.showclient = this.isClient();
+    //this.showclient = true;
    
   }
   loggedIn() {
