@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CineTEC_API.Models
 {
   public class Empleado
   {
-    //[Table("Empleado",Schema ="public")]
+    //indica que la llave primaria es cedulaempleado
     [Key]
     public int cedulaempleado { get; set; }
     public string nombreempleado1 { get; set; }
