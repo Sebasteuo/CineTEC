@@ -1,0 +1,10 @@
+DROP TABLE public.rolxempleado;
+DROP TABLE public.rol;
+DROP TABLE public.protaginista;
+DROP TABLE public.director;
+DROP TABLE public.clasificacion;
+DROP TABLE public.funcion;
+DROP TABLE public.sala;
+DROP TABLE public.pelicula;
+DROP TABLE public.cliente;
+DROP TABLE public.empleado;
