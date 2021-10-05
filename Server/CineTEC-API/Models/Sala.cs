@@ -10,6 +10,5 @@ namespace CineTEC_API.Models
     public int columna { get; set; }
     public int fila { get; set; }
     public int capacidad { get; set; }
-    public int espacio { get; set; }
   }
 }

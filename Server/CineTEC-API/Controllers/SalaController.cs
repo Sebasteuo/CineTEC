@@ -30,7 +30,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select salaid, columna, fila, capacidad, espacio
+          select salaid, columna, fila, capacidad
           from sala
           ";
       DataTable table = new DataTable();
@@ -56,7 +56,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(string id)
     {
       string query = @"
-          select salaid, columna, fila, capacidad, espacio
+          select salaid, columna, fila, capacidad
           from sala
           where salaid = @salaid
           ";
@@ -84,8 +84,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Sala sala)
     {
       string query = @"
-          insert into sala(salaid, columna, fila, capacidad, espacio)
-          values (@salaid, @columna, @fila, @capacidad, @espacio)
+          insert into sala(salaid, columna, fila, capacidad)
+          values (@salaid, @columna, @fila, @capacidad)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -99,7 +99,6 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@columna", sala.columna);
           myComand.Parameters.AddWithValue("@fila", sala.fila);
           myComand.Parameters.AddWithValue("@capacidad", sala.capacidad);
-          myComand.Parameters.AddWithValue("@espacio", sala.espacio);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -119,8 +118,7 @@ namespace CineTEC_API.Controllers
           set salaid = @salaid,
               columna = @columna,
               fila = @fila,
-              capacidad = @capacidad,
-              espacio = @espacio,
+              capacidad = @capacidad
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -134,7 +132,6 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@columna", sala.columna);
           myComand.Parameters.AddWithValue("@fila", sala.fila);
           myComand.Parameters.AddWithValue("@capacidad", sala.capacidad);
-          myComand.Parameters.AddWithValue("@espacio", sala.espacio);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();

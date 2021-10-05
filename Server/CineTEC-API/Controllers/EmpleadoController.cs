@@ -27,7 +27,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, usuario, numerotelefono, edad, fechaingreso, contrasenna
+          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna
           from empleado
           ";
       DataTable table = new DataTable();
@@ -53,7 +53,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(int id)
     {
       string query = @"
-          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, usuario, numerotelefono, edad, fechaingreso, contrasenna
+          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna
           from empleado
           where cedulaempleado = @cedulaempleado
           ";
@@ -81,8 +81,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Empleado empleado)
     {
       string query = @"
-          insert into empleado(cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, usuario, numerotelefono, edad, fechaingreso, contrasenna)
-          values (@cedulaempleado, @nombreempleado1, @nombreempleado2, @apellidoempleado1, @apellidoempleado2, @usuario, @numerotelefono, @edad, @fechaingreso, @contrasenna)
+          insert into empleado(cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna)
+          values (@cedulaempleado, @nombreempleado1, @nombreempleado2, @apellidoempleado1, @apellidoempleado2, @fechanacimiento, @usuario, @numerotelefono, @fechaingreso, @contrasenna)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -97,9 +97,9 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@nombreempleado2", empleado.nombreempleado2);
           myComand.Parameters.AddWithValue("@apellidoempleado1", empleado.apellidoempleado1);
           myComand.Parameters.AddWithValue("@apellidoempleado2", empleado.apellidoempleado2);
+          myComand.Parameters.AddWithValue("@fechanacimiento", empleado.fechanacimiento);
           myComand.Parameters.AddWithValue("@usuario", empleado.usuario);
           myComand.Parameters.AddWithValue("@numerotelefono", empleado.numerotelefono);
-          myComand.Parameters.AddWithValue("@edad", empleado.edad);
           myComand.Parameters.AddWithValue("@fechaingreso", empleado.fechaingreso);
           myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna);
           myReader = myComand.ExecuteReader();
@@ -123,9 +123,9 @@ namespace CineTEC_API.Controllers
               nombreempleado2 = @nombreempleado2,
               apellidoempleado1 = @apellidoempleado1,
               apellidoempleado2 = @apellidoempleado2,
+              fechanacimiento = @fechanacimiento,
               usuario = @usuario,
               numerotelefono = @numerotelefono,
-              edad = @edad,
               fechaingreso = @fechaingreso,
               contrasenna = @contrasenna
           where cedulaempleado = @cedulaempleado
@@ -143,9 +143,9 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@nombreempleado2", empleado.nombreempleado2);
           myComand.Parameters.AddWithValue("@apellidoempleado1", empleado.apellidoempleado1);
           myComand.Parameters.AddWithValue("@apellidoempleado2", empleado.apellidoempleado2);
+          myComand.Parameters.AddWithValue("@fechanacimiento", empleado.fechanacimiento);
           myComand.Parameters.AddWithValue("@usuario", empleado.usuario);
           myComand.Parameters.AddWithValue("@numerotelefono", empleado.numerotelefono);
-          myComand.Parameters.AddWithValue("@edad", empleado.edad);
           myComand.Parameters.AddWithValue("@fechaingreso", empleado.fechaingreso);
           myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna);
           myReader = myComand.ExecuteReader();
