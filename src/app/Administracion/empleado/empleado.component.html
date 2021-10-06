@@ -17,7 +17,16 @@
                                                 <label>Nombre: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newempleado.nombre"
+                                                <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newempleado.nombreempleado1"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Segundo Nombre: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Segundo Nombre" [(ngModel)]="newempleado.nombreempleado2"
                                                     required>
                                             </div>
                                         </div>
@@ -26,7 +35,7 @@
                                                 <label>Primer Apellido: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Primer Apellido" [(ngModel)]="newempleado.apellido1"
+                                                <input name="quantity" class="form-control" placeholder="Primer Apellido" [(ngModel)]="newempleado.apellidoempleado1"
                                                     required>
                                             </div>
                                         </div>
@@ -35,7 +44,7 @@
                                                 <label>Segundo Apellido: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Segundo Apellido" [(ngModel)]="newempleado.apellido2"
+                                                <input name="quantity" class="form-control" placeholder="Segundo Apellido" [(ngModel)]="newempleado.apellidoempleado2"
                                                     required>
                                             </div>
                                         </div>
@@ -44,29 +53,21 @@
                                                 <label>Cédula: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Cédula" [(ngModel)]="newempleado.cedula"
+                                                <input name="quantity" class="form-control" placeholder="Cédula" [(ngModel)]="newempleado.cedulaempleado"
                                                     required>
                                             </div>
                                         </div>
 
-                                        <div class="form-row">
-                                            <div class="col form-group">
-                                                <label>Edad: </label>
-                                            </div>
-                                            <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Edad" [(ngModel)]="newempleado.edad"
-                                                    required>
-                                            </div>
-                                        </div>
+                            
 
                                         <div class="form-row">
                                             <div class="col form-group">
                                                 <label>Fecha de Nacimiento: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="newempleado.fechaDeNacimiento"
+                                                <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="newempleado.fechanacimiento"
                             (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" 
-                            dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Fecha de Nacimiento" 
+                            dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Fechanacimiento" 
                             [ngModelOptions]="{standalone: true}" />
                                             </div>
                                         </div>
@@ -77,7 +78,7 @@
                                                 <label>Teléfono: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Teléfono" [(ngModel)]="newempleado.telefono"
+                                                <input name="quantity" class="form-control" placeholder="Teléfono" [(ngModel)]="newempleado.numerotelefono"
                                                     required>
                                             </div>
                                         </div>
@@ -87,7 +88,7 @@
                                                 <label>Fecha de Ingreso: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="newempleado.fechaDeIngreso"
+                                                <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="newempleado.fechaingreso"
                             (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" 
                             dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Fecha de Ingreso" 
                             [ngModelOptions]="{standalone: true}" />
@@ -99,8 +100,17 @@
                                                 <label>Rol: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Rol" [(ngModel)]="newempleado.rol"
-                                                    required>
+                                                <div ngbDropdown class="d-inline-block">
+                                                    <button class="btn btn-outline-primary"
+                                                        id="dropdownBasic1"
+                                                        ngbDropdownToggle>{{selectedRol}}</button>
+                                                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                                        <button *ngFor="let rol of roles"
+                                                            ngbDropdownItem
+                                                            (click)="selectRol(rol.nombre)">{{rol.nombre}}</button>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -118,10 +128,10 @@
 
                                         <div class="form-row">
                                             <div class="col form-group">
-                                                <label>Contrasena: </label>
+                                                <label>Contraseña: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Contrasena" [(ngModel)]="newempleado.contrasena"
+                                                <input name="quantity" class="form-control" placeholder="Contraseña" [(ngModel)]="newempleado.contrasenna"
                                                     required>
                                             </div>
                                         </div>
@@ -149,8 +159,9 @@
                                             <thead>
                                                 <!-- Columnas para los datos mostrados de los empleadoes-->
                                                 <tr>
-                                                    <th>Cedula</th>
+                                                    <th>cedulaempleado</th>
                                                     <th>Nombre</th>
+                                                    <th>Segundo Nombre</th>
                                                     <th>Primer Apellido</th>
                                                     <th>Segundo Apellido</th>
                                                     <th>Teléfono</th>
@@ -166,62 +177,66 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let empleado of this.empleados"> <!-- ngFor repite una sección del código HTML, por cada empleadoe hace una nueva fila en la tabla-->
-                                                    <td>{{empleado.cedula}}</td>
+                                                    <td>{{empleado.cedulaempleado}}</td>
                                                     <!-- ngIF es una condicional para que se muestre una linea de HTML según una condición-->
-                                                    <td *ngIf='editingID != empleado.cedula'>{{empleado.nombre}}</td>
-                                                    <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.nombre}}"
-                                                        [(ngModel)]="selectedempleado.nombre" class="form-control"></td>
+                                                    <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.nombreempleado1}}</td>
+                                                    <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.nombreempleado1}}"
+                                                        [(ngModel)]="selectedempleado.nombreempleado1" class="form-control"></td>
 
-                                                    <td *ngIf='editingID != empleado.cedula'>{{empleado.apellido1}}</td>
-                                                    <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.apellido1}}"
-                                                        [(ngModel)]="selectedempleado.apellido1" class="form-control"></td>
+                                                        <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.nombreempleado2}}</td>
+                                                        <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.nombreempleado1}}"
+                                                            [(ngModel)]="selectedempleado.nombreempleado1" class="form-control"></td>
+
+                                                    <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.apellidoempleado1}}</td>
+                                                    <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.apellidoempleado1}}"
+                                                        [(ngModel)]="selectedempleado.apellidoempleado1" class="form-control"></td>
                                                         
-                                                    <td *ngIf='editingID != empleado.cedula'>{{empleado.apellido2}}</td>
-                                                    <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.apellido2}}"
-                                                        [(ngModel)]="selectedempleado.apellido2" class="form-control"></td>
+                                                    <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.apellidoempleado2}}</td>
+                                                    <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.apellidoempleado2}}"
+                                                        [(ngModel)]="selectedempleado.apellidoempleado2" class="form-control"></td>
 
-                                                    <td *ngIf='editingID != empleado.cedula'>{{empleado.telefono}}</td>
-                                                    <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.telefono}}"
-                                                        [(ngModel)]="selectedempleado.telefono" class="form-control"></td>
-
-
-                                                        <td *ngIf='editingID != empleado.cedula'>{{empleado.fechaDeNacimiento}}</td>
-                                                        <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.fechaDeNacimiento}}"
-                                                            [(ngModel)]="selectedempleado.fechaDeNacimiento" class="form-control"></td>
+                                                    <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.numerotelefono}}</td>
+                                                    <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.numerotelefono}}"
+                                                        [(ngModel)]="selectedempleado.numerotelefono" class="form-control"></td>
 
 
-                                                            <td *ngIf='editingID != empleado.cedula'>{{empleado.fechaDeIngreso}}</td>
-                                                            <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.fechaDeIngreso}}"
-                                                                [(ngModel)]="selectedempleado.fechaDeIngreso" class="form-control"></td>
+                                                        <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.fechanacimiento}}</td>
+                                                        <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.fechanacimiento}}"
+                                                            [(ngModel)]="selectedempleado.fechanacimiento" class="form-control"></td>
 
 
-                                                                <td *ngIf='editingID != empleado.cedula'>{{empleado.rol}}</td>
-                                                            <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.rol}}"
+                                                            <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.fechaingreso}}</td>
+                                                            <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.fechaingreso}}"
+                                                                [(ngModel)]="selectedempleado.fechaingreso" class="form-control"></td>
+
+
+                                                                <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.rol}}</td>
+                                                            <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.rol}}"
                                                                 [(ngModel)]="selectedempleado.rol" class="form-control"></td>
 
-                                                                <td *ngIf='editingID != empleado.cedula'>{{empleado.usuario}}</td>
-                                                            <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.usuario}}"
+                                                                <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.usuario}}</td>
+                                                            <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.usuario}}"
                                                                 [(ngModel)]="selectedempleado.usuario" class="form-control"></td>
 
-                                                                <td *ngIf='editingID != empleado.cedula'>{{empleado.contrasena}}</td>
-                                                            <td *ngIf='editingID == empleado.cedula'><input value="{{selectedempleado.contrasena}}"
-                                                                [(ngModel)]="selectedempleado.contrasena" class="form-control"></td>
+                                                                <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.contrasenna}}</td>
+                                                            <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.contrasenna}}"
+                                                                [(ngModel)]="selectedempleado.contrasenna" class="form-control"></td>
                                                
 
                                                         
 
                                                     <th scope="row">
-                                                        <button *ngIf='editingID != empleado.cedula' (click)="edit(empleado)" class="btn-icon" placement="top"
+                                                        <button *ngIf='editingID != empleado.cedulaempleado' (click)="edit(empleado)" class="btn-icon" placement="top"
                                                             ngbTooltip="Editar">
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </button>
-                                                        <button *ngIf='editingID == empleado.cedula' (click)="submit()" class="btn-icon" placement="top"
+                                                        <button *ngIf='editingID == empleado.cedulaempleado' (click)="submit()" class="btn-icon" placement="top"
                                                             ngbTooltip="Aceptar">
                                                             <i class="fa fa-check" aria-hidden="true"></i>
                                                         </button>
                                                     </th>
                                                     <th scope="row">
-                                                        <button (click)="delete(empleado.cedula)" class="btn-icon" placement="top"
+                                                        <button (click)="delete(empleado.cedulaempleado)" class="btn-icon" placement="top"
                                                             ngbTooltip="Eliminar">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </button>

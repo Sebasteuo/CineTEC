@@ -2,25 +2,26 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Empleado } from '../Models/empleado.Model';
+import { Rol } from '../Models/rol.Model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleadoManagementService {
-
+  roles: Rol[] = []
   empleados: Empleado[] = []
   currentempleado: Empleado ={
-    nombre: "",
-    apellido1: "",
-    apellido2: "",
-    cedula: 0,
-    telefono: 0,
-    fechaDeNacimiento: new Date(),
-    edad: 0,
-    fechaDeIngreso: new Date(),
+    nombreempleado1: "",
+    nombreempleado2: "",
+    apellidoempleado1: "",
+    apellidoempleado2: "",
+    cedulaempleado: 0,
+    numerotelefono: 0,
+    fechanacimiento: new Date(),
+    fechaingreso: new Date(),
     rol: "",
     usuario: "",
-    contrasena: 0
+    contrasenna: 0
     
   }
   constructor(public http:HttpClient) { }
@@ -71,4 +72,33 @@ export class EmpleadoManagementService {
     await this.http.post(environment.api+"/empleado", empleado).toPromise().then(res=>{this.getempleados().then(result=>{this.empleados=result})})
     return this.empleados;
   }
+
+  async getroles(){  //Función que obtiene empleadoes
+
+    await this.http.get(environment.api+"/rol").toPromise().then(res=>{
+      this.roles=res as Rol[]
+
+    
+    })
+
+    return this.roles
+    
+  }
+
+
+  async getrolempleado(id: number){  //Función que obtiene empleadoes
+
+    var rol
+    await this.http.get(environment.api+"/rol/"+id).toPromise().then(res=>{
+      rol=res as Rol
+      console.log(rol)
+
+    
+    })
+
+    return rol
+    
+  }
+
+
 }

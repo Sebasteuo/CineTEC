@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Empleado } from 'src/app/Models/empleado.Model';
+import { Rol } from 'src/app/Models/rol.Model';
 import { EmpleadoManagementService } from 'src/app/services/empleado-management.service';
 
 @Component({
@@ -11,22 +12,25 @@ import { EmpleadoManagementService } from 'src/app/services/empleado-management.
 export class EmpleadoComponent implements OnInit {
 
   refresh: Subject<any> = new Subject();
+  roles: Rol[] = []
+  selectedRol: string | undefined
   constructor(private empleadoServices:EmpleadoManagementService) {
     //Servicios se deben invocar acá
     //VARIABLES. SINTAXIS= Nombre:Tipo = Valor
  }
 newempleado: Empleado={
-  nombre: "",
-    apellido1: "",
-    apellido2: "",
-    cedula: 0,
-    telefono: 0,
-    fechaDeNacimiento: new Date(),
-    edad: 0,
-    fechaDeIngreso: new Date(),
-    rol: "",
-    usuario: "",
-    contrasena: 0,
+
+  nombreempleado1: "",
+  nombreempleado2: "",
+  apellidoempleado1: "",
+  apellidoempleado2: "",
+  cedulaempleado: 0,
+  numerotelefono: 0,
+  fechanacimiento: new Date(),
+  fechaingreso: new Date(),
+  rol: "",
+  usuario: "",
+  contrasenna: 0
    
  
  
@@ -34,24 +38,33 @@ newempleado: Empleado={
 }
 selectedempleado: Empleado={
  
-  nombre: "",
-    apellido1: "",
-    apellido2: "",
-    cedula: 0,
-    telefono: 0,
-    fechaDeNacimiento: new Date(),
-    edad: 0,
-    fechaDeIngreso: new Date(),
-    rol: "",
-    usuario: "",
-    contrasena: 0,
+
+  nombreempleado1: "",
+  nombreempleado2: "",
+  apellidoempleado1: "",
+  apellidoempleado2: "",
+  cedulaempleado: 0,
+  numerotelefono: 0,
+  fechanacimiento: new Date(),
+  fechaingreso: new Date(),
+  rol: "",
+  usuario: "",
+  contrasenna: 0
 }
 empleados: Empleado[]=[]
 editingID: number | undefined = 0;
 ngOnInit(): void { //Función que se ejecuta de primero cuando carga componentes
   
-  this.empleadoServices.getempleados().then(res=>this.empleados=res);
+  this.empleadoServices.getempleados().then(res=>{this.empleados=res
+  this.empleados.forEach((empleado,index)=>{
+    this.empleadoServices.getrolempleado(empleado.cedulaempleado as unknown as number).then(response =>{
+      this.empleados[index].rol = response})
+
+})
+  });
+
   this.empleadoServices.getempleadosById(123456789).then(res=> console.log(res));
+  this.empleadoServices.getroles().then(res=> this.roles = res);
 }
 
 //Envía el ID del empleadoe que se va a eliminar al servicio
@@ -61,7 +74,7 @@ delete(id : number | undefined){
 
 //Click en el botón de editar genera cajas de texto para escribir editables
 edit(empleado : Empleado){
-  this.editingID = empleado.cedula;
+  this.editingID = empleado.cedulaempleado;
   this.selectedempleado = empleado;
 }
 
@@ -75,18 +88,22 @@ submit(){
 add(){
   this.empleadoServices.addempleado(this.newempleado).then(res=>{this.empleados=res});
   this.newempleado = {
-    nombre: "",
-    apellido1: "",
-    apellido2: "",
-    cedula: 0,
-    telefono: 0,
-    fechaDeNacimiento: new Date(),
-    edad: 0,
-    fechaDeIngreso: new Date(),
+    nombreempleado1: "",
+    nombreempleado2: "",
+    apellidoempleado1: "",
+    apellidoempleado2: "",
+    cedulaempleado: 0,
+    numerotelefono: 0,
+    fechanacimiento: new Date(),
+    fechaingreso: new Date(),
     rol: "",
     usuario: "",
-    contrasena: 0,
+    contrasenna: 0
   }
+}
+
+selectRol(nombre: string | undefined) {
+  this.selectedRol = nombre
 }
 
 }

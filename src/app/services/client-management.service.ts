@@ -10,13 +10,14 @@ export class ClientManagementService {
 
   clients: Client[] = []
   currentClient: Client ={
-    nombre:"",
-    apellido1:"",
-    apellido2:"",
-    cedula:0,
-    edad:0,
-    fechaDeNacimiento:"",
-    telefono:0
+    nombrecliente1:"",
+    nombrecliente2:"",
+    apellidocliente1:"",
+    apellidocliente2:"",
+    cedulaempleado:0,
+    fechanacimiento: new Date(),
+    numerotelefono:0,
+    cedulacliente:0
    
     
   }
@@ -64,6 +65,7 @@ export class ClientManagementService {
 
   //Envía los datos de un nuevo cliente al API
   async addClient(Client : Client){
+
     const body = {}
     await this.http.post(environment.api+"/cliente", Client).toPromise().then(res=>{this.getClients().then(result=>{this.clients=result})})
     return this.clients;

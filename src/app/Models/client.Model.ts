@@ -1,9 +1,10 @@
 export class Client {
-    nombre: string | undefined
-    apellido1: string | undefined
-    apellido2:string | undefined
-    cedula: number | undefined
-    telefono: number | undefined
-    fechaDeNacimiento: string | undefined
-    edad:number | undefined
+    nombrecliente1: string | undefined
+    nombrecliente2: string | undefined
+    apellidocliente1: string | undefined
+    apellidocliente2:string | undefined
+    cedulaempleado: number | undefined
+    numerotelefono: number | undefined
+    fechanacimiento: Date | undefined
+    cedulacliente: number | undefined
 }

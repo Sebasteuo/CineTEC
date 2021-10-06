@@ -16,25 +16,27 @@ export class ClientsComponent implements OnInit {
     //VARIABLES. SINTAXIS= Nombre:Tipo = Valor
  }
 newClient: Client={
-  nombre:"",
-  apellido1:"",
-  apellido2:"",
-  cedula:0,
-  telefono:0,
-  fechaDeNacimiento:"",
-  edad:0
+  nombrecliente1:"",
+    nombrecliente2:"",
+    apellidocliente1:"",
+    apellidocliente2:"",
+    cedulaempleado:0,
+    fechanacimiento:new Date(),
+    numerotelefono:0,
+    cedulacliente:0
  
   
 }
 selectedClient: Client={
  
-  nombre:"",
-  apellido1:"",
-  apellido2:"",
-  cedula:0,
-  telefono:0,
-  fechaDeNacimiento:"",
-  edad:0
+  nombrecliente1:"",
+    nombrecliente2:"",
+    apellidocliente1:"",
+    apellidocliente2:"",
+    cedulaempleado:0,
+    fechanacimiento:new Date(),
+    numerotelefono:0,
+    cedulacliente:0
 }
 clients: Client[]=[]
 editingID: number | undefined = 0;
@@ -51,7 +53,7 @@ delete(id : number | undefined){
 
 //Click en el botón de editar genera cajas de texto para escribir editables
 edit(client : Client){
-  this.editingID = client.cedula;
+  this.editingID = client.cedulacliente;
   this.selectedClient = client;
 }
 
@@ -63,15 +65,17 @@ submit(){
 
 //Envía los datos de un nuevo cliente al servicio
 add(){
+
   this.clientServices.addClient(this.newClient).then(res=>{this.clients=res});
   this.newClient = {
-    nombre:"",
-    apellido1:"",
-    apellido2:"",
-    cedula:0,
-    telefono:0,
-    fechaDeNacimiento:"",
-    edad:0
+    nombrecliente1:"",
+    nombrecliente2:"",
+    apellidocliente1:"",
+    apellidocliente2:"",
+    cedulaempleado:0,
+    fechanacimiento:new Date(),
+    numerotelefono:0,
+    cedulacliente:0
   }
 }
 
