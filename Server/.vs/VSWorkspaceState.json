@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\CineTEC-API"
+    "\\CineTEC-API",
+    "\\CineTEC-API\\Controllers"
   ],
-  "SelectedNode": "\\CineTEC-API\\CineTEC-API.sln",
+  "SelectedNode": "\\CineTEC-API\\Controllers\\RolXEmpleadoController.cs",
   "PreviewInSolutionExplorer": false
 }

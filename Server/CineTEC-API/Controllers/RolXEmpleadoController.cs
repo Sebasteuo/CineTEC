@@ -53,12 +53,12 @@ namespace CineTEC_API.Controllers
     //este metodo recibe como parametro una llave primaria y devuelve la tupla donde está esa llave
     // GET api/<EmpleadoController>/5
     [HttpGet("{id}")]
-    public JsonResult GetOne(string id)
+    public JsonResult GetOne(int id)
     {
       string query = @"
-          select nombre, cedulaempleado
+          select nombre
           from rolxempleado
-          where nombre = @nombre
+          where cedulaempleado = @cedulaempleado
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -68,7 +68,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@nombre", id);
+          myComand.Parameters.AddWithValue("@cedulaempleado", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
