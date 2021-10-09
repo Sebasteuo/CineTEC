@@ -58,12 +58,12 @@ ngOnInit(): void { //Función que se ejecuta de primero cuando carga componentes
   this.empleadoServices.getempleados().then(res=>{this.empleados=res
   this.empleados.forEach((empleado,index)=>{
     this.empleadoServices.getrolempleado(empleado.cedulaempleado as unknown as number).then(response =>{
-      this.empleados[index].rol = response})
+      this.empleados[index].rol = response[0].nombre})
 
 })
   });
 
-  this.empleadoServices.getempleadosById(123456789).then(res=> console.log(res));
+  
   this.empleadoServices.getroles().then(res=> this.roles = res);
 }
 
@@ -86,6 +86,7 @@ submit(){
 
 //Envía los datos de un nuevo empleadoe al servicio
 add(){
+  this.newempleado.rol = this.selectedRol
   this.empleadoServices.addempleado(this.newempleado).then(res=>{this.empleados=res});
   this.newempleado = {
     nombreempleado1: "",

@@ -16,37 +16,50 @@ export class MoviesComponent implements OnInit {
  }
 newMovie: Movie={
   nombre:"",
-  protagonistas: [],
+  protagonistas: "",
   director:"",
   duracion:"",
   clasificacion:"",
+  nombreogpelicula:"",
   imagen:"",
-  id:0,
-  priceChildren:0,
-  priceAdult:0,
-  priceGoldenCitizen:0
+  peliid:0,
+  precioninos:0,
+  precioadulto:0,
+  preciocidoro:0
  
   
 }
 selectedMovie: Movie={
  
   nombre:"",
-  protagonistas: [],
+  protagonistas: "",
   director:"",
   duracion:"",
   clasificacion:"",
+  nombreogpelicula:"",
   imagen:"",
-  id:0,
-  priceChildren:0,
-  priceAdult:0,
-  priceGoldenCitizen:0
+  peliid:0,
+  precioninos:0,
+  precioadulto:0,
+  preciocidoro:0
 }
 Movies: Movie[]=[]
 editingID: number | undefined = 0;
 ngOnInit(): void { //Función que se ejecuta de primero cuando carga componentes
   
-  this.MovieServices.getMovies().then(res=>this.Movies=res);
-  this.MovieServices.getMoviesById(123456789).then(res=> console.log(res));
+  this.MovieServices.getMovies().then(res=>{this.Movies=res
+  this.Movies.forEach((movie,index)=>{
+    this.MovieServices.getDirectorById(movie.peliid as unknown as string).then(response =>{
+      this.Movies[index].director=response[0].nombredirector
+    })
+    this.MovieServices.getProtagonistaById(movie.peliid as unknown as string).then(response =>{
+      this.Movies[index].protagonistas=response[0].nombreprotagonista
+  })
+})
+  });
+
+  
+
 }
 
 //Envía el ID del Moviee que se va a eliminar al servicio
@@ -56,7 +69,7 @@ delete(id : number | undefined){
 
 //Click en el botón de editar genera cajas de texto para escribir editables
 edit(Movie : Movie){
-  this.editingID = Movie.id;
+  this.editingID = Movie.peliid;
   this.selectedMovie = Movie;
 }
 
@@ -71,15 +84,16 @@ add(){
   this.MovieServices.addMovie(this.newMovie).then(res=>{this.Movies=res});
   this.newMovie = {
     nombre:"",
-  protagonistas: [],
-  director:"",
-  duracion:"",
-  clasificacion:"",
-  imagen:"",
-  id:0,
-  priceChildren:0,
-  priceAdult:0,
-  priceGoldenCitizen:0
+    protagonistas: "",
+    director:"",
+    duracion:"",
+    clasificacion:"",
+    nombreogpelicula:"",
+    imagen:"",
+    peliid:0,
+    precioninos:0,
+    precioadulto:0,
+    preciocidoro:0
   }
 }
 

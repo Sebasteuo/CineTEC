@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { Empleado } from '../Models/empleado.Model';
+import { RolXEmpleado } from '../Models/rol-xempleado.Model';
 import { Rol } from '../Models/rol.Model';
 
 @Injectable({
@@ -24,7 +27,7 @@ export class EmpleadoManagementService {
     contrasenna: 0
     
   }
-  constructor(public http:HttpClient) { }
+  constructor(public http:HttpClient, private toastr: ToastrService) { }
   /**
    * 
    * @returns 
@@ -55,21 +58,38 @@ export class EmpleadoManagementService {
   
   //Envía el ID del empleadoe que se va a eliminar al API
   async deleteempleado(id: number | undefined) {
+
     //this.empleados = this.empleados.filter((obj) => obj.cedula !== id);
-    await this.http.delete(environment.api+'/empleado/'+id).toPromise().then(res=>{this.getempleados().then(result=>{this.empleados=result})})
+    await this.http.delete(environment.api+'/RolXempleado/'+id).toPromise().then(res2=>{
+    this.http.delete(environment.api+'/empleado/'+id).toPromise().then(res=>{
+      
+      this.getempleados().then(result=>{this.empleados=result})})})
     return this.empleados
   }
-
+  rolXEmpleado:RolXEmpleado ={nombre:"", cedulaempleado:0}
   //Envía los datos modificados al API (esta función se comporta igual a la que account-management.service)
   async editempleado(empleado: Empleado) {
-    await this.http.put(environment.api+"/empleado", empleado).toPromise().then(res=>{this.getempleados().then(result=>{this.empleados=result})})
+    await this.http.put(environment.api+"/empleado", empleado).toPromise().then(res=>{
+      this.rolXEmpleado.nombre=empleado.rol as unknown as string
+      this.rolXEmpleado.cedulaempleado=empleado.cedulaempleado as unknown as number
+      console.log(this.rolXEmpleado)
+      try{ this.http.put(environment.api+"/RolXEmpleado",this.rolXEmpleado).toPromise().then(res2=>this.getempleados().then(result=>{this.empleados=result},error=>this.toastr.error("Rol Iválido","error")))}
+      catch{this.toastr.error("Rol Iválido","error")}
+      })
+      
+
     return this.empleados
   }
 
   //Envía los datos de un nuevo empleadoe al API
   async addempleado(empleado : Empleado){
-    const body = {}
-    await this.http.post(environment.api+"/empleado", empleado).toPromise().then(res=>{this.getempleados().then(result=>{this.empleados=result})})
+    this.rolXEmpleado.nombre = empleado.rol as unknown as string
+    this.rolXEmpleado.cedulaempleado = empleado.cedulaempleado as unknown as number
+    await this.http.post(environment.api+"/empleado", empleado).toPromise().then(res=>{
+      console.log(this.rolXEmpleado);
+      
+      this.http.post(environment.api+"/RolXEmpleado", this.rolXEmpleado).toPromise().then(res2=>this.getempleados().then(result=>{this.empleados=result}))
+      })
     return this.empleados;
   }
 
@@ -86,17 +106,17 @@ export class EmpleadoManagementService {
   }
 
 
+  rol: Rol[]=[]
   async getrolempleado(id: number){  //Función que obtiene empleadoes
 
-    var rol
-    await this.http.get(environment.api+"/rol/"+id).toPromise().then(res=>{
-      rol=res as Rol
-      console.log(rol)
+    await this.http.get(environment.api+"/RolXEmpleado/"+id).toPromise().then(res=>{
+      this.rol=res as Rol[]
+      console.log(this.rol)
 
     
     })
 
-    return rol
+    return this.rol
     
   }
 

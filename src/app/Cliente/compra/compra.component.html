@@ -45,7 +45,7 @@
                                                                             ngbDropdownToggle>{{selectedMovie}}</button>
                                                                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                                                             <button *ngFor="let movie of movies" ngbDropdownItem
-                                                                                (click)="selectMovie(movie.nombre, movie.id)">{{movie.nombre}}</button>
+                                                                                (click)="selectMovie(movie.nombre, movie.peliid)">{{movie.nombre}}</button>
                                                                        
                                                                         </div>
                                                                     </div>

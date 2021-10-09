@@ -115,7 +115,7 @@ namespace CineTEC_API.Controllers
           update rolxempleado
           set nombre = @nombre,
               cedulaempleado = @cedulaempleado
-          where nombre = @nombre
+          where cedulaempleado = @cedulaempleado
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -139,11 +139,11 @@ namespace CineTEC_API.Controllers
     //este metodo recibe como parametro una llave primaria y elimina la tupla con esa llave
     // DELETE api/<EmpleadoController>/5
     [HttpDelete("{id}")]
-    public JsonResult Delete(string id)
+    public JsonResult Delete(int id)
     {
       string query = @"
           delete from rolxempleado
-          where nombre = @nombre
+          where cedulaempleado = @cedulaempleado
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -153,7 +153,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@nombre", id);
+          myComand.Parameters.AddWithValue("@cedulaempleado", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
