@@ -165,5 +165,30 @@ namespace CineTEC_API.Controllers
       }
       return new JsonResult("Deleted Successfully");
     }
+
+    [HttpDelete("[action]/{peliid}")]
+    public JsonResult DeleteByPelicula(string peliid)
+    {
+      string query = @"
+          delete from funcion
+          where peliid = @peliid
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@peliid", peliid);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult("Deleted Successfully");
+    }
   }
 }

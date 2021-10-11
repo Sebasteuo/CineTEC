@@ -17,8 +17,9 @@
                                                 <label>Nombre Original: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Nombre Original" [(ngModel)]="newMovie.nombreogpelicula"
-                                                    required>
+                                                <input name="quantity" class="form-control"
+                                                    placeholder="Nombre Original"
+                                                    [(ngModel)]="newMovie.nombreogpelicula" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -26,8 +27,8 @@
                                                 <label>Nombre: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newMovie.nombre"
-                                                    required>
+                                                <input name="quantity" class="form-control" placeholder="Nombre"
+                                                    [(ngModel)]="newMovie.nombre" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -35,8 +36,8 @@
                                                 <label>Director: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Director" [(ngModel)]="newMovie.director"
-                                                    required>
+                                                <input name="quantity" class="form-control" placeholder="Director"
+                                                    [(ngModel)]="newMovie.director" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -44,8 +45,8 @@
                                                 <label>Clasificación: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Clasificación" [(ngModel)]="newMovie.clasificacion"
-                                                    required>
+                                                <input name="quantity" class="form-control" placeholder="Clasificación"
+                                                    [(ngModel)]="newMovie.clasificacion" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -53,8 +54,8 @@
                                                 <label>Duración: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Duración" [(ngModel)]="newMovie.duracion"
-                                                    required>
+                                                <input name="quantity" class="form-control" placeholder="Duración"
+                                                    [(ngModel)]="newMovie.duracion" required>
                                             </div>
                                         </div>
 
@@ -63,8 +64,8 @@
                                                 <label>Imagen: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Imagen" [(ngModel)]="newMovie.imagen"
-                                                    required>
+                                                <input name="quantity" class="form-control" placeholder="Imagen"
+                                                    [(ngModel)]="newMovie.imagen" required>
                                             </div>
                                         </div>
 
@@ -73,9 +74,9 @@
                                                 <label>Protagonistas: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Protagonistas" [(ngModel)]="newMovie.protagonistas"
-                                                    required>
-                         
+                                                <input name="quantity" class="form-control" placeholder="Protagonistas"
+                                                    [(ngModel)]="newMovie.protagonistas" required>
+
                                             </div>
                                         </div>
 
@@ -84,9 +85,10 @@
                                                 <label>Precio Niño: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Precio para Niño" [(ngModel)]="newMovie.precioninos"
+                                                <input name="quantity" class="form-control"
+                                                    placeholder="Precio para Niño" [(ngModel)]="newMovie.precioninos"
                                                     required>
-                         
+
                                             </div>
                                         </div>
 
@@ -95,9 +97,10 @@
                                                 <label>Precio Adulto: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Precio de Adulto" [(ngModel)]="newMovie.precioadulto"
+                                                <input name="quantity" class="form-control"
+                                                    placeholder="Precio de Adulto" [(ngModel)]="newMovie.precioadulto"
                                                     required>
-                         
+
                                             </div>
                                         </div>
 
@@ -106,12 +109,26 @@
                                                 <label>Precio Ciudadano de Oro: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Precio para Ciudadano de Oro" [(ngModel)]="newMovie.preciocidoro"
-                                                    required>
-                         
+                                                <input name="quantity" class="form-control"
+                                                    placeholder="Precio para Ciudadano de Oro"
+                                                    [(ngModel)]="newMovie.preciocidoro" required>
+
                                             </div>
                                         </div>
-                                       
+
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>ID de Película: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control"
+                                                    placeholder="ID de Película"
+                                                    [(ngModel)]="newMovie.peliid" required>
+
+                                            </div>
+                                        </div>
+                                        
+
                                         <div class="col form-groupform-group">
                                             <button class="btn btn-primary btn-block" (click)="add()">Agregar</button>
                                         </div>
@@ -149,66 +166,92 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let Movie of this.Movies"> <!-- ngFor repite una sección del código HTML, por cada Moviee hace una nueva fila en la tabla-->
+                                                <tr *ngFor="let Movie of this.Movies">
+                                                    <!-- ngFor repite una sección del código HTML, por cada Moviee hace una nueva fila en la tabla-->
                                                     <td>{{Movie.peliid}}</td>
                                                     <!-- ngIF es una condicional para que se muestre una linea de HTML según una condición-->
-                                                    <td *ngIf='editingID != Movie.peliid'>{{Movie.nombreogpelicula}}</td>
-                                                    <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.nombreogpelicula}}"
-                                                        [(ngModel)]="selectedMovie.nombreogpelicula" class="form-control"></td>
+                                                    <td *ngIf='editingID != Movie.peliid'>{{Movie.nombreogpelicula}}
+                                                    </td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.nombreogpelicula}}"
+                                                            [(ngModel)]="selectedMovie.nombreogpelicula"
+                                                            class="form-control"></td>
                                                     <td *ngIf='editingID != Movie.peliid'>{{Movie.nombre}}</td>
-                                                    <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.nombre}}"
-                                                        [(ngModel)]="selectedMovie.nombre" class="form-control"></td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.nombre}}"
+                                                            [(ngModel)]="selectedMovie.nombre" class="form-control">
+                                                    </td>
 
                                                     <td *ngIf='editingID != Movie.peliid'>{{Movie.director}}</td>
-                                                    <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.director}}"
-                                                        [(ngModel)]="selectedMovie.director" class="form-control"></td>
-                                                        
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.director}}"
+                                                            [(ngModel)]="selectedMovie.director" class="form-control">
+                                                    </td>
+
                                                     <td *ngIf='editingID != Movie.peliid'>{{Movie.protagonistas}}</td>
-                                                    <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.protagonistas}}"
-                                                        [(ngModel)]="selectedMovie.protagonistas" class="form-control"></td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.protagonistas}}"
+                                                            [(ngModel)]="selectedMovie.protagonistas"
+                                                            class="form-control"></td>
+
+
+                                                    <td *ngIf='editingID != Movie.peliid'>{{Movie.duracion}}</td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.duracion}}"
+                                                            [(ngModel)]="selectedMovie.duracion" class="form-control">
+                                                    </td>
 
                                                     <td *ngIf='editingID != Movie.peliid'>{{Movie.imagen}}</td>
-                                                    <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.imagen}}"
-                                                        [(ngModel)]="selectedMovie.imagen" class="form-control"></td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.imagen}}"
+                                                            [(ngModel)]="selectedMovie.imagen" class="form-control">
+                                                    </td>
+
+                                                    <td *ngIf='editingID != Movie.peliid'>{{Movie.clasificacion}}</td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.clasificacion}}"
+                                                            [(ngModel)]="selectedMovie.clasificacion"
+                                                            class="form-control"></td>
 
 
-                                                        <td *ngIf='editingID != Movie.peliid'>{{Movie.clasificacion}}</td>
-                                                        <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.clasificacion}}"
-                                                            [(ngModel)]="selectedMovie.clasificacion" class="form-control"></td>
+                                                    <td *ngIf='editingID != Movie.peliid'>{{Movie.precioninos}}</td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.precioninos}}"
+                                                            [(ngModel)]="selectedMovie.precioninos"
+                                                            class="form-control"></td>
 
 
-                                                            <td *ngIf='editingID != Movie.peliid'>{{Movie.precioninos}}</td>
-                                                        <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.precioninos}}"
-                                                            [(ngModel)]="selectedMovie.precioninos" class="form-control"></td>
+                                                    <td *ngIf='editingID != Movie.peliid'>{{Movie.precioadulto}}</td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.precioadulto}}"
+                                                            [(ngModel)]="selectedMovie.precioadulto"
+                                                            class="form-control"></td>
 
 
-                                                            <td *ngIf='editingID != Movie.peliid'>{{Movie.precioadulto}}</td>
-                                                        <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.precioadulto}}"
-                                                            [(ngModel)]="selectedMovie.precioadulto" class="form-control"></td>
+                                                    <td *ngIf='editingID != Movie.peliid'>{{Movie.preciocidoro}}</td>
+                                                    <td *ngIf='editingID == Movie.peliid'><input
+                                                            value="{{selectedMovie.preciocidoro}}"
+                                                            [(ngModel)]="selectedMovie.preciocidoro"
+                                                            class="form-control"></td>
 
 
-                                                            <td *ngIf='editingID != Movie.peliid'>{{Movie.preciocidoro}}</td>
-                                                        <td *ngIf='editingID == Movie.peliid'><input value="{{selectedMovie.preciocidoro}}"
-                                                            [(ngModel)]="selectedMovie.preciocidoro" class="form-control"></td>
 
 
-                                               
 
-                                                        
 
                                                     <th scope="row">
-                                                        <button *ngIf='editingID != Movie.peliid' (click)="edit(Movie)" class="btn-icon" placement="top"
-                                                            ngbTooltip="Editar">
+                                                        <button *ngIf='editingID != Movie.peliid' (click)="edit(Movie)"
+                                                            class="btn-icon" placement="top" ngbTooltip="Editar">
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </button>
-                                                        <button *ngIf='editingID == Movie.peliid' (click)="submit()" class="btn-icon" placement="top"
-                                                            ngbTooltip="Aceptar">
+                                                        <button *ngIf='editingID == Movie.peliid' (click)="submit()"
+                                                            class="btn-icon" placement="top" ngbTooltip="Aceptar">
                                                             <i class="fa fa-check" aria-hidden="true"></i>
                                                         </button>
                                                     </th>
                                                     <th scope="row">
-                                                        <button (click)="delete(Movie.peliid)" class="btn-icon" placement="top"
-                                                            ngbTooltip="Eliminar">
+                                                        <button (click)="delete(Movie.peliid)" class="btn-icon"
+                                                            placement="top" ngbTooltip="Eliminar">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </button>
                                                     </th>

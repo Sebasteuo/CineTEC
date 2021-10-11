@@ -153,7 +153,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@pellid", id);
+          myComand.Parameters.AddWithValue("@peliid", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();

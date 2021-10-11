@@ -6,9 +6,10 @@ export class Movie {
     protagonistas: string | undefined
     director: string | undefined
     clasificacion: string | undefined
-    peliid: number | undefined
+    peliid: string | undefined
     precioninos: number | undefined
     precioadulto: number | undefined
     preciocidoro: number | undefined
+    cedulaempleado: number | undefined
 }
 

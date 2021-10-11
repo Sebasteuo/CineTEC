@@ -17,7 +17,7 @@ export class CompraComponent implements OnInit {
 
   selectedLocation: String | undefined = ""
   selectedLocationID: Number | undefined = 0
-  selectedMovieID: Number | undefined = 0
+  selectedMovieID: String | undefined = ""
   selectedMovie: String | undefined = ""
   selectedProyeccion: Date | undefined = new Date()
   selectedProyeccionID: Number | undefined = 0
@@ -76,7 +76,7 @@ export class CompraComponent implements OnInit {
     this.compraService.getMovies(id as unknown as number).then(res => this.movies = res)
   }
 
-  loadProyecciones(id: number | undefined) {
+  loadProyecciones(id: string | undefined) {
     this.compraService.getProyecciones(id as unknown as number).then(res => {this.proyecciones = res
     })
 
@@ -99,7 +99,7 @@ export class CompraComponent implements OnInit {
     this.capacity= ((this.filas as unknown as number)*(this.columnas as unknown as number))*(this.aforo as unknown as number)
   }
 
-  selectMovie(nombre: string | undefined, id: number | undefined) {
+  selectMovie(nombre: string | undefined, id: string | undefined) {
     this.selectedMovie = nombre
     this.selectedMovieID = id
     this.loadProyecciones(id)

@@ -36,17 +36,17 @@ INSERT INTO public.director(peliid,nombredirector) VALUES('xhd962','Sian Hede');
 INSERT INTO public.director(peliid,nombredirector) VALUES('mcu789','Destin Daniel Cretton');
 
 /*Insercion a protagonista*/
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('ijh007','Daniel Craig');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('ijh007','Naomie Harris');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('ijh007','Rami Malek');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('mcu789','Simu Liu');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('mcu789','Awkwafina');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('mcu789','Benedict Wong');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('mcu789','Michelle Yeo');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('xhd962','Eugenio Derbez');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('xhd962','Marlee Matli');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('xhd962','Emilia Jones');
-INSERT INTO public.protaginista(peliid,nombreprotagonista) VALUES('xhd962','Daniel Duran');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('ijh007','Daniel Craig');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('ijh007','Naomie Harris');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('ijh007','Rami Malek');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('mcu789','Simu Liu');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('mcu789','Awkwafina');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('mcu789','Benedict Wong');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('mcu789','Michelle Yeo');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('xhd962','Eugenio Derbez');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('xhd962','Marlee Matli');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('xhd962','Emilia Jones');
+INSERT INTO public.protagonista(peliid,nombreprotagonista) VALUES('xhd962','Daniel Duran');
 
 /*Insercion a sala*/
 INSERT INTO sala(salaid,columna,fila,capacidad) VALUES('4MN001',15,9,100);
@@ -68,6 +68,7 @@ INSERT INTO public.funcion(salaid,peliid,hora) VALUES('4MN001','xhd962','2021-10
 INSERT INTO public.funcion(salaid,peliid,hora) VALUES('3OR001','xhd962','2021-10-24 11:20:00');
 INSERT INTO public.funcion(salaid,peliid,hora) VALUES('1SA001','xhd962','2021-10-24 11:20:00');
 INSERT INTO public.funcion(salaid,peliid,hora) VALUES('2AL001','xhd962','2021-10-24 11:20:00');
+
 
 
 

@@ -119,8 +119,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Update(Pelicula pelicula)
     {
       string query = @"
-          update cliente
-          set peliid = @pellid,
+          update pelicula
+          set peliid = @peliid,
               nombreogpelicula = @nombreogpelicula,
               nombre = @nombre,
               duracion = @duracion,
@@ -129,7 +129,7 @@ namespace CineTEC_API.Controllers
               precioninos = @precioninos,
               precioadulto = @precioadulto,
               cedulaempleado = @cedulaempleado
-          where cedulacliente = @cedulacliente
+          where peliid = @peliid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
