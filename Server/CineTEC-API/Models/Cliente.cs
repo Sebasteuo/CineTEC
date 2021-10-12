@@ -13,6 +13,5 @@ namespace CineTEC_API.Models
     public string apellidocliente2 { get; set; }
     public DateTime fechanacimiento { get; set; }
     public int numerotelefono { get; set; }
-    public int cedulaempleado { get; set; }
   }
 }

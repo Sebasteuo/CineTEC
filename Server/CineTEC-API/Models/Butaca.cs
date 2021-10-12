@@ -1,15 +1,16 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CineTEC_API.Models
 {
-  public class Sala
+  public class Butaca
   {
-    //indica que la llave primaria es salaid
     [Key]
+    public int numerodeasiento { get; set; }
     public string salaid { get; set; }
-    public int columna { get; set; }
-    public int fila { get; set; }
-    public int capacidad { get; set; }
     public string codigosucursal { get; set; }
   }
 }
