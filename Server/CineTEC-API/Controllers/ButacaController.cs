@@ -13,13 +13,13 @@ namespace CineTEC_API.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class SalaController : ControllerBase
+  public class ButacaController : ControllerBase
   {
     private string cadenaDeConexion = "PostgreSQLConnection"; //hace referencia a la cadena de conexion en appsettings.json
     private readonly IConfiguration _configuration;
 
     //el metodo constructor recibe como parametro una instancia de la interface Iconfiguration que permite la representacion de un conjunto de propiedades clave/valor
-    public SalaController(IConfiguration configuration)
+    public ButacaController(IConfiguration configuration)
     {
       _configuration = configuration;
     }
@@ -30,8 +30,8 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select salaid, columna, fila, capacidad, codigosucursal
-          from sala
+          select numerodeasiento, salaid, codigosucursal
+          from butaca
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -56,8 +56,8 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(string id)
     {
       string query = @"
-          select salaid, columna, fila, capacidad, codigosucursal
-          from sala
+          select numerodeasiento, salaid, codigosucursal
+          from butaca
           where salaid = @salaid
           ";
       DataTable table = new DataTable();
@@ -81,11 +81,11 @@ namespace CineTEC_API.Controllers
     //este metodo recibe como parametro un objeto con sus atributos para insertarlo como tupla en la tabla
     // POST api/<EmpleadoController>
     [HttpPost]
-    public JsonResult Create(Sala sala)
+    public JsonResult Create(Butaca butaca)
     {
       string query = @"
-          insert into sala(salaid, columna, fila, capacidad, codigosucursal)
-          values (@salaid, @columna, @fila, @capacidad, @codigosucursal)
+          insert into butaca(numerodeasiento, salaid, codigosucursal)
+          values (@numerodeasiento, @salaid, @codigosucursal)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -95,11 +95,9 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", sala.salaid);
-          myComand.Parameters.AddWithValue("@columna", sala.columna);
-          myComand.Parameters.AddWithValue("@fila", sala.fila);
-          myComand.Parameters.AddWithValue("@capacidad", sala.capacidad); 
-          myComand.Parameters.AddWithValue("@codigosucursal", sala.codigosucursal);
+          myComand.Parameters.AddWithValue("@numerodeasiento", butaca.numerodeasiento);
+          myComand.Parameters.AddWithValue("@salaid", butaca.salaid);
+          myComand.Parameters.AddWithValue("@codigosucursal", butaca.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -112,14 +110,12 @@ namespace CineTEC_API.Controllers
     //este metodo recibe como parametro un objeto que tiene como llave primaria la misma llave que en una tupla existente para actualizar todos los atributos igual a los del objeto
     // PUT api/<EmpleadoController>/5
     [HttpPut]
-    public JsonResult Update(Sala sala)
+    public JsonResult Update(Butaca butaca)
     {
       string query = @"
-          update sala
-          set salaid = @salaid,
-              columna = @columna,
-              fila = @fila,
-              capacidad = @capacidad,
+          update butaca
+          set numerodeasiento = @numerodeasiento,
+              salaid = @salaid,
               codigosucursal = @codigosucursal
           ";
       DataTable table = new DataTable();
@@ -130,11 +126,9 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", sala.salaid);
-          myComand.Parameters.AddWithValue("@columna", sala.columna);
-          myComand.Parameters.AddWithValue("@fila", sala.fila);
-          myComand.Parameters.AddWithValue("@capacidad", sala.capacidad);
-          myComand.Parameters.AddWithValue("@codigosucursal", sala.codigosucursal);
+          myComand.Parameters.AddWithValue("@numerodeasiento", butaca.numerodeasiento);
+          myComand.Parameters.AddWithValue("@salaid", butaca.salaid);
+          myComand.Parameters.AddWithValue("@codigosucursal", butaca.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -150,7 +144,7 @@ namespace CineTEC_API.Controllers
     public JsonResult Delete(string id)
     {
       string query = @"
-          delete from sala
+          delete from butaca
           where salaid = @salaid
           ";
       DataTable table = new DataTable();

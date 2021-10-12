@@ -27,7 +27,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna
+          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna, codigosucursal
           from empleado
           ";
       DataTable table = new DataTable();
@@ -53,7 +53,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(int id)
     {
       string query = @"
-          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna
+          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna, codigosucursal
           from empleado
           where cedulaempleado = @cedulaempleado
           ";
@@ -81,8 +81,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Empleado empleado)
     {
       string query = @"
-          insert into empleado(cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna)
-          values (@cedulaempleado, @nombreempleado1, @nombreempleado2, @apellidoempleado1, @apellidoempleado2, @fechanacimiento, @usuario, @numerotelefono, @fechaingreso, @contrasenna)
+          insert into empleado(cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna, codigosucursal)
+          values (@cedulaempleado, @nombreempleado1, @nombreempleado2, @apellidoempleado1, @apellidoempleado2, @fechanacimiento, @usuario, @numerotelefono, @fechaingreso, @contrasenna, @codigosucursal)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -101,7 +101,8 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@usuario", empleado.usuario);
           myComand.Parameters.AddWithValue("@numerotelefono", empleado.numerotelefono);
           myComand.Parameters.AddWithValue("@fechaingreso", empleado.fechaingreso);
-          myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna);
+          myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna); 
+          myComand.Parameters.AddWithValue("@codigosucursal", empleado.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -127,7 +128,8 @@ namespace CineTEC_API.Controllers
               usuario = @usuario,
               numerotelefono = @numerotelefono,
               fechaingreso = @fechaingreso,
-              contrasenna = @contrasenna
+              contrasenna = @contrasenna,
+              codigosucursal = @codigosucursal
           where cedulaempleado = @cedulaempleado
           ";
       DataTable table = new DataTable();
@@ -148,6 +150,7 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@numerotelefono", empleado.numerotelefono);
           myComand.Parameters.AddWithValue("@fechaingreso", empleado.fechaingreso);
           myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna);
+          myComand.Parameters.AddWithValue("@codigosucursal", empleado.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();

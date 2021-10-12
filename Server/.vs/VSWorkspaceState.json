@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\CineTEC-API",
-    "\\CineTEC-API\\Controllers"
+    "\\CineTEC-API\\Controllers",
+    "\\CineTEC-API\\Models"
   ],
-  "SelectedNode": "\\CineTEC-API\\Controllers\\FuncionController.cs",
+  "SelectedNode": "\\CineTEC-API\\CineTEC-API.sln",
   "PreviewInSolutionExplorer": false
 }
