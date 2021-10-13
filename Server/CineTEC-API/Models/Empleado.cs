@@ -17,6 +17,7 @@ namespace CineTEC_API.Models
     public int numerotelefono { get; set; }
     public DateTime fechaingreso { get; set; }
     public string contrasenna { get; set; }
+    public string codigosucursal { get; set; }
 
   }
 }

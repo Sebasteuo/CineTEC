@@ -30,7 +30,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select salaid, hora, peliid
+          select funcionid, salaid, hora, peliid
           from funcion
           ";
       DataTable table = new DataTable();
@@ -56,9 +56,9 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(string id)
     {
       string query = @"
-          select salaid, hora, peliid
+          select funcionid, salaid, hora, peliid
           from funcion
-          where salaid = @salaid
+          where funcionid = @funcionid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -68,7 +68,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", id);
+          myComand.Parameters.AddWithValue("@funcionid", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -84,8 +84,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Funcion funcion)
     {
       string query = @"
-          insert into funcion(salaid, hora, peliid)
-          values (@salaid, @hora, @peliid)
+          insert into funcion(funcionid, salaid, hora, peliid)
+          values (@funcionid, @salaid, @hora, @peliid)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -95,6 +95,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
+          myComand.Parameters.AddWithValue("@funcionid", funcion.funcionid);
           myComand.Parameters.AddWithValue("@salaid", funcion.salaid);
           myComand.Parameters.AddWithValue("@hora", funcion.hora);
           myComand.Parameters.AddWithValue("@peliid", funcion.peliid);
@@ -114,7 +115,8 @@ namespace CineTEC_API.Controllers
     {
       string query = @"
           update funcion
-          set salaid = @salaid,
+          set funcionid = @funcionid,
+              salaid = @salaid,
               hora = @hora
               peliid = @peliid
           where salaid = @salaid
@@ -127,6 +129,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
+          myComand.Parameters.AddWithValue("@funcionid", funcion.funcionid);
           myComand.Parameters.AddWithValue("@salaid", funcion.salaid);
           myComand.Parameters.AddWithValue("@hora", funcion.hora);
           myComand.Parameters.AddWithValue("@peliid", funcion.peliid);
@@ -146,7 +149,7 @@ namespace CineTEC_API.Controllers
     {
       string query = @"
           delete from funcion
-          where salaid = @salaid
+          where funcionid = @funcionid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -156,7 +159,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", id);
+          myComand.Parameters.AddWithValue("@funcionid", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();

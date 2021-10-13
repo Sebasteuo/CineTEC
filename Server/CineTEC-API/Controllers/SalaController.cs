@@ -30,7 +30,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select salaid, columna, fila, capacidad
+          select salaid, columna, fila, capacidad, codigosucursal
           from sala
           ";
       DataTable table = new DataTable();
@@ -56,9 +56,9 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(string id)
     {
       string query = @"
-          select salaid, columna, fila, capacidad
+          select salaid, columna, fila, capacidad, codigosucursal
           from sala
-          where salaid = @salaid
+          where codigosucursal = @codigosucursal
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -68,7 +68,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", id);
+          myComand.Parameters.AddWithValue("@codigosucursal", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -84,8 +84,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Sala sala)
     {
       string query = @"
-          insert into sala(salaid, columna, fila, capacidad)
-          values (@salaid, @columna, @fila, @capacidad)
+          insert into sala(salaid, columna, fila, capacidad, codigosucursal)
+          values (@salaid, @columna, @fila, @capacidad, @codigosucursal)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -98,7 +98,8 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@salaid", sala.salaid);
           myComand.Parameters.AddWithValue("@columna", sala.columna);
           myComand.Parameters.AddWithValue("@fila", sala.fila);
-          myComand.Parameters.AddWithValue("@capacidad", sala.capacidad);
+          myComand.Parameters.AddWithValue("@capacidad", sala.capacidad); 
+          myComand.Parameters.AddWithValue("@codigosucursal", sala.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -118,7 +119,8 @@ namespace CineTEC_API.Controllers
           set salaid = @salaid,
               columna = @columna,
               fila = @fila,
-              capacidad = @capacidad
+              capacidad = @capacidad,
+              codigosucursal = @codigosucursal
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -132,6 +134,7 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@columna", sala.columna);
           myComand.Parameters.AddWithValue("@fila", sala.fila);
           myComand.Parameters.AddWithValue("@capacidad", sala.capacidad);
+          myComand.Parameters.AddWithValue("@codigosucursal", sala.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
