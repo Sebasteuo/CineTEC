@@ -92,8 +92,9 @@ export class MoviesService {
       this.http.delete(environment.api + '/Director/' + id).toPromise().then(res1 => {
         this.http.delete(environment.api + '/Clasificacion/' + id).toPromise().then(res2 => {
           this.http.delete(environment.api + '/Funcion/DeleteByPelicula/' + id).toPromise().then(res2 => {
-            this.http.delete(environment.api + '/Pelicula/' + id).toPromise().then(res3 => { this.getMovies().then(result => { this.Movies = result }) })
-          })
+            this.http.delete(environment.api + '/PeliculaXSucursal/DeleteByMovie/' + id).toPromise().then(res3 => {
+            this.http.delete(environment.api + '/Pelicula/' + id).toPromise().then(res4 => { this.getMovies().then(result => { this.Movies = result }) })
+          })})
         })
       })
     })

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { formatISO } from 'date-fns';
+import { formatISO, parseISO } from 'date-fns';
 import { environment } from 'src/environments/environment';
 import { Proyeccion } from '../Models/proyeccion.Model';
 import { Sala } from '../Models/sala.Model';

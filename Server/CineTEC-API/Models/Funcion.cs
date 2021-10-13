@@ -8,7 +8,7 @@ namespace CineTEC_API.Models
     [Key]
     public string funcionid { get; set; }
     public string salaid { get; set; }
-    public TimeSpan hora { get; set; }
+    public DateTime hora { get; set; }
     public string peliid { get; set; }
   }
 }

@@ -63,10 +63,11 @@ export class LocationManagementService {
       console.log("deleting salas")
       this.http.delete(environment.api + '/empleado/DeleteBySucursal/' + id).toPromise().then(res2 => {
         console.log("deleting empleados")
+        this.http.delete(environment.api + '/PeliculaXSucursal/' + id).toPromise().then(res2 => {
         this.http.delete(environment.api + '/sucursal/' + id).toPromise().then(res3 => {
           console.log("deleting sucursal " + id)
           this.getlocations().then(result => { this.locations = result })
-        })
+        })})
       })
     })
     return this.locations
