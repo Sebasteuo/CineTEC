@@ -78,6 +78,32 @@ namespace CineTEC_API.Controllers
       return new JsonResult(table);
     }
 
+    [HttpGet("[action]/{id}")]
+    public JsonResult GetFuncionByMovie(string id)
+    {
+      string query = @"
+          select funcionid, salaid, hora, peliid
+          from funcion
+          where peliid = @peliid
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@peliid", id);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult(table);
+    }
+
     //este metodo recibe como parametro un objeto con sus atributos para insertarlo como tupla en la tabla
     // POST api/<EmpleadoController>
     [HttpPost]
@@ -117,9 +143,9 @@ namespace CineTEC_API.Controllers
           update funcion
           set funcionid = @funcionid,
               salaid = @salaid,
-              hora = @hora
+              hora = @hora,
               peliid = @peliid
-          where salaid = @salaid
+          where funcionid = @funcionid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -220,6 +246,7 @@ namespace CineTEC_API.Controllers
     }
   }
 }
+
 
 
 

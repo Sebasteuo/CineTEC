@@ -6,6 +6,7 @@ import { Clasificacion } from '../Models/clasificacion.Model';
 
 import { Director } from '../Models/director.Model';
 import { Movie } from '../Models/movie.Model';
+import { PeliculaXSucursal } from '../Models/pelicula-xsucursal.model';
 import { Protagonista } from '../Models/protagonista.Model';
 
 @Injectable({
@@ -43,6 +44,7 @@ export class MoviesService {
     peliid: "",
     nombredirector: ""
   }
+
   constructor(public http: HttpClient, private toastr: ToastrService) { }
   /**
    * 
@@ -93,8 +95,9 @@ export class MoviesService {
         this.http.delete(environment.api + '/Clasificacion/' + id).toPromise().then(res2 => {
           this.http.delete(environment.api + '/Funcion/DeleteByPelicula/' + id).toPromise().then(res2 => {
             this.http.delete(environment.api + '/PeliculaXSucursal/DeleteByMovie/' + id).toPromise().then(res3 => {
-            this.http.delete(environment.api + '/Pelicula/' + id).toPromise().then(res4 => { this.getMovies().then(result => { this.Movies = result }) })
-          })})
+              this.http.delete(environment.api + '/Pelicula/' + id).toPromise().then(res4 => { this.getMovies().then(result => { this.Movies = result }) })
+            })
+          })
         })
       })
     })
@@ -148,14 +151,20 @@ export class MoviesService {
     this.newClasificacion.descripcion = Movie.clasificacion as unknown as string
     this.newProtagonista.peliid = Movie.peliid as unknown as string
     this.newProtagonista.nombreprotagonista = Movie.protagonistas as unknown as string
-    await this.http.post(environment.api + "/Pelicula", Movie).toPromise().then(res => { 
-      this.http.post(environment.api + "/Director", this.newDirector).toPromise().then(res2 => { 
-        this.http.post(environment.api + "/Protagonista", this.newProtagonista).toPromise().then(res3 => { 
-          this.http.post(environment.api + "/Clasificacion", this.newClasificacion).toPromise().then(res4 => { 
-      this.getMovies().then(result => { this.Movies = result }) })})})})
+   
+    await this.http.post(environment.api + "/Pelicula", Movie).toPromise().then(res => {
+      this.http.post(environment.api + "/Director", this.newDirector).toPromise().then(res2 => {
+        this.http.post(environment.api + "/Protagonista", this.newProtagonista).toPromise().then(res3 => {
+          this.http.post(environment.api + "/Clasificacion", this.newClasificacion).toPromise().then(res4 => {
+              this.getMovies().then(result => { this.Movies = result })
+          })
+        })
+      })
+    })
     return this.Movies;
   }
 }
+
 
 
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Proyeccion } from 'src/app/Models/proyeccion.Model';
 import { ProyeccionManagementService } from 'src/app/services/proyeccion-management.service';
-import { formatISO,parseISO } from 'date-fns';
+import { formatISO, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-proyecciones',
@@ -21,8 +21,6 @@ export class ProyeccionesComponent implements OnInit {
     peliid: 0,
     salaid: 0,
     hora: new Date()
-
-
   }
   selectedproyeccion: Proyeccion = {
     funcionid: 0,
@@ -32,9 +30,10 @@ export class ProyeccionesComponent implements OnInit {
   }
   proyeccions: Proyeccion[] = []
   editingID: number | undefined = 0;
-  ngOnInit(): void { //Función que se ejecuta de primero cuando carga componentes
-
-    this.proyeccionServices.getproyeccions().then(res => this.proyeccions = res);
+  ngOnInit(): void { //Función que se ejecuta de primero cuando carga componente
+    this.proyeccionServices.getproyeccions().then(res => {
+      this.proyeccions = res
+    });
   }
 
   //Envía el ID del proyeccione que se va a eliminar al servicio
@@ -64,7 +63,7 @@ export class ProyeccionesComponent implements OnInit {
       hora: new Date()
     }
   }
-
 }
+
 
 

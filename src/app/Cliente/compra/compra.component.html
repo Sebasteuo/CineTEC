@@ -42,20 +42,18 @@
                                                                 <div class="col form-group">
                                                                     <label>Seleccione la Película </label>
                                                                 </div>
-                                                                <div class="col form-group">
-                                                                    <div ngbDropdown class="d-inline-block">
-                                                                        <button class="btn btn-outline-primary"
-                                                                            id="dropdownBasic1"
-                                                                            ngbDropdownToggle>{{selectedMovie}}</button>
-                                                                        <div ngbDropdownMenu
-                                                                            aria-labelledby="dropdownBasic1">
-                                                                            <button *ngFor="let movie of movies"
-                                                                                ngbDropdownItem
-                                                                                (click)="selectMovie(movie.nombre, movie.peliid)">{{movie.nombre}}</button>
 
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="col form-group">
+                                                                    <label>{{selectedMovie}} </label>
                                                                 </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <div class="col form-group"
+                                                                    *ngFor="let movie of movies">
+                                                                    <img src="{{movie.imagen}}" height="300px"
+                                                                        (click)="selectMovie(movie.nombre, movie.peliid)">
+                                                                </div>
+
                                                             </div>
                                                             <div class="form-row">
                                                                 <div class="col form-group">
@@ -77,19 +75,14 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                             <label>
                                                                 En la siguiente pestaña seleccione los asientos
                                                             </label>
-
                                                         </form>
                                                     </div>
                                                 </article>
                                             </div>
-
-
                                         </div>
-
                                     </ng-template>
                                 </li>
                                 <li ngbNavItem="middle">
@@ -99,15 +92,29 @@
                                             <div class="form">
                                                 <div class="row" *ngFor="let fila of rows; index as i;">
                                                     <div class="col" *ngFor="let column of columns; index as j;">
-                                                        <img class="seat" src="../assets/Img/asiento.png">
+                                                        <img [id]="'loc' + j + i" class="seat" src="../assets/Img/asientoVerde.png"
+                                                            (click)="selectSeat(i, j)">
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </article>
                                     </ng-template>
                                 </li>
-
+                                <li ngbNavItem="middle">
+                                    <a ngbNavLink>Pago</a>
+                                    <ng-template ngbNavContent>
+                                        <article class="card-body">
+                                            <div class="form">
+                                                <div class="row" *ngFor="let fila of rows; index as i;">
+                                                    <div class="col" *ngFor="let column of columns; index as j;">
+                                                        <img [id]="'loc' + j + i" class="seat" src="../assets/Img/asientoVerde.png"
+                                                            (click)="selectSeat(i, j)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </ng-template>
+                                </li>
                             </ul>
 
                             <div [ngbNavOutlet]="nav" class="ml-4"></div>

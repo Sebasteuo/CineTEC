@@ -18,6 +18,7 @@ export class SalaManagementService {
     columna: 0,
     capacidad: 0
   }
+  
   constructor(public http: HttpClient) { }
 
   async getsalas() {  //Función que obtiene salaes
@@ -36,8 +37,7 @@ export class SalaManagementService {
 
   async getsalasById(id: string) {  //Función que obtiene salaes según su ID
     await this.http.get(environment.api + "/sala/" + id).toPromise().then(res => {
-      this.currentsala = res as Sala
-      console.log(this.currentsala)
+      this.currentsala = (res as Sala[])[0]
     })
     return this.currentsala
   }
@@ -71,5 +71,6 @@ export class SalaManagementService {
     return this.salas;
   }
 }
+
 
 

@@ -7,6 +7,8 @@ import { CompraManagementService } from 'src/app/services/compra-management.serv
 import { Sala } from 'src/app/Models/sala.Model';
 import { ProyeccionManagementService } from 'src/app/services/proyeccion-management.service';
 import { SalaManagementService } from 'src/app/services/sala-management.service';
+import { ButacaXfuncion } from 'src/app/Models/butaca-xfuncion.model';
+import { Butaca } from 'src/app/Models/butaca.model';
 
 @Component({
   selector: 'app-compra',
@@ -15,7 +17,7 @@ import { SalaManagementService } from 'src/app/services/sala-management.service'
 })
 export class CompraComponent implements OnInit {
 
-  selectedLocation: String | undefined = ""
+  selectedLocation: String | undefined = "Click para expandir"
   selectedLocationID: Number | undefined = 0
   selectedMovieID: String | undefined = ""
   selectedMovie: String | undefined = ""
@@ -26,6 +28,7 @@ export class CompraComponent implements OnInit {
   aforo: Number | undefined = 0
   capacity: Number = 0
   rows: Number[] = []
+  butacas: Butaca[]=[]
 
   currentProyeccion: Proyeccion = {
     funcionid: 0,
@@ -57,7 +60,7 @@ export class CompraComponent implements OnInit {
   locations: Location[] = []
   movies: Movie[] = []
   proyecciones: Proyeccion[] = []
-  seats: number[] = []
+  seats: ButacaXfuncion[] = []
   columns: number[] = []
 
 
@@ -65,30 +68,38 @@ export class CompraComponent implements OnInit {
     private salaService: SalaManagementService) { }
 
   ngOnInit(): void {
-
     this.compraService.getLocations().then(res => this.locations = res)
     this.rows = Array(4).fill(1)
     this.columns = Array(6).fill(1)
   }
 
-
   loadMovies(id: number | undefined) {
-    this.compraService.getMovies(id as unknown as number).then(res => this.movies = res)
+    this.compraService.getMovies(id as unknown as string).then(res => {
+      this.movies = []
+      this.proyecciones = []
+      this.movies = res
+    })
   }
 
   loadProyecciones(id: string | undefined) {
-    this.compraService.getProyecciones(id as unknown as number).then(res => {
+    this.proyecciones = []
+    this.compraService.getProyecciones(id as unknown as string).then(res => {
       this.proyecciones = res
     })
 
   }
 
   loadSeats(id: number | undefined) {
+    this.rows = Array(this.currentSala.fila).fill(1)
+    this.columns = Array(this.currentSala.columna).fill(1)
     this.compraService.getSeats(id as unknown as number).then(res => {
       this.seats = res
-      //this.rows= Array(this.currentSala.filas).fill(1)
-
+      console.log(this.seats)
     })
+    this.compraService.getButacasBySala(this.currentSala.salaid as unknown as string).then(res => {this.butacas = res 
+      console.log(this.butacas)
+    })
+    
   }
 
   selectLocation(nombre: string | undefined, id: number | undefined) {
@@ -107,13 +118,28 @@ export class CompraComponent implements OnInit {
     this.loadProyecciones(id)
   }
 
-
   selectProyeccion(hora: Date | undefined, id: number | undefined) {
     this.selectedProyeccion = hora
     this.selectedProyeccionID = id
-    this.proyeccionService.getproyeccionsById(id as unknown as number).then(res => this.currentProyeccion = res)
-    this.salaService.getsalasById(id as unknown as string).then(res => this.currentSala = res)
-    this.loadSeats(id)
+    this.proyeccionService.getproyeccionsById(id as unknown as number).then(res => {
+      this.currentProyeccion = res
+      this.salaService.getsalasById(res.salaid as unknown as string).then(res2 => {
+        this.currentSala = res2
+        this.loadSeats(id)
+      })
+    })
+  }
+
+  selectSeat(i: number, j: number) {
+    var image = document.getElementById('loc' + j + i) as HTMLImageElement;
+    if (image.src.match("../assets/Img/asientoVerde.png")) {
+      image.src = "../assets/Img/asientoRojo.png";
+    }
+    else {
+      image.src = "../assets/Img/asientoVerde.png";
+    }
+    console.log('loc' + j + i)
   }
 }
+
 
