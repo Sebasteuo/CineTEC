@@ -56,9 +56,9 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(string id)
     {
       string query = @"
-          select peliid, nombreogpelicula, nombre, duracion, imagen, preciocidoro, precioninos, precioadulto, cedulaempleado
+          select peliid, nombreogpelicula, nombre, duracion, imagen, preciocidoro, precioninos, precioadulto, cedulaempleado, codigosucursal
           from pelicula
-          where peliid = @peliid
+          where codigosucursal = @codigosucursal
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -68,7 +68,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@peliid", id);
+          myComand.Parameters.AddWithValue("@codigosucursal", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -84,8 +84,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Pelicula pelicula)
     {
       string query = @"
-          insert into pelicula(peliid, nombreogpelicula, nombre, duracion, imagen, preciocidoro, precioninos, precioadulto, cedulaempleado)
-          values (@peliid, @nombreogpelicula, @nombre, @duracion, @imagen, @preciocidoro, @precioninos, @precioadulto, @cedulaempleado)
+          insert into pelicula(peliid, nombreogpelicula, nombre, duracion, imagen, preciocidoro, precioninos, precioadulto, cedulaempleado, codigosucursal)
+          values (@peliid, @nombreogpelicula, @nombre, @duracion, @imagen, @preciocidoro, @precioninos, @precioadulto, @cedulaempleado, @codigosucursal)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -104,6 +104,7 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@precioninos", pelicula.precioninos);
           myComand.Parameters.AddWithValue("@precioadulto", pelicula.precioadulto);
           myComand.Parameters.AddWithValue("@cedulaempleado", pelicula.cedulaempleado);
+          myComand.Parameters.AddWithValue("@codigosucursal", pelicula.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -128,7 +129,8 @@ namespace CineTEC_API.Controllers
               preciocidoro = @preciocidoro,
               precioninos = @precioninos,
               precioadulto = @precioadulto,
-              cedulaempleado = @cedulaempleado
+              cedulaempleado = @cedulaempleado,
+              codigosucursal = @codigosucursal
           where peliid = @peliid
           ";
       DataTable table = new DataTable();
@@ -148,6 +150,7 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@precioninos", pelicula.precioninos);
           myComand.Parameters.AddWithValue("@precioadulto", pelicula.precioadulto);
           myComand.Parameters.AddWithValue("@cedulaempleado", pelicula.cedulaempleado);
+          myComand.Parameters.AddWithValue("@codigosucursal", pelicula.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();

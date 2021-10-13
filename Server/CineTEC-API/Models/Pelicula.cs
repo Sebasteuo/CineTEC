@@ -15,5 +15,6 @@ namespace CineTEC_API.Models
     public int precioninos { get; set; }
     public int precioadulto { get; set; }
     public int cedulaempleado { get; set; }
+    public string codigosucursal { get; set; }
   }
 }

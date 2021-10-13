@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\CineTEC-API",
-    "\\CineTEC-API\\Controllers",
-    "\\CineTEC-API\\Models"
+    "\\CineTEC-API"
   ],
   "SelectedNode": "\\CineTEC-API\\CineTEC-API.sln",
   "PreviewInSolutionExplorer": false

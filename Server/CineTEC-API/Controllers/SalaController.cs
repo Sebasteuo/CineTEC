@@ -58,7 +58,7 @@ namespace CineTEC_API.Controllers
       string query = @"
           select salaid, columna, fila, capacidad, codigosucursal
           from sala
-          where salaid = @salaid
+          where codigosucursal = @codigosucursal
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -68,7 +68,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", id);
+          myComand.Parameters.AddWithValue("@codigosucursal", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
