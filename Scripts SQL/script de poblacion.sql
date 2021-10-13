@@ -66,6 +66,21 @@ INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preci
 INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preciocidoro,precioninos,precioadulto,cedulaempleado) VALUES('mcu789','Shang-Chi y la leyenda de los Diez Anillos','Shang-Chi ',172,'g',2500,2500,3200,12345678);
 INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preciocidoro,precioninos,precioadulto,cedulaempleado) VALUES('xhd962','Coda: Señales del corazón','Coda: Señales del corazón',111,'g',2500,2500,3200,12345678);
 
+/*Insercion a peliculaxsucursal*/
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('ijh007','4MN');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('mcu789','4MN');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('xhd962','4MN');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('ijh007','3OR');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('mcu789','3OR');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('xhd962','3OR');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('ijh007','1SA');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('mcu789','1SA');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('xhd962','1SA');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('ijh007','2AL');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('mcu789','2AL');
+INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('xhd962','2AL');
+
+
 /*Insercion a clasificacion*/
 INSERT INTO public.clasificacion(peliid,descripcion ) VALUES('ijh007','M12');
 INSERT INTO public.clasificacion(peliid,descripcion ) VALUES('mcu789','TPA');
