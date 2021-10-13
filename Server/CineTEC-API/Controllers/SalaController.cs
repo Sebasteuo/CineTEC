@@ -50,10 +50,8 @@ namespace CineTEC_API.Controllers
       return new JsonResult(table);
     }
 
-    //este metodo recibe como parametro una llave primaria y devuelve la tupla donde está esa llave
-    // GET api/<EmpleadoController>/5
-    [HttpGet("{id}")]
-    public JsonResult GetOne(string id)
+    [HttpGet("[action]/{salaid}")]
+    public JsonResult GetSalasByLocation(string salaid)
     {
       string query = @"
           select salaid, columna, fila, capacidad, codigosucursal
@@ -68,7 +66,35 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@codigosucursal", id);
+          myComand.Parameters.AddWithValue("@codigosucursal", salaid);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult(table);
+    }
+
+    //este metodo recibe como parametro una llave primaria y devuelve la tupla donde está esa llave
+    // GET api/<EmpleadoController>/5
+    [HttpGet("{id}")]
+    public JsonResult GetOne(string id)
+    {
+      string query = @"
+          select salaid, columna, fila, capacidad, codigosucursal
+          from sala
+          where salaid = @salaid
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@salaid", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -98,7 +124,7 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@salaid", sala.salaid);
           myComand.Parameters.AddWithValue("@columna", sala.columna);
           myComand.Parameters.AddWithValue("@fila", sala.fila);
-          myComand.Parameters.AddWithValue("@capacidad", sala.capacidad); 
+          myComand.Parameters.AddWithValue("@capacidad", sala.capacidad);
           myComand.Parameters.AddWithValue("@codigosucursal", sala.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
@@ -121,6 +147,7 @@ namespace CineTEC_API.Controllers
               fila = @fila,
               capacidad = @capacidad,
               codigosucursal = @codigosucursal
+            where salaid = @salaid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -170,5 +197,34 @@ namespace CineTEC_API.Controllers
       }
       return new JsonResult("Deleted Successfully");
     }
+
+    [HttpDelete("[action]/{id}")]
+    public JsonResult DeleteBySucursal(string id)
+    {
+      string query = @"
+          delete from sala
+          where codigosucursal = @codigosucursal
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@codigosucursal", id);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult("Deleted Successfully");
+    }
   }
 }
+
+
+
+

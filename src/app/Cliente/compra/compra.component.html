@@ -25,12 +25,15 @@
                                                                 </div>
                                                                 <div class="col form-group">
                                                                     <div ngbDropdown class="d-inline-block">
-                                                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                                                        <button class="btn btn-outline-primary"
+                                                                            id="dropdownBasic1"
                                                                             ngbDropdownToggle>{{selectedLocation}}</button>
-                                                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                                            <button *ngFor="let location of locations" ngbDropdownItem
-                                                                                (click)="selectLocation(location.nombreCine, location.id)">{{location.nombreCine}}</button>
-                                                                       
+                                                                        <div ngbDropdownMenu
+                                                                            aria-labelledby="dropdownBasic1">
+                                                                            <button *ngFor="let location of locations"
+                                                                                ngbDropdownItem
+                                                                                (click)="selectLocation(location.nombre, location.codigosucursal)">{{location.nombre}}</button>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -41,12 +44,15 @@
                                                                 </div>
                                                                 <div class="col form-group">
                                                                     <div ngbDropdown class="d-inline-block">
-                                                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                                                        <button class="btn btn-outline-primary"
+                                                                            id="dropdownBasic1"
                                                                             ngbDropdownToggle>{{selectedMovie}}</button>
-                                                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                                            <button *ngFor="let movie of movies" ngbDropdownItem
+                                                                        <div ngbDropdownMenu
+                                                                            aria-labelledby="dropdownBasic1">
+                                                                            <button *ngFor="let movie of movies"
+                                                                                ngbDropdownItem
                                                                                 (click)="selectMovie(movie.nombre, movie.peliid)">{{movie.nombre}}</button>
-                                                                       
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -57,26 +63,28 @@
                                                                 </div>
                                                                 <div class="col form-group">
                                                                     <div ngbDropdown class="d-inline-block">
-                                                                        <button class="btn btn-outline-primary" id="dropdownBasic1"
+                                                                        <button class="btn btn-outline-primary"
+                                                                            id="dropdownBasic1"
                                                                             ngbDropdownToggle>{{selectedProyeccion}}</button>
-                                                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                                            <button *ngFor="let proyeccion of proyecciones" ngbDropdownItem
-                                                                                (click)="selectProyeccion(proyeccion.hora, proyeccion.ID)">{{proyeccion.hora}}</button>
-                                                                       
+                                                                        <div ngbDropdownMenu
+                                                                            aria-labelledby="dropdownBasic1">
+                                                                            <button
+                                                                                *ngFor="let proyeccion of proyecciones"
+                                                                                ngbDropdownItem
+                                                                                (click)="selectProyeccion(proyeccion.hora, proyeccion.funcionid)">{{proyeccion.hora}}</button>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                           
+
                                                             <label>
                                                                 En la siguiente pestaña seleccione los asientos
                                                             </label>
-        
-    
-        
+
                                                         </form>
                                                     </div>
-                                                </article> 
+                                                </article>
                                             </div>
 
 
@@ -89,12 +97,12 @@
                                     <ng-template ngbNavContent>
                                         <article class="card-body">
                                             <div class="form">
-                                                <div class= "row" *ngFor="let fila of rows; index as i;">
-                                                    <div class= "col" *ngFor="let column of columns; index as j;">
-                                                    <img class="seat" src= "../assets/Img/asiento.png">
+                                                <div class="row" *ngFor="let fila of rows; index as i;">
+                                                    <div class="col" *ngFor="let column of columns; index as j;">
+                                                        <img class="seat" src="../assets/Img/asiento.png">
+                                                    </div>
                                                 </div>
-                                                </div>
-                                                
+
                                             </div>
                                         </article>
                                     </ng-template>

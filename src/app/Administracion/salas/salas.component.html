@@ -15,10 +15,18 @@
                                         <div class="form-row">
                                             <div class="col form-group">
                                                 <label>Sucursal: </label>
-                                                
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Sucursal" [(ngModel)]="newsala.sucursal"
+                                                <input name="quantity" class="form-control" placeholder="Sucursal" [(ngModel)]="newsala.codigosucursal"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>ID sala: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Sala" [(ngModel)]="newsala.salaid"
                                                     required>
                                             </div>
                                         </div>
@@ -27,7 +35,7 @@
                                                 <label>Cantidad de Columnas: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Cantidad de Columnas" [(ngModel)]="newsala.columnas"
+                                                <input name="quantity" class="form-control" placeholder="Cantidad de Columnas" [(ngModel)]="newsala.columna"
                                                     required>
                                             </div>
                                         </div>
@@ -36,7 +44,7 @@
                                                 <label>Cantidad de Filas: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Cantidad de Filas" [(ngModel)]="newsala.filas"
+                                                <input name="quantity" class="form-control" placeholder="Cantidad de Filas" [(ngModel)]="newsala.fila"
                                                     required>
                                             </div>
                                         </div>
@@ -87,41 +95,37 @@
                                             </thead>
                                             <tbody>
                                                 <tr *ngFor="let sala of this.salas"> <!-- ngFor repite una sección del código HTML, por cada salae hace una nueva fila en la tabla-->
-                                                    <td>{{sala.id}}</td>
+                                                    <td>{{sala.salaid}}</td>
                                                     <!-- ngIF es una condicional para que se muestre una linea de HTML según una condición-->
-                                                    <td *ngIf='editingID != sala.id'>{{sala.sucursal}}</td>
-                                                    <td *ngIf='editingID == sala.id'><input value="{{selectedsala.sucursal}}"
-                                                        [(ngModel)]="selectedsala.sucursal" class="form-control"></td>
+                                                    <td *ngIf='editingID != sala.salaid'>{{sala.codigosucursal}}</td>
+                                                    <td *ngIf='editingID == sala.salaid'><input value="{{selectedsala.codigosucursal}}"
+                                                        [(ngModel)]="selectedsala.codigosucursal" class="form-control"></td>
 
-                                                    <td *ngIf='editingID != sala.id'>{{sala.filas}}</td>
-                                                    <td *ngIf='editingID == sala.id'><input value="{{selectedsala.filas}}"
-                                                        [(ngModel)]="selectedsala.filas" class="form-control"></td>
+                                                    <td *ngIf='editingID != sala.salaid'>{{sala.fila}}</td>
+                                                    <td *ngIf='editingID == sala.salaid'><input value="{{selectedsala.fila}}"
+                                                        [(ngModel)]="selectedsala.fila" class="form-control"></td>
                                                         
-                                                    <td *ngIf='editingID != sala.id'>{{sala.columnas}}</td>
-                                                    <td *ngIf='editingID == sala.id'><input value="{{selectedsala.columnas}}"
-                                                        [(ngModel)]="selectedsala.columnas" class="form-control"></td>
+                                                    <td *ngIf='editingID != sala.salaid'>{{sala.columna}}</td>
+                                                    <td *ngIf='editingID == sala.salaid'><input value="{{selectedsala.columna}}"
+                                                        [(ngModel)]="selectedsala.columna" class="form-control"></td>
 
-                                                        <td *ngIf='editingID != sala.id'>{{sala.capacidad}}</td>
-                                                        <td *ngIf='editingID == sala.id'><input value="{{selectedsala.capacidad}}"
+                                                        <td *ngIf='editingID != sala.salaid'>{{sala.capacidad}}</td>
+                                                        <td *ngIf='editingID == sala.salaid'><input value="{{selectedsala.capacidad}}"
                                                             [(ngModel)]="selectedsala.capacidad" class="form-control"></td>
 
 
-                                               
-
-                                                        
-
                                                     <th scope="row">
-                                                        <button *ngIf='editingID != sala.id' (click)="edit(sala)" class="btn-icon" placement="top"
+                                                        <button *ngIf='editingID != sala.salaid' (click)="edit(sala)" class="btn-icon" placement="top"
                                                             ngbTooltip="Editar">
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </button>
-                                                        <button *ngIf='editingID == sala.id' (click)="submit()" class="btn-icon" placement="top"
+                                                        <button *ngIf='editingID == sala.salaid' (click)="submit()" class="btn-icon" placement="top"
                                                             ngbTooltip="Aceptar">
                                                             <i class="fa fa-check" aria-hidden="true"></i>
                                                         </button>
                                                     </th>
                                                     <th scope="row">
-                                                        <button (click)="delete(sala.id)" class="btn-icon" placement="top"
+                                                        <button (click)="delete(sala.salaid)" class="btn-icon" placement="top"
                                                             ngbTooltip="Eliminar">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </button>
@@ -145,3 +149,5 @@
 </div> <!-- row.// -->
 
 <!--container end.//-->
+
+

@@ -14,10 +14,21 @@
                                     <form #form autocomplete="off">
                                         <div class="form-row">
                                             <div class="col form-group">
+                                                <label>Código de la sucursal: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control"
+                                                    placeholder="Código del Cine" [(ngModel)]="newlocation.codigosucursal"
+                                                    required>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col form-group">
                                                 <label>Nombre del Cine: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Nombre del Cine" [(ngModel)]="newlocation.nombreCine"
+                                                <input name="quantity" class="form-control"
+                                                    placeholder="Nombre del Cine" [(ngModel)]="newlocation.nombre"
                                                     required>
                                             </div>
                                         </div>
@@ -26,8 +37,8 @@
                                                 <label>Ubicación: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Ubicacion" [(ngModel)]="newlocation.ubicacion"
-                                                    required>
+                                                <input name="quantity" class="form-control" placeholder="Ubicacion"
+                                                    [(ngModel)]="newlocation.ubicacion" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
@@ -35,14 +46,12 @@
                                                 <label>Cantidad de Salas: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Cantidad de Salas" [(ngModel)]="newlocation.cantidadSalas"
-                                                    required>
+                                                <input name="quantity" class="form-control"
+                                                    placeholder="Cantidad de Salas"
+                                                    [(ngModel)]="newlocation.cantidadsalas" required>
                                             </div>
                                         </div>
-                                       
 
-
-                                       
                                         <div class="col form-groupform-group">
                                             <button class="btn btn-primary btn-block" (click)="add()">Agregar</button>
                                         </div>
@@ -69,47 +78,50 @@
                                                     <th>Nombre del Cine</th>
                                                     <th>Ubicación</th>
                                                     <th>Cantidad de Salas</th>
-                                                   
-                                                    
                                                     <th colspan="2"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let location of this.locations"> <!-- ngFor repite una sección del código HTML, por cada locatione hace una nueva fila en la tabla-->
-                                                    <td>{{location.id}}</td>
+                                                <tr *ngFor="let location of this.locations">
+                                                    <!-- ngFor repite una sección del código HTML, por cada locatione hace una nueva fila en la tabla-->
+                                                    <td>{{location.codigosucursal}}</td>
                                                     <!-- ngIF es una condicional para que se muestre una linea de HTML según una condición-->
-                                                    <td *ngIf='editingID != location.id'>{{location.nombreCine}}</td>
-                                                    <td *ngIf='editingID == location.id'><input value="{{selectedlocation.nombreCine}}"
-                                                        [(ngModel)]="selectedlocation.nombreCine" class="form-control"></td>
+                                                    <td *ngIf='editingID != location.codigosucursal'>{{location.nombre}}
+                                                    </td>
+                                                    <td *ngIf='editingID == location.codigosucursal'><input
+                                                            value="{{selectedlocation.nombre}}"
+                                                            [(ngModel)]="selectedlocation.nombre" class="form-control">
+                                                    </td>
 
-                                                    <td *ngIf='editingID != location.id'>{{location.ubicacion}}</td>
-                                                    <td *ngIf='editingID == location.id'><input value="{{selectedlocation.ubicacion}}"
-                                                        [(ngModel)]="selectedlocation.ubicacion" class="form-control"></td>
-                                                        
-                                                    <td *ngIf='editingID != location.id'>{{location.cantidadSalas}}</td>
-                                                    <td *ngIf='editingID == location.id'><input value="{{selectedlocation.cantidadSalas}}"
-                                                        [(ngModel)]="selectedlocation.cantidadSalas" class="form-control"></td>
+                                                    <td *ngIf='editingID != location.codigosucursal'>
+                                                        {{location.ubicacion}}</td>
+                                                    <td *ngIf='editingID == location.codigosucursal'><input
+                                                            value="{{selectedlocation.ubicacion}}"
+                                                            [(ngModel)]="selectedlocation.ubicacion"
+                                                            class="form-control"></td>
 
-
-
-
-                                               
-
-                                                        
+                                                    <td *ngIf='editingID != location.codigosucursal'>
+                                                        {{location.cantidadsalas}}</td>
+                                                    <td *ngIf='editingID == location.codigosucursal'><input
+                                                            value="{{selectedlocation.cantidadsalas}}"
+                                                            [(ngModel)]="selectedlocation.cantidadsalas"
+                                                            class="form-control"></td>
 
                                                     <th scope="row">
-                                                        <button *ngIf='editingID != location.id' (click)="edit(location)" class="btn-icon" placement="top"
+                                                        <button *ngIf='editingID != location.codigosucursal'
+                                                            (click)="edit(location)" class="btn-icon" placement="top"
                                                             ngbTooltip="Editar">
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </button>
-                                                        <button *ngIf='editingID == location.id' (click)="submit()" class="btn-icon" placement="top"
+                                                        <button *ngIf='editingID == location.codigosucursal'
+                                                            (click)="submit()" class="btn-icon" placement="top"
                                                             ngbTooltip="Aceptar">
                                                             <i class="fa fa-check" aria-hidden="true"></i>
                                                         </button>
                                                     </th>
                                                     <th scope="row">
-                                                        <button (click)="delete(location.id)" class="btn-icon" placement="top"
-                                                            ngbTooltip="Eliminar">
+                                                        <button (click)="delete(location.codigosucursal)"
+                                                            class="btn-icon" placement="top" ngbTooltip="Eliminar">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </button>
                                                     </th>
@@ -132,3 +144,4 @@
 </div> <!-- row.// -->
 
 <!--container end.//-->
+

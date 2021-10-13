@@ -1,7 +1,9 @@
 export class Sala {
-    id: number = 0
-    sucursal: number = 0
-    filas:number = 0
-    columnas:number = 0
+    salaid: string = ""
+    codigosucursal: string = ""
+    fila:number = 0
+    columna:number = 0
     capacidad:number = 0
 }
+
+

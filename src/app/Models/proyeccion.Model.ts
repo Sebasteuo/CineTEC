@@ -1,7 +1,8 @@
 export class Proyeccion {
-    ID:  number = 0
-    pelicula: number = 0
-    sala: number = 0
+    funcionid:  number = 0
+    peliid: number = 0
+    salaid: number = 0
     hora: Date = new Date()
 
 }
+

@@ -58,7 +58,7 @@ namespace CineTEC_API.Controllers
       string query = @"
           select numerodeasiento, salaid, codigosucursal
           from butaca
-          where numerodeasiento = @numerodeasiento
+          where salaid = @salaid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -68,7 +68,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@numerodeasiento", id);
+          myComand.Parameters.AddWithValue("@salaid", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -145,7 +145,7 @@ namespace CineTEC_API.Controllers
     {
       string query = @"
           delete from butaca
-          where numerodeasiento = @numerodeasiento
+          where salaid = @salaid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -155,7 +155,32 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@numerodeasiento", id);
+          myComand.Parameters.AddWithValue("@salaid", id);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult("Deleted Successfully");
+    }
+
+    [HttpDelete("[action]/{id}")]
+    public JsonResult DeleteBySucursal(string id)
+    {
+      string query = @"
+          delete from butaca
+          where codigosucursal = @codigosucursal
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@codigosucursal", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -166,3 +191,5 @@ namespace CineTEC_API.Controllers
     }
   }
 }
+
+

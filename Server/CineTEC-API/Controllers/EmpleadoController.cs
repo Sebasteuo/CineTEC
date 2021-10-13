@@ -33,10 +33,10 @@ namespace CineTEC_API.Controllers
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
       NpgsqlDataReader myReader;
-      using (NpgsqlConnection myCon=new NpgsqlConnection(sqlDataSource))
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
       {
         myCon.Open();
-        using(NpgsqlCommand myComand=new NpgsqlCommand(query, myCon))
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
@@ -74,6 +74,31 @@ namespace CineTEC_API.Controllers
       }
       return new JsonResult(table);
     }
+    [HttpGet("[action]/{id}")]
+    public JsonResult GetEmpleadoBySucursal(string id)
+    {
+      string query = @"
+          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna, codigosucursal
+          from empleado
+          where codigosucursal = @codigosucursal
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@codigosucursal", id);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult(table);
+    }
 
     //este metodo recibe como parametro un objeto con sus atributos para insertarlo como tupla en la tabla
     // POST api/<EmpleadoController>
@@ -93,7 +118,7 @@ namespace CineTEC_API.Controllers
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
           myComand.Parameters.AddWithValue("@cedulaempleado", empleado.cedulaempleado);
-          myComand.Parameters.AddWithValue("@nombreempleado1",empleado.nombreempleado1);
+          myComand.Parameters.AddWithValue("@nombreempleado1", empleado.nombreempleado1);
           myComand.Parameters.AddWithValue("@nombreempleado2", empleado.nombreempleado2);
           myComand.Parameters.AddWithValue("@apellidoempleado1", empleado.apellidoempleado1);
           myComand.Parameters.AddWithValue("@apellidoempleado2", empleado.apellidoempleado2);
@@ -101,7 +126,7 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@usuario", empleado.usuario);
           myComand.Parameters.AddWithValue("@numerotelefono", empleado.numerotelefono);
           myComand.Parameters.AddWithValue("@fechaingreso", empleado.fechaingreso);
-          myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna); 
+          myComand.Parameters.AddWithValue("@contrasenna", empleado.contrasenna);
           myComand.Parameters.AddWithValue("@codigosucursal", empleado.codigosucursal);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
@@ -186,5 +211,32 @@ namespace CineTEC_API.Controllers
       }
       return new JsonResult("Deleted Successfully");
     }
+
+    [HttpDelete("[action]/{id}")]
+    public JsonResult DeleteBySucursal(string id)
+    {
+      string query = @"
+          delete from empleado
+          where codigosucursal = @codigosucursal
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@codigosucursal", id);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult("Deleted Successfully");
+    }
   }
 }
+
+

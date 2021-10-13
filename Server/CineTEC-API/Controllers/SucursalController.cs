@@ -1,3 +1,4 @@
+
 using CineTEC_API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -119,6 +120,7 @@ namespace CineTEC_API.Controllers
               nombre = @nombre,
               ubicacion = @ubicacion,
               cantidadsalas = @cantidadsalas
+          where codigosucursal = @codigosucursal
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -169,3 +171,4 @@ namespace CineTEC_API.Controllers
     }
   }
 }
+

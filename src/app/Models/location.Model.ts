@@ -1,6 +1,7 @@
 export class Location {
-    nombreCine: string | undefined
+    nombre: string | undefined
     ubicacion: string | undefined
-    cantidadSalas:number | undefined
-    id: number | undefined
+    cantidadsalas:number | undefined
+    codigosucursal: number | undefined
 }
+

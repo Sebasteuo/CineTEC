@@ -12,57 +12,44 @@ export class SalaManagementService {
   aforo: number = 100
   salas: Sala[] = []
   currentsala: Sala = {
-    id: 0,
-    sucursal:  0,
-    filas: 0,
-    columnas: 0,
-    capacidad:  0
+    salaid: "",
+    codigosucursal: "",
+    fila: 0,
+    columna: 0,
+    capacidad: 0
   }
   constructor(public http: HttpClient) { }
-  /**
-   * 
-   * @returns 
-   */
-  async getsalas() {  //Función que obtiene salaes
 
+  async getsalas() {  //Función que obtiene salaes
     await this.http.get(environment.api + "/sala").toPromise().then(res => {
       this.salas = res as Sala[]
-
-
     })
-
     return this.salas
-
   }
 
   async getaforo() {  //Función que obtiene salaes
-
     await this.http.get(environment.api + "/aforo").toPromise().then(res => {
       this.aforo = res as number
-
     })
-
     return this.aforo
-
   }
 
-
-  async getsalasById(id: number) {  //Función que obtiene salaes según su ID
-
+  async getsalasById(id: string) {  //Función que obtiene salaes según su ID
     await this.http.get(environment.api + "/sala/" + id).toPromise().then(res => {
       this.currentsala = res as Sala
       console.log(this.currentsala)
-
     })
-
     return this.currentsala
-
   }
 
   //Envía el ID del salae que se va a eliminar al API
-  async deletesala(id: number | undefined) {
+  async deletesala(id: string | undefined) {
     //this.salas = this.salas.filter((obj) => obj.cedula !== id);
-    await this.http.delete(environment.api + '/sala/' + id).toPromise().then(res => { this.getsalas().then(result => { this.salas = result }) })
+    await this.http.delete(environment.api + '/Funcion/' + id).toPromise().then(res => {
+      this.http.delete(environment.api + '/sala/' + id).toPromise().then(res => {
+        this.getsalas().then(result => { this.salas = result })
+      })
+    })
     return this.salas
   }
 
@@ -80,8 +67,9 @@ export class SalaManagementService {
 
   //Envía los datos de un nuevo salae al API
   async addsala(sala: Sala) {
-    const body = {}
-    await this.http.post(environment.api + "/salae", sala).toPromise().then(res => { this.getsalas().then(result => { this.salas = result }) })
+    await this.http.post(environment.api + "/sala", sala).toPromise().then(res => { this.getsalas().then(result => { this.salas = result }) })
     return this.salas;
   }
 }
+
+

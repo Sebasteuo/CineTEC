@@ -22,23 +22,23 @@ export class CompraComponent implements OnInit {
   selectedProyeccion: Date | undefined = new Date()
   selectedProyeccionID: Number | undefined = 0
   filas: Number | undefined = 0
-  columnas:  Number | undefined = 0
-  aforo:  Number | undefined = 0
+  columnas: Number | undefined = 0
+  aforo: Number | undefined = 0
   capacity: Number = 0
   rows: Number[] = []
 
   currentProyeccion: Proyeccion = {
-    ID: 0,
-    pelicula: 0,
-    sala: 0,
+    funcionid: 0,
+    peliid: 0,
+    salaid: 0,
     hora: new Date()
   }
 
   currentSala: Sala = {
-    id: 0,
-    sucursal: 0,
-    filas: 0,
-    columnas: 0,
+    salaid: "",
+    codigosucursal: "",
+    fila: 0,
+    columna: 0,
     capacidad: 0
   }
 
@@ -67,7 +67,7 @@ export class CompraComponent implements OnInit {
   ngOnInit(): void {
 
     this.compraService.getLocations().then(res => this.locations = res)
-    this.rows= Array(4).fill(1)
+    this.rows = Array(4).fill(1)
     this.columns = Array(6).fill(1)
   }
 
@@ -77,15 +77,17 @@ export class CompraComponent implements OnInit {
   }
 
   loadProyecciones(id: string | undefined) {
-    this.compraService.getProyecciones(id as unknown as number).then(res => {this.proyecciones = res
+    this.compraService.getProyecciones(id as unknown as number).then(res => {
+      this.proyecciones = res
     })
 
   }
 
   loadSeats(id: number | undefined) {
-    this.compraService.getSeats(id as unknown as number).then(res => {this.seats = res
-    //this.rows= Array(this.currentSala.filas).fill(1)
-   
+    this.compraService.getSeats(id as unknown as number).then(res => {
+      this.seats = res
+      //this.rows= Array(this.currentSala.filas).fill(1)
+
     })
   }
 
@@ -95,8 +97,8 @@ export class CompraComponent implements OnInit {
     this.loadMovies(id)
   }
 
-  getCapacity(){
-    this.capacity= ((this.filas as unknown as number)*(this.columnas as unknown as number))*(this.aforo as unknown as number)
+  getCapacity() {
+    this.capacity = ((this.filas as unknown as number) * (this.columnas as unknown as number)) * (this.aforo as unknown as number)
   }
 
   selectMovie(nombre: string | undefined, id: string | undefined) {
@@ -110,11 +112,8 @@ export class CompraComponent implements OnInit {
     this.selectedProyeccion = hora
     this.selectedProyeccionID = id
     this.proyeccionService.getproyeccionsById(id as unknown as number).then(res => this.currentProyeccion = res)
-    this.salaService.getsalasById(id as unknown as number).then(res=>this.currentSala =res)
+    this.salaService.getsalasById(id as unknown as string).then(res => this.currentSala = res)
     this.loadSeats(id)
   }
-
-
-
-
 }
+

@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bojorge\\Documents\\BasesDeDatos\\Proyectos\\CineTec\\CineTEC\\CineTEC\\Server\\CineTEC-API\\CineTEC-API.csproj": {}
+    "C:\\GitHub\\CineTEC\\CineTEC\\Server\\CineTEC-API\\CineTEC-API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Bojorge\\Documents\\BasesDeDatos\\Proyectos\\CineTec\\CineTEC\\CineTEC\\Server\\CineTEC-API\\CineTEC-API.csproj": {
+    "C:\\GitHub\\CineTEC\\CineTEC\\Server\\CineTEC-API\\CineTEC-API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bojorge\\Documents\\BasesDeDatos\\Proyectos\\CineTec\\CineTEC\\CineTEC\\Server\\CineTEC-API\\CineTEC-API.csproj",
+        "projectUniqueName": "C:\\GitHub\\CineTEC\\CineTEC\\Server\\CineTEC-API\\CineTEC-API.csproj",
         "projectName": "CineTEC-API",
-        "projectPath": "C:\\Users\\Bojorge\\Documents\\BasesDeDatos\\Proyectos\\CineTec\\CineTEC\\CineTEC\\Server\\CineTEC-API\\CineTEC-API.csproj",
-        "packagesPath": "C:\\Users\\Bojorge\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bojorge\\Documents\\BasesDeDatos\\Proyectos\\CineTec\\CineTEC\\CineTEC\\Server\\CineTEC-API\\obj\\",
+        "projectPath": "C:\\GitHub\\CineTEC\\CineTEC\\Server\\CineTEC-API\\CineTEC-API.csproj",
+        "packagesPath": "C:\\Users\\sebastianalba\\.nuget\\packages\\",
+        "outputPath": "C:\\GitHub\\CineTEC\\CineTEC\\Server\\CineTEC-API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Bojorge\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\sebastianalba\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -77,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
