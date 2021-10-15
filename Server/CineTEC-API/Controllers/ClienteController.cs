@@ -30,7 +30,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select cedulacliente, nombrecliente1, nombrecliente2, apellidocliente1, apellidocliente2, fechanacimiento, numerotelefono, usuario, contrasenna
+          select cedulacliente, nombrecliente1, nombrecliente2, apellidocliente1, apellidocliente2, fechanacimiento, numerotelefono
           from cliente
           ";
       DataTable table = new DataTable();
@@ -56,7 +56,7 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(int id)
     {
       string query = @"
-          select cedulacliente, nombrecliente1, nombrecliente2, apellidocliente1, apellidocliente2, fechanacimiento, numerotelefono, usuario, contrasenna
+          select cedulacliente, nombrecliente1, nombrecliente2, apellidocliente1, apellidocliente2, fechanacimiento, numerotelefono
           from cliente
           where cedulacliente = @cedulacliente
           ";
@@ -84,8 +84,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Cliente cliente)
     {
       string query = @"
-          insert into cliente(cedulacliente, nombrecliente1, nombrecliente2, apellidocliente1, apellidocliente2, fechanacimiento, numerotelefono, usuario, contrasenna)
-          values (@cedulacliente, @nombrecliente1, @nombrecliente2, @apellidocliente1, @apellidocliente2, @fechanacimiento, @numerotelefono, @usuario, @contrasenna)
+          insert into cliente(cedulacliente, nombrecliente1, nombrecliente2, apellidocliente1, apellidocliente2, fechanacimiento, numerotelefono)
+          values (@cedulacliente, @nombrecliente1, @nombrecliente2, @apellidocliente1, @apellidocliente2, @fechanacimiento, @numerotelefono)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -102,8 +102,6 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@apellidocliente2", cliente.apellidocliente2);
           myComand.Parameters.AddWithValue("@fechanacimiento", cliente.fechanacimiento);
           myComand.Parameters.AddWithValue("@numerotelefono", cliente.numerotelefono);
-          myComand.Parameters.AddWithValue("@usuario", cliente.usuario);
-          myComand.Parameters.AddWithValue("@contrasenna", cliente.contrasenna);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -127,8 +125,6 @@ namespace CineTEC_API.Controllers
               apellidocliente2 = @apellidocliente2,
               fechanacimiento = @fechanacimiento,
               numerotelefono = @numerotelefono
-              usuario = @usuario,
-              contrasenna = @contrasenna
           where cedulacliente = @cedulacliente
           ";
       DataTable table = new DataTable();
@@ -146,8 +142,6 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@apellidocliente2", cliente.apellidocliente2);
           myComand.Parameters.AddWithValue("@fechanacimiento", cliente.fechanacimiento);
           myComand.Parameters.AddWithValue("@numerotelefono", cliente.numerotelefono);
-          myComand.Parameters.AddWithValue("@usuario", cliente.usuario);
-          myComand.Parameters.AddWithValue("@contrasenna", cliente.contrasenna);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -183,5 +177,33 @@ namespace CineTEC_API.Controllers
       }
       return new JsonResult("Deleted Successfully");
     }
+
+    [HttpPost("[action]")]
+    public JsonResult checkCredentials(Credenciales credenciales)
+    {
+      string query = @"
+          select cedulacliente, nombrecliente1, nombrecliente2, apellidocliente1, apellidocliente2, fechanacimiento, numerotelefono
+          from cliente
+          where usuario = @usuario and contrasenna = @contrasenna
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@usuario", credenciales.user);
+          myComand.Parameters.AddWithValue("@contrasenna", credenciales.password);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult(table);
+    }
   }
 }
+

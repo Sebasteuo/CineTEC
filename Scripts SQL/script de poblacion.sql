@@ -63,8 +63,8 @@ INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidoc
 
 /*Insercion a pelicula*/
 INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preciocidoro,precioninos,precioadulto,cedulaempleado) VALUES('ijh007','No Time to Die','Sin Tiempo para Morir',163,'https://i.imgur.com/JlRyGcz.jpg',2500,2500,3200,12345678);
-INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preciocidoro,precioninos,precioadulto,cedulaempleado) VALUES('mcu789','Shang-Chi y la leyenda de los Diez Anillos','Shang-Chi ',172,'https://i.imgur.com/JlRyGcz.jpg',2500,2500,3200,12345678);
-INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preciocidoro,precioninos,precioadulto,cedulaempleado) VALUES('xhd962','Coda: Señales del corazón','Coda: Señales del corazón',111,'https://i.imgur.com/JlRyGcz.jpg',2500,2500,3200,12345678);
+INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preciocidoro,precioninos,precioadulto,cedulaempleado) VALUES('mcu789','Shang-Chi y la leyenda de los Diez Anillos','Shang-Chi ',172,'https://i.imgur.com/8vkYpkn.jpg',2500,2500,3200,12345678);
+INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preciocidoro,precioninos,precioadulto,cedulaempleado) VALUES('xhd962','Coda: Señales del corazón','Coda: Señales del corazón',111,'https://i.imgur.com/HRgemZN.jpg',2500,2500,3200,12345678);
 
 /*Insercion a peliculaxsucursal*/
 INSERT INTO public.peliculaxsucursal(peliid,codigosucursal) VALUES('ijh007','4MN');
@@ -1497,3 +1497,4 @@ INSERT INTO public.butacaxfuncion(funcionid,numerodeasiento) VALUES('25101120amA
 INSERT INTO public.butacaxfuncion(funcionid,numerodeasiento) VALUES('25101120amAs2',980);
 INSERT INTO public.butacaxfuncion(funcionid,numerodeasiento) VALUES('25101120amAs2',981);
 INSERT INTO public.butacaxfuncion(funcionid,numerodeasiento) VALUES('25101120amAs2',982);
+

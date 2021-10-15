@@ -9,6 +9,7 @@ import { ButacaXfuncion } from '../Models/butaca-xfuncion.model';
 import { Butaca } from '../Models/butaca.model';
 import { FacturacionManagementService } from './facturacion-management.service';
 import { Factura } from '../Models/factura.model';
+import { jsPDF } from "jspdf";
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,23 @@ export class CompraManagementService {
   proyecciones: Proyeccion[] = []
   seats: ButacaXfuncion[] = []
   peliculasXsucursal: PeliculaXSucursal[] = []
-  butacas: Butaca[]=[]
-  butacaXFuncion: ButacaXfuncion={numerodeasiento:0,funcionid:""}
-  xml: string =""
+  butacas: Butaca[] = []
+  butacaXFuncion: ButacaXfuncion = { numerodeasiento: 0, funcionid: "" }
+  xml: string = ""
+  newFactura: Factura = {
+    monto: 0,
+    nombre: "",
+    telefono: 0,
+    correoelectronico: "",
+    identificacion: 0,
+    funcionid: "",
+    facturaid: 0,
+    numerodeasiento: 1,
+    provincia: "",
+    canton: "",
+    distrito: ""
+
+  }
 
   constructor(private http: HttpClient, private facturacionservice: FacturacionManagementService) { }
 
@@ -34,36 +49,38 @@ export class CompraManagementService {
   }
 
 
-  async purchase(sucursal:string, sala: string, proyeccion: string, pelicula: string, factura: Factura, proyeccionid: string){
-    this.butacaXFuncion.numerodeasiento=factura.numerodeasiento
-    this.butacaXFuncion.funcionid=proyeccionid 
-    console.log(this.butacaXFuncion)
-    await this.http.post(environment.api+"/butacaXFuncion",this.butacaXFuncion).toPromise().then(res=>{
-      this.facturacionservice.addFactura(sucursal, sala, proyeccion, pelicula, factura).then(res2=>{this.xml = res2
-      console.log(this.xml)
+  async purchase(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura, proyeccionid: string) {
+    this.butacaXFuncion.numerodeasiento = factura.numerodeasiento
+    this.butacaXFuncion.funcionid = proyeccionid
+    await this.http.post(environment.api + "/butacaXFuncion", this.butacaXFuncion).toPromise().then(res => {
+      this.facturacionservice.addFactura(sucursal, sala, proyeccion, pelicula, factura).then(res2 => {
+        this.newFactura = res2
       })
     })
-    console.log("------")
-    return this.xml
-    
+    return this.newFactura
   }
 
-  
-  async getButacasBySala(id:string) {
-    await this.http.get(environment.api + "/butaca/"+id).toPromise().then(res => {
+
+  async getButacasBySala(id: string) {
+    await this.http.get(environment.api + "/butaca/" + id).toPromise().then(res => {
       this.butacas = res as Butaca[]
-      console.log(this.butacas)
     })
     return this.butacas
   }
 
-  getXML(){
-    return this.facturacionservice.xml
+  async getXML(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura) {
+    await this.facturacionservice.generateXML(sucursal, sala, proyeccion, pelicula, factura).then(res3 => {
+      this.xml = res3
+    })
+    return this.xml
   }
 
-  //https://drive.google.com/file/d/1M9p8HgieJP81xwxaJ_s_ynEyzyMQKRSX/view?usp=sharing
-  //https://drive.google.com/file/d/1L8XXGgilp5ChBUOlEvkPtIJ7-TAizhG-/view?usp=sharing
-  //
+  async getPDF(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura){
+    var doc = new jsPDF({ putOnlyUsedFonts: true });
+   await this.facturacionservice.generatePDF(sucursal, sala, proyeccion, pelicula, factura).then(res =>{doc = res});
+   return doc
+  }
+
   async getMovies(id: string) {
     await this.http.get(environment.api + "/PeliculaXSucursal/" + id).toPromise().then(res => {
       this.peliculasXsucursal = res as PeliculaXSucursal[]
@@ -90,4 +107,5 @@ export class CompraManagementService {
   }
 
 }
+
 

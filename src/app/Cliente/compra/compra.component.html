@@ -44,14 +44,14 @@
                                                                 </div>
 
                                                                 <div class="col form-group">
-                                                                    <label>{{selectedMovie}} </label>
+                                                                    <label>{{selectedMovie.nombre}} </label>
                                                                 </div>
                                                             </div>
                                                             <div class="form-row">
                                                                 <div class="col form-group"
                                                                     *ngFor="let movie of movies">
                                                                     <img src="{{movie.imagen}}" height="300px"
-                                                                        (click)="selectMovie(movie.nombre, movie.peliid)">
+                                                                        (click)="selectMovie(movie)">
                                                                 </div>
 
                                                             </div>
@@ -90,9 +90,28 @@
                                     <ng-template ngbNavContent>
                                         <article class="card-body">
                                             <div class="form">
+                                                <div class="form-row">
+                                                    <div class="col form-group">
+                                                        <label>Seleccione tipo de boleto </label>
+                                                    </div>
+                                                    <div class="col form-group">
+                                                        <div ngbDropdown class="d-inline-block">
+                                                            <button class="btn btn-outline-primary"
+                                                                id="dropdownBasic1"
+                                                                ngbDropdownToggle>{{selectedTipoBoleto}}</button>
+                                                            <div ngbDropdownMenu
+                                                                aria-labelledby="dropdownBasic1">
+                                                                <button *ngFor="let boleto of boletos"
+                                                                    ngbDropdownItem
+                                                                    (click)="selectTipoBoleto(boleto)">{{boleto}}</button>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="row" *ngFor="let fila of rows; index as i;">
                                                     <div class="col" *ngFor="let column of columns; index as j;">
-                                                        <img [id]="'loc' + j + i" class="seat" src="../assets/Img/asientoVerde.png"
+                                                        <img [id]="'loc' + i + j" class="seat" src="../assets/Img/asientoVerde.png"
                                                             (click)="selectSeat(i, j)">
                                                     </div>
                                                 </div>
@@ -182,6 +201,7 @@
                                                         <button class="btn btn-primary btn-block" (click)="pay()">Comprar</button>
                                                     </div>
                                                     <a [href]="fileURL" download="factura.xml">DownloadFile</a>
+                                                    <a (click)="downloadPDF()">Download PDF</a>
                                                 </form>
                                             </div>
                                         </article>

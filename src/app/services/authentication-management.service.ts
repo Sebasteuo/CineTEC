@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import { Client } from '../Models/client.Model';
 import { Credenciales } from '../Models/credenciales.Model';
 import { Empleado } from '../Models/empleado.Model';
 import { RolXEmpleado } from '../Models/rol-xempleado.Model';
@@ -20,20 +21,33 @@ export class AuthenticationManagementService {
 
   //Hace una consulta en el API para verificar credenciales del usuario y guardar los datos del usuario como cookies
   async login(Credenciales: Credenciales) {
-  const body = {
-    user:Credenciales.user,
-    password: Credenciales.password
-  }
+    const body = {
+      user: Credenciales.user,
+      password: Credenciales.password
+    }
 
     await this.http.post(environment.api + "/empleado/checkCredentials", body).toPromise().then(res => {
-      if((res as Empleado[]).length>0 ){
-        localStorage.setItem("User", Credenciales.user as unknown as string) 
-        localStorage.setItem("UserId", (res as Empleado[])[0].cedulaempleado as unknown as string )
-        this.http.get(environment.api + "/RolXEmpleado/"+(res as Empleado[])[0].cedulaempleado).toPromise().then(res2 => {
-        localStorage.setItem("UserType", (res2 as RolXEmpleado[])[0].nombre as unknown as string)
-        this.router.navigate(["/Welcome"])})
+      if ((res as Empleado[]).length > 0) {
+        localStorage.setItem("User", Credenciales.user as unknown as string)
+        localStorage.setItem("UserId", (res as Empleado[])[0].cedulaempleado as unknown as string)
+        this.http.get(environment.api + "/RolXEmpleado/" + (res as Empleado[])[0].cedulaempleado).toPromise().then(res2 => {
+          localStorage.setItem("UserType", (res2 as RolXEmpleado[])[0].nombre as unknown as string)
+          this.router.navigate(["/Welcome"])
+        })
       }
-      
+      else {
+        this.http.post(environment.api + "/cliente/checkCredentials", body).toPromise().then(res => {
+          if ((res as Client[]).length > 0) {
+            localStorage.setItem("User", Credenciales.user as unknown as string)
+            localStorage.setItem("UserId", (res as Client[])[0].cedulacliente as unknown as string)
+            localStorage.setItem("UserType", "Cliente")
+            this.router.navigate(["/Compra"])
+          }
+          else{
+            this.toastr.error("Credenciales incorrectas", "Error")
+          }
+        })
+      }
     })
   }
   async getClientID(user: Credenciales) {
@@ -75,3 +89,4 @@ export class AuthenticationManagementService {
     }
   }
 }
+
