@@ -56,10 +56,10 @@ INSERT INTO public.rolxempleado(nombre,cedulaempleado) VALUES('cajero',21586376)
 
 
 /*Insercion a cliente*/
-INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidocliente1,apellidocliente2,fechanacimiento,numerotelefono) VALUES(43908822,'Jose','Alexander','Bogantes','Jimenez','19591119',82564812);
-INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidocliente1,apellidocliente2,fechanacimiento,numerotelefono) VALUES(57736901,'Fransisco','Alberto','Morales','Brenes','19671204',84168745);
-INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidocliente1,apellidocliente2,fechanacimiento,numerotelefono) VALUES(36619762,'Ana','Cecilia','Pacheco','Chaves','19680112',84615479);
-INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidocliente1,apellidocliente2,fechanacimiento,numerotelefono) VALUES(22136639,'Erica','Gabriela','Miranda','Gamboa','19941018',68418756);
+INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidocliente1,apellidocliente2,fechanacimiento,numerotelefono,usuario,contrasenna) VALUES(43908822,'Jose','Alexander','Bogantes','Jimenez','19591119',82564812,'jbogantes1119','tdrkf51');
+INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidocliente1,apellidocliente2,fechanacimiento,numerotelefono,usuario,contrasenna) VALUES(57736901,'Fransisco','Alberto','Morales','Brenes','19671204',84168745,'fmorales1204','cfjjg5132');
+INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidocliente1,apellidocliente2,fechanacimiento,numerotelefono,usuario,contrasenna) VALUES(36619762,'Ana','Cecilia','Pacheco','Chaves','19680112',84615479,'achaves0112','cfy51awe');
+INSERT INTO public.cliente(cedulacliente,nombrecliente1,nombrecliente2,apellidocliente1,apellidocliente2,fechanacimiento,numerotelefono,usuario,contrasenna) VALUES(22136639,'Erica','Gabriela','Miranda','Gamboa','19941018',68418756,'emiranda1018','ktfu35');
 
 /*Insercion a pelicula*/
 INSERT INTO public.pelicula(peliid,nombreogpelicula,nombre,duracion,imagen,preciocidoro,precioninos,precioadulto,cedulaempleado) VALUES('ijh007','No Time to Die','Sin Tiempo para Morir',163,'g',2500,2500,3200,12345678);
