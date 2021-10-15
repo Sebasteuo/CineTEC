@@ -100,17 +100,89 @@
                                         </article>
                                     </ng-template>
                                 </li>
-                                <li ngbNavItem="middle">
+                                <li ngbNavItem="n">
                                     <a ngbNavLink>Pago</a>
                                     <ng-template ngbNavContent>
                                         <article class="card-body">
                                             <div class="form">
-                                                <div class="row" *ngFor="let fila of rows; index as i;">
-                                                    <div class="col" *ngFor="let column of columns; index as j;">
-                                                        <img [id]="'loc' + j + i" class="seat" src="../assets/Img/asientoVerde.png"
-                                                            (click)="selectSeat(i, j)">
+                                                <form #form autocomplete="off">
+                                                    <div class="form-row">
+                                                        <div class="col form-group">
+                                                            <label>Identificación: </label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.identificacion"
+                                                                required>
+                                                        </div>
                                                     </div>
-                                                </div>
+
+                                                    <div class="form-row">
+                                                        <div class="col form-group">
+                                                            <label>Nombre Completo: </label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.nombre"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-row">
+                                                        <div class="col form-group">
+                                                            <label>Teléfono: </label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.telefono"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-row">
+                                                        <div class="col form-group">
+                                                            <label>Correo: </label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.correoelectronico"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-row">
+                                                        <div class="col form-group">
+                                                            <label>Provincia: </label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.provincia"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-row">
+                                                        <div class="col form-group">
+                                                            <label>Distrito: </label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.distrito"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-row">
+                                                        <div class="col form-group">
+                                                            <label>Cantón: </label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.canton"
+                                                                required>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col form-groupform-group">
+                                                        <button class="btn btn-primary btn-block" (click)="pay()">Comprar</button>
+                                                    </div>
+                                                    <a [href]="fileURL" download="factura.xml">DownloadFile</a>
+                                                </form>
                                             </div>
                                         </article>
                                     </ng-template>

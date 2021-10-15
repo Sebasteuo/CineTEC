@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   submit(){
-   var pass = (CryptoJS.MD5(this.newCredenciales.password as unknown as string) as unknown) as string;
-   this.newCredenciales.password=CryptoJS.enc.Base64.stringify(sha256(pass))
+   //var pass = (CryptoJS.MD5(this.newCredenciales.password as unknown as string) as unknown) as string;
+   //this.newCredenciales.password=CryptoJS.enc.Base64.stringify(sha256(pass))
   this.authenticationService.login(this.newCredenciales); 
     //this.authenticationService.login(this.newCredenciales);
   }

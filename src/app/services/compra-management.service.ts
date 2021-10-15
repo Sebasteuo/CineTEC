@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Movie } from '../Models/movie.Model';
@@ -7,6 +7,8 @@ import { Proyeccion } from '../Models/proyeccion.Model';
 import { PeliculaXSucursal } from '../Models/pelicula-xsucursal.model';
 import { ButacaXfuncion } from '../Models/butaca-xfuncion.model';
 import { Butaca } from '../Models/butaca.model';
+import { FacturacionManagementService } from './facturacion-management.service';
+import { Factura } from '../Models/factura.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +21,31 @@ export class CompraManagementService {
   seats: ButacaXfuncion[] = []
   peliculasXsucursal: PeliculaXSucursal[] = []
   butacas: Butaca[]=[]
+  butacaXFuncion: ButacaXfuncion={numerodeasiento:0,funcionid:""}
+  xml: string =""
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private facturacionservice: FacturacionManagementService) { }
 
   async getLocations() {
     await this.http.get(environment.api + "/sucursal/").toPromise().then(res => {
       this.locations = res as Location[]
     })
     return this.locations
+  }
+
+
+  async purchase(sucursal:string, sala: string, proyeccion: string, pelicula: string, factura: Factura, proyeccionid: string){
+    this.butacaXFuncion.numerodeasiento=factura.numerodeasiento
+    this.butacaXFuncion.funcionid=proyeccionid 
+    console.log(this.butacaXFuncion)
+    await this.http.post(environment.api+"/butacaXFuncion",this.butacaXFuncion).toPromise().then(res=>{
+      this.facturacionservice.addFactura(sucursal, sala, proyeccion, pelicula, factura).then(res2=>{this.xml = res2
+      console.log(this.xml)
+      })
+    })
+    console.log("------")
+    return this.xml
+    
   }
 
   
@@ -36,6 +55,10 @@ export class CompraManagementService {
       console.log(this.butacas)
     })
     return this.butacas
+  }
+
+  getXML(){
+    return this.facturacionservice.xml
   }
 
   //https://drive.google.com/file/d/1M9p8HgieJP81xwxaJ_s_ynEyzyMQKRSX/view?usp=sharing

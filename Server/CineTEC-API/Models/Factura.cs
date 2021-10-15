@@ -9,7 +9,7 @@ namespace CineTEC_API.Models
   public class Factura
   {
     [Key]
-    public string facturaid { get; set; }
+    public int facturaid { get; set; }
     public float monto { get; set; }
     public string funcionid {get; set;}
     public int numerodeasiento { get; set; }

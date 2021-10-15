@@ -53,7 +53,7 @@ namespace CineTEC_API.Controllers
     //este metodo recibe como parametro una llave primaria y devuelve la tupla donde está esa llave
     // GET api/<EmpleadoController>/5
     [HttpGet("{id}")]
-    public JsonResult GetOne(string id)
+    public JsonResult GetOne(int id)
     {
       string query = @"
           select facturaid, monto, funcionid, numerodeasiento
@@ -84,8 +84,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Create(Factura factura)
     {
       string query = @"
-          insert into factura(facturaid, monto, funcionid, numerodeasiento)
-          values (@facturaid, @monto, @funcionid, @numerodeasiento)
+          insert into factura( monto, funcionid, numerodeasiento)
+          values ( @monto, @funcionid, @numerodeasiento)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -95,7 +95,6 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@facturaid", factura.facturaid);
           myComand.Parameters.AddWithValue("@monto", factura.monto);
           myComand.Parameters.AddWithValue("@funcionid", factura.funcionid);
           myComand.Parameters.AddWithValue("@numerodeasiento", factura.numerodeasiento);
@@ -108,6 +107,34 @@ namespace CineTEC_API.Controllers
       return new JsonResult("Added Successfully");
     }
 
+    [HttpPost ("[action]")]
+    public JsonResult getFactura(Factura factura)
+    {
+      string query = @"
+          select facturaid, monto, funcionid, numerodeasiento
+          from factura
+          where funcionid = @funcionid and monto =@monto and numerodeasiento = @numerodeasiento
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@funcionid", factura.funcionid);
+          myComand.Parameters.AddWithValue("@monto", factura.monto);
+          myComand.Parameters.AddWithValue("@numerodeasiento", factura.numerodeasiento);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult(table);
+    }
+
     //este metodo recibe como parametro un objeto que tiene como llave primaria la misma llave que en una tupla existente para actualizar todos los atributos igual a los del objeto
     // PUT api/<EmpleadoController>/5
     [HttpPut]
@@ -115,7 +142,7 @@ namespace CineTEC_API.Controllers
     {
       string query = @"
           update factura
-          set facturaid = @facturaid,
+          set 
               monto = @monto,
               funcionid = @funcionid,
               numerodeasiento = @numerodeasiento
@@ -128,7 +155,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@facturaid", factura.facturaid);
+         
           myComand.Parameters.AddWithValue("@monto", factura.monto);
           myComand.Parameters.AddWithValue("@funcionid", factura.funcionid);
           myComand.Parameters.AddWithValue("@numerodeasiento", factura.numerodeasiento);
@@ -144,7 +171,7 @@ namespace CineTEC_API.Controllers
     //este metodo recibe como parametro una llave primaria y elimina la tupla con esa llave
     // DELETE api/<EmpleadoController>/5
     [HttpDelete("{id}")]
-    public JsonResult Delete(string id)
+    public JsonResult Delete(int id)
     {
       string query = @"
           delete from factura

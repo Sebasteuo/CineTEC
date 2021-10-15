@@ -14,7 +14,7 @@ import { WelcomeComponent } from './Others/welcome/welcome.component';
 
 const routes: Routes = [
 
-  { path: '', redirectTo: 'Welcome', pathMatch: 'full' }, //Al entrar al localhost, se le agrega a la ruta Welcome
+  { path: '', redirectTo: 'Login', pathMatch: 'full' }, //Al entrar al localhost, se le agrega a la ruta Welcome
   { path: 'Welcome', component: WelcomeComponent}, // Se hacen navegables y  los componentes
   { path: 'Clientes', component: ClientsComponent}, // Se hacen navegables y  los componentes
   { path: 'Salas', component: SalasComponent}, // Se hacen navegables y  los componentes

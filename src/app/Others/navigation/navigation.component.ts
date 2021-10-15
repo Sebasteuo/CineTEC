@@ -14,12 +14,12 @@ export class NavigationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    //this.logged = this.loggedIn();
-    this.logged=true;
+    this.logged = this.loggedIn();
+    //this.logged=true;
     this.showadmin = this.isAdmin();
    // this.showadmin = true;
-    //this.showclient = this.isClient();
-    this.showclient = true;
+    this.showclient = this.isClient();
+    //this.showclient = true;
    
   }
   loggedIn() {
@@ -37,7 +37,7 @@ export class NavigationComponent implements OnInit {
   }
 
   isAdmin() {
-    if (localStorage.getItem('UserType') == 'Administrador')
+    if (localStorage.getItem('UserType') == 'administrador')
       return true;
     else
       return false;

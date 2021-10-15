@@ -9,6 +9,9 @@ import { ProyeccionManagementService } from 'src/app/services/proyeccion-managem
 import { SalaManagementService } from 'src/app/services/sala-management.service';
 import { ButacaXfuncion } from 'src/app/Models/butaca-xfuncion.model';
 import { Butaca } from 'src/app/Models/butaca.model';
+import { Factura } from 'src/app/Models/factura.model';
+import { FacturacionManagementService } from 'src/app/services/facturacion-management.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-compra',
@@ -29,6 +32,17 @@ export class CompraComponent implements OnInit {
   capacity: Number = 0
   rows: Number[] = []
   butacas: Butaca[]=[]
+  newFactura: Factura = {monto:0,
+    nombre:"",
+    telefono:0,
+    correoelectronico:"",
+    identificacion:0,
+    funcionid:"",
+    facturaid:0,
+    numerodeasiento:1,
+    provincia:"",
+    canton:"",
+    distrito:""}
 
   currentProyeccion: Proyeccion = {
     funcionid: 0,
@@ -46,7 +60,7 @@ export class CompraComponent implements OnInit {
   }
 
   active = 1
-
+  fileURL: SafeResourceUrl = ""
   newCompra: Compra = {
     id: 0,
     cine: 0,
@@ -62,10 +76,11 @@ export class CompraComponent implements OnInit {
   proyecciones: Proyeccion[] = []
   seats: ButacaXfuncion[] = []
   columns: number[] = []
+  selectedButaca: number = 0
 
 
   constructor(private compraService: CompraManagementService, private proyeccionService: ProyeccionManagementService,
-    private salaService: SalaManagementService) { }
+    private salaService: SalaManagementService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.compraService.getLocations().then(res => this.locations = res)
@@ -81,11 +96,31 @@ export class CompraComponent implements OnInit {
     })
   }
 
+  pay(){
+    this.newFactura.numerodeasiento = this.selectedButaca
+    this.newFactura.funcionid = this.selectedProyeccionID as unknown as string
+    this.newFactura.monto = 1200
+    this.compraService.purchase(this.selectedLocation as unknown as string,this.currentSala.salaid,
+       this.selectedProyeccion as unknown as string, this.selectedMovie as unknown as string, this.newFactura, 
+       this.selectedProyeccionID as unknown as string).then(res=>{
+        console.log("purchase")
+         console.log(res)
+        const blob = new Blob([res], { type: 'application/octet-stream' });
+
+        this.fileURL = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+       })
+
+    
+      
+  
+  }
+
   loadProyecciones(id: string | undefined) {
     this.proyecciones = []
     this.compraService.getProyecciones(id as unknown as string).then(res => {
       this.proyecciones = res
     })
+
 
   }
 

@@ -236,6 +236,32 @@ namespace CineTEC_API.Controllers
       }
       return new JsonResult("Deleted Successfully");
     }
+    [HttpPost("[action]")]
+    public JsonResult checkCredentials(Credenciales credenciales)
+    {
+      string query = @"
+          select cedulaempleado, nombreempleado1, nombreempleado2, apellidoempleado1, apellidoempleado2, fechanacimiento, usuario, numerotelefono, fechaingreso, contrasenna, codigosucursal
+          from empleado
+          where usuario = @usuario and contrasenna = @contrasenna
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@usuario", credenciales.user);
+          myComand.Parameters.AddWithValue("@contrasenna", credenciales.password);
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult(table);
+    }
   }
 }
 
