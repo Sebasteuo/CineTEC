@@ -38,6 +38,8 @@ CREATE TABLE CLIENTE (
 	ApellidoCliente2 VARCHAR(50) NOT NULL,
 	FechaNacimiento DATE,
 	NumeroTelefono INT,
+	Usuario VARCHAR NOT NULL,
+	Contrasenna VARCHAR(10) NOT NULL,
 	PRIMARY KEY (CedulaCliente)
 );
 CREATE TABLE EMPLEADO (
