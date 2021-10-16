@@ -121,7 +121,7 @@ export class FacturacionManagementService {
       Total: (factura.monto * 0.13 + factura.monto) as unknown as string
     }]
     
-    var doc = new jsPDF({ putOnlyUsedFonts: true })
+    var doc = new jsPDF({ orientation: "landscape" })
     var totalIVA = factura.monto*0.13+factura.monto
     var IVA = factura.monto*0.13
     doc.text("Factura Electrónica", 10, 20);
@@ -138,7 +138,7 @@ export class FacturacionManagementService {
     doc.text("Teléfono: "+ factura.telefono, 10, 78);
     doc.text("Direccion: "+ factura.provincia +" "+ factura.canton+ " "+factura.distrito, 10, 84);
 
-    doc.table(30, 90, pdfHeader, ["Descripcion", "PrecioUnit", "Cantidad", "Impuesto", "Total" ], { autoSize: true });
+    doc.table(30, 90, pdfHeader, ["Descripcion", "PrecioUnit", "Cantidad", "Impuesto", "Total" ], { printHeaders: true });
     doc.text("SubTotal: "+ factura.monto, 130, 120);
     doc.text("Descuento: "+"0",130, 126);
     doc.text("Impuesto: "+ IVA, 130, 132);
@@ -163,4 +163,5 @@ export class FacturacionManagementService {
 
 
 }
+
 

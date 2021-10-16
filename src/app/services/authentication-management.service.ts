@@ -13,6 +13,20 @@ import { RolXEmpleado } from '../Models/rol-xempleado.Model';
 export class AuthenticationManagementService {
 
   newUser: Credenciales = { user: "", password: "", tipo: "", cedula: 0 }
+  newCliente:Client ={
+    nombrecliente1:"",
+    nombrecliente2:"",
+    apellidocliente1:"",
+    apellidocliente2:"",
+    cedulaempleado:0,
+    fechanacimiento: new Date(),
+    numerotelefono:0,
+    cedulacliente:0,
+    usuario:"",
+    contrasenna:""
+   
+    
+  }
 
   constructor(private router: Router, public toastr: ToastrService, public http: HttpClient) { }
   Users: Credenciales[] = []
@@ -71,11 +85,10 @@ export class AuthenticationManagementService {
   //Envía los datos al API para registrar un cliente 
   async Register(id: number, tipo: string, user: string, password: string) {
     if (tipo && user && password && id) {
-      this.newUser.user = user
-      this.newUser.password = password
-      this.newUser.tipo = tipo
-      this.newUser.cedula = id
-      await this.http.post(environment.api + "/usuario/Registrar", this.newUser).toPromise().then(res => {
+      this.newCliente.usuario = user
+      this.newCliente.contrasenna = password
+      this.newCliente.cedulacliente = id
+      await this.http.put(environment.api + "/cliente/UpdateCredenciales", this.newCliente).toPromise().then(res => {
         this.toastr.success("Registrado exitosamente", "Exito")
         this.router.navigate(["/Login"])
       }, error => {

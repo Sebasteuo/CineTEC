@@ -197,11 +197,13 @@
 
 
 
-                                                    <div class="col form-groupform-group">
+                                                    <div class="col form-group">
                                                         <button class="btn btn-primary btn-block" (click)="pay()">Comprar</button>
                                                     </div>
-                                                    <a [href]="fileURL" download="factura.xml">DownloadFile</a>
-                                                    <a (click)="downloadPDF()">Download PDF</a>
+                                                    <div class="col form-group">
+                                                        <button class="btn btn-primary btn-block"><a style="color: white;" [href]="fileURL" download="factura.xml">Descargar XML</a></button>
+                                                        <button class="btn btn-primary btn-block" (click)="downloadPDF()">Descargar PDF</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </article>

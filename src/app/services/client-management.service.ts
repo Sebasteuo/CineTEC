@@ -17,7 +17,9 @@ export class ClientManagementService {
     cedulaempleado:0,
     fechanacimiento: new Date(),
     numerotelefono:0,
-    cedulacliente:0
+    cedulacliente:0,
+    usuario:"",
+    contrasenna:""
    
     
   }

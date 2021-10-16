@@ -12,6 +12,7 @@ import { Butaca } from 'src/app/Models/butaca.model';
 import { Factura } from 'src/app/Models/factura.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { jsPDF } from "jspdf";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-compra',
@@ -23,18 +24,20 @@ export class CompraComponent implements OnInit {
   selectedLocation: String | undefined = "Click para expandir"
   selectedLocationID: Number | undefined = 0
   selectedMovieID: String | undefined = ""
-  selectedMovie: Movie = {nombre: "",
-  protagonistas: "",
-  director: "",
-  duracion: "",
-  clasificacion: "",
-  nombreogpelicula: "",
-  imagen: "",
-  peliid: "",
-  precioninos: 0,
-  precioadulto: 0,
-  preciocidoro: 0,
-  cedulaempleado: 12345678 }
+  selectedMovie: Movie = {
+    nombre: "",
+    protagonistas: "",
+    director: "",
+    duracion: "",
+    clasificacion: "",
+    nombreogpelicula: "",
+    imagen: "",
+    peliid: "",
+    precioninos: 0,
+    precioadulto: 0,
+    preciocidoro: 0,
+    cedulaempleado: 12345678
+  }
   selectedProyeccion: Date | undefined = new Date()
   selectedProyeccionID: Number | undefined = 0
   filas: Number | undefined = 0
@@ -42,9 +45,9 @@ export class CompraComponent implements OnInit {
   aforo: Number | undefined = 0
   capacity: Number = 0
   rows: Number[] = []
-  selectedTipoBoleto: string = ""
+  selectedTipoBoleto: string = "Seleccione un tipo de boleto"
   selectedPrecio: Number = 0
-  boletos: string[] =["Adulto", "Niño", "Ciudadano de Oro"]
+  boletos: string[] = ["Adulto", "Niño", "Ciudadano de Oro"]
   butacas: Butaca[] = []
   newFactura: Factura = {
     monto: 0,
@@ -95,9 +98,8 @@ export class CompraComponent implements OnInit {
   selectedButaca: number = 0
   doc = new jsPDF({ putOnlyUsedFonts: true })
 
-
   constructor(private compraService: CompraManagementService, private proyeccionService: ProyeccionManagementService,
-    private salaService: SalaManagementService, private sanitizer: DomSanitizer) { }
+    private salaService: SalaManagementService, private sanitizer: DomSanitizer, private toastr : ToastrService) { }
 
   ngOnInit(): void {
     this.compraService.getLocations().then(res => this.locations = res)
@@ -117,6 +119,7 @@ export class CompraComponent implements OnInit {
     this.newFactura.numerodeasiento = this.selectedButaca
     this.newFactura.funcionid = this.selectedProyeccionID as unknown as string
     this.newFactura.monto = this.selectedPrecio as unknown as number
+    this.newFactura.numerodeasiento = this.selectedButaca
     this.compraService.purchase(this.selectedLocation as unknown as string, this.currentSala.salaid,
       this.selectedProyeccion as unknown as string, this.selectedMovie.nombre as unknown as string, this.newFactura,
       this.selectedProyeccionID as unknown as string).then(res => {
@@ -127,12 +130,11 @@ export class CompraComponent implements OnInit {
         const blob = new Blob([res], { type: 'application/octet-stream' });
         this.fileURL = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
       })
-      this.compraService.getPDF(this.selectedLocation as unknown as string, this.currentSala.salaid,
-        this.selectedProyeccion as unknown as string, this.selectedMovie.nombre as unknown as string, this.newFactura).then(res=>{this.doc = res});
-
+    this.compraService.getPDF(this.selectedLocation as unknown as string, this.currentSala.salaid,
+      this.selectedProyeccion as unknown as string, this.selectedMovie.nombre as unknown as string, this.newFactura).then(res => { this.doc = res });
   }
 
-  downloadPDF(){
+  downloadPDF() {
     this.doc.save("factura.pdf")
   }
 
@@ -143,20 +145,20 @@ export class CompraComponent implements OnInit {
     })
   }
 
-  loadSeats(id: number | undefined) {
-    this.compraService.getSeats(id as unknown as number).then(res => {
-      this.seats = res
-      this.seats.forEach((seat, index) => {
-        try {
-          var image = document.getElementById('loc' + '0' + seat.numerodeasiento) as HTMLImageElement;
-          image.src = "../assets/Img/asientoRojo.png";
-        }
-        catch {
-          console.log("catch")
-        }
+  async loadSeats(id: number | undefined) {
+    console.log(id)
+    await this.proyeccionService.getproyeccionsById(id as unknown as number).then(res => {
+      this.salaService.getsalasById(res.salaid as unknown as string).then(res2 => {
+        this.currentSala = res2
+        this.rows = Array(this.currentSala.fila - 1).fill(1)
+        this.columns = Array(this.currentSala.columna - 1).fill(1)
+        this.compraService.getSeats(id as unknown as number).then(res3 => {
+          this.seats = res3
+        })
       })
-      console.log(this.seats)
     })
+    return this.seats
+
   }
 
   selectLocation(nombre: string | undefined, id: number | undefined) {
@@ -166,12 +168,32 @@ export class CompraComponent implements OnInit {
   }
   selectTipoBoleto(nombre: string) {
     this.selectedTipoBoleto = nombre
-    if(nombre == "Adulto")
-    this.selectedPrecio = this.selectedMovie.precioadulto as unknown as number
-    else if(nombre == "Niño")
-    this.selectedPrecio = this.selectedMovie.precioninos as unknown as number
+    if (nombre == "Adulto")
+      this.selectedPrecio = this.selectedMovie.precioadulto as unknown as number
+    else if (nombre == "Niño")
+      this.selectedPrecio = this.selectedMovie.precioninos as unknown as number
     else
-    this.selectedPrecio = this.selectedMovie.preciocidoro as unknown as number
+      this.selectedPrecio = this.selectedMovie.preciocidoro as unknown as number
+
+    this.loadSeats(this.currentProyeccion.funcionid).then(res => {
+      this.seats.forEach(seat => {
+        console.log(seat)
+        try {
+          if (seat.numerodeasiento < 10) {
+            var image = document.getElementById('loc0' + seat.numerodeasiento) as HTMLImageElement;
+            image.src = "../assets/Img/asientoGris.png";
+          }
+          else{
+            var image = document.getElementById('loc' + seat.numerodeasiento) as HTMLImageElement;
+            image.src = "../assets/Img/asientoGris.png";
+          }
+        }
+        catch {
+          console.log("catch")
+        }
+      })
+      console.log(this.seats)
+    })
   }
 
   getCapacity() {
@@ -187,23 +209,32 @@ export class CompraComponent implements OnInit {
   selectProyeccion(hora: Date | undefined, id: number | undefined) {
     this.selectedProyeccion = hora
     this.selectedProyeccionID = id
-    this.loadSeats(id)
+    this.proyeccionService.getproyeccionsById(id as unknown as number).then(res => {
+      this.currentProyeccion = res
+    })
   }
 
 
   selectSeat(i: number, j: number) {
     var image = document.getElementById('loc' + i + j) as HTMLImageElement;
-    console.log(image.getAttribute("id"))
     //var previosSeat = document.getElementById('loc' + this.selectedButaca) as HTMLImageElement;
     if (image.src.match("../assets/Img/asientoVerde.png")) {
-      //previosSeat.src = "../assets/Img/asientoVerde.png";
+     // previosSeat.src = "../assets/Img/asientoVerde.png";
       image.src = "../assets/Img/asientoRojo.png";
+      this.selectedButaca = i*10 + j;
+      console.log(this.selectedButaca)
+    }
+    else if(image.src.match("../assets/Img/asientoGris.png")){
+      this.toastr.warning("Asiento reservado")
     }
     else {
       image.src = "../assets/Img/asientoVerde.png";
+      
+      
     }
   }
 }
+
 
 
 

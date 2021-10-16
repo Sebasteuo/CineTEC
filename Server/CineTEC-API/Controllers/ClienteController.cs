@@ -151,6 +151,37 @@ namespace CineTEC_API.Controllers
       return new JsonResult("Updated Successfully");
     }
 
+    [HttpPut("[action]")]
+    public JsonResult UpdateCredenciales(Cliente cliente)
+    {
+      string query = @"
+          update cliente
+          set usuario = @usuario,
+              contrasenna = @contrasenna,
+             
+          where cedulacliente = @cedulacliente
+          ";
+      DataTable table = new DataTable();
+      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
+      NpgsqlDataReader myReader;
+      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
+      {
+        myCon.Open();
+        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
+        {
+          myComand.Parameters.AddWithValue("@cedulacliente", cliente.cedulacliente);
+          myComand.Parameters.AddWithValue("@usuario", cliente.usuario);
+          myComand.Parameters.AddWithValue("@contrasenna", cliente.contrasenna);
+         
+          myReader = myComand.ExecuteReader();
+          table.Load(myReader);
+          myReader.Close();
+          myCon.Close();
+        }
+      }
+      return new JsonResult("Updated Successfully");
+    }
+
     //este metodo recibe como parametro una llave primaria y elimina la tupla con esa llave
     // DELETE api/<EmpleadoController>/5
     [HttpDelete("{id}")]

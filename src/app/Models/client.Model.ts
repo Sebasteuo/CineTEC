@@ -7,4 +7,6 @@ export class Client {
     numerotelefono: number | undefined
     fechanacimiento: Date | undefined
     cedulacliente: number | undefined
+    usuario:string | undefined
+    contrasenna:string | undefined
 }

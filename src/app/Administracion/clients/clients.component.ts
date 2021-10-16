@@ -23,7 +23,9 @@ newClient: Client={
     cedulaempleado:0,
     fechanacimiento:new Date(),
     numerotelefono:0,
-    cedulacliente:0
+    cedulacliente:0,
+    usuario: "",
+    contrasenna: ""
  
   
 }
@@ -36,7 +38,9 @@ selectedClient: Client={
     cedulaempleado:0,
     fechanacimiento:new Date(),
     numerotelefono:0,
-    cedulacliente:0
+    cedulacliente:0,
+    usuario: "",
+    contrasenna: ""
 }
 clients: Client[]=[]
 editingID: number | undefined = 0;
@@ -75,7 +79,9 @@ add(){
     cedulaempleado:0,
     fechanacimiento:new Date(),
     numerotelefono:0,
-    cedulacliente:0
+    cedulacliente:0,
+    usuario: "",
+    contrasenna: ""
   }
 }
 
