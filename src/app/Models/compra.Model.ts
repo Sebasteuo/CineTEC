@@ -3,8 +3,9 @@ export class Compra {
     cine: number | undefined
     pelicula: number | undefined
     proyeccion: number | undefined
-    asientoNiño: number | undefined
+    asientoNino: number | undefined
     asientoAdulto: number | undefined
     asientoCiudadano: number | undefined
     butacas: number[] | undefined
 }
+

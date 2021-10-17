@@ -7,8 +7,9 @@ export class Factura {
     correoelectronico:string =""
     identificacion:number=0
     funcionid: string =""
-    numerodeasiento:number=0
+    numerodeasiento:number[]=[]
     provincia:string =""
     canton:string =""
     distrito:string =""
 }
+

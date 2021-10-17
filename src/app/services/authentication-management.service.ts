@@ -24,14 +24,10 @@ export class AuthenticationManagementService {
     cedulacliente:0,
     usuario:"",
     contrasenna:""
-   
-    
   }
 
   constructor(private router: Router, public toastr: ToastrService, public http: HttpClient) { }
   Users: Credenciales[] = []
-
-
 
   //Hace una consulta en el API para verificar credenciales del usuario y guardar los datos del usuario como cookies
   async login(Credenciales: Credenciales) {
@@ -102,4 +98,5 @@ export class AuthenticationManagementService {
     }
   }
 }
+
 

@@ -10,6 +10,7 @@ import { Butaca } from '../Models/butaca.model';
 import { FacturacionManagementService } from './facturacion-management.service';
 import { Factura } from '../Models/factura.model';
 import { jsPDF } from "jspdf";
+import { Compra } from '../Models/compra.Model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class CompraManagementService {
     identificacion: 0,
     funcionid: "",
     facturaid: 0,
-    numerodeasiento: 1,
+    numerodeasiento: [],
     provincia: "",
     canton: "",
     distrito: ""
@@ -49,13 +50,15 @@ export class CompraManagementService {
   }
 
 
-  async purchase(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura, proyeccionid: string) {
-    this.butacaXFuncion.numerodeasiento = factura.numerodeasiento
-    this.butacaXFuncion.funcionid = proyeccionid
-    await this.http.post(environment.api + "/butacaXFuncion", this.butacaXFuncion).toPromise().then(res => {
-      this.facturacionservice.addFactura(sucursal, sala, proyeccion, pelicula, factura).then(res2 => {
-        this.newFactura = res2
+  async purchase(sucursal: string, sala: string, proyeccion: string, pelicula: Movie, factura: Factura, proyeccionid: string, compra: Compra) {
+    factura.numerodeasiento.forEach(asiento => {
+      this.butacaXFuncion.numerodeasiento = asiento
+      this.butacaXFuncion.funcionid = proyeccionid
+      this.http.post(environment.api + "/butacaXFuncion", this.butacaXFuncion).toPromise().then(res => {
       })
+    })
+    await this.facturacionservice.addFactura(sucursal, sala, proyeccion, pelicula, factura, compra).then(res2 => {
+      this.newFactura = res2
     })
     return this.newFactura
   }
@@ -68,17 +71,17 @@ export class CompraManagementService {
     return this.butacas
   }
 
-  async getXML(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura) {
+  async getXML(sucursal: string, sala: string, proyeccion: string, pelicula: Movie, factura: Factura) {
     await this.facturacionservice.generateXML(sucursal, sala, proyeccion, pelicula, factura).then(res3 => {
       this.xml = res3
     })
     return this.xml
   }
 
-  async getPDF(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura){
+  async getPDF(sucursal: string, sala: string, proyeccion: string, pelicula: Movie, factura: Factura) {
     var doc = new jsPDF({ putOnlyUsedFonts: true });
-   await this.facturacionservice.generatePDF(sucursal, sala, proyeccion, pelicula, factura).then(res =>{doc = res});
-   return doc
+    await this.facturacionservice.generatePDF(sucursal, sala, proyeccion, pelicula, factura).then(res => { doc = res });
+    return doc
   }
 
   async getMovies(id: string) {
@@ -107,6 +110,7 @@ export class CompraManagementService {
   }
 
 }
+
 
 
 

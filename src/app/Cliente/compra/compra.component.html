@@ -92,27 +92,36 @@
                                             <div class="form">
                                                 <div class="form-row">
                                                     <div class="col form-group">
-                                                        <label>Seleccione tipo de boleto </label>
+                                                        <label>Seleccione la cantidad de boletos</label>
                                                     </div>
                                                     <div class="col form-group">
-                                                        <div ngbDropdown class="d-inline-block">
-                                                            <button class="btn btn-outline-primary"
-                                                                id="dropdownBasic1"
-                                                                ngbDropdownToggle>{{selectedTipoBoleto}}</button>
-                                                            <div ngbDropdownMenu
-                                                                aria-labelledby="dropdownBasic1">
-                                                                <button *ngFor="let boleto of boletos"
-                                                                    ngbDropdownItem
-                                                                    (click)="selectTipoBoleto(boleto)">{{boleto}}</button>
-
-                                                            </div>
-                                                        </div>
+                                                        <label>Adulto</label>
+                                                        <input name="quantity" class="form-control" type="number"
+                                                            placeholder="Adulto" [(ngModel)]="newCompra.asientoAdulto">
+                                                    </div>
+                                                    <div class="col form-group">
+                                                        <label>Niño</label>
+                                                        <input name="quantity" class="form-control" type="number"
+                                                            placeholder="Niño" [(ngModel)]="newCompra.asientoNino">
+                                                    </div>
+                                                    <div class="col form-group">
+                                                        <label>Ciudadano de oro</label>
+                                                        <input name="quantity" class="form-control" type="number"
+                                                            placeholder="Ciudadano de oro"
+                                                            [(ngModel)]="newCompra.asientoCiudadano">
+                                                    </div>
+                                                    <div class="col form-group">
+                                                        <button class="btn btn-primary btn-block"
+                                                            (click)="loadSeatSelector()">Elegir asientos</button>
                                                     </div>
                                                 </div>
-                                                <div class="row" *ngFor="let fila of rows; index as i;">
-                                                    <div class="col" *ngFor="let column of columns; index as j;">
-                                                        <img [id]="'loc' + i + j" class="seat" src="../assets/Img/asientoVerde.png"
-                                                            (click)="selectSeat(i, j)">
+                                                <div *ngIf="showSeats">
+                                                    <div class="row" *ngFor="let fila of rows; index as i;">
+                                                        <div class="col" *ngFor="let column of columns; index as j;">
+                                                            <img [id]="'loc' + i + j" class="seat"
+                                                                src="../assets/Img/asientoVerde.png"
+                                                                (click)="selectSeat(i, j)">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -130,8 +139,9 @@
                                                             <label>Identificación: </label>
                                                         </div>
                                                         <div class="col form-group">
-                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.identificacion"
-                                                                required>
+                                                            <input name="quantity" class="form-control"
+                                                                placeholder="Nombre" value="{{newFactura.identificacion}}"
+                                                                [(ngModel)]="newFactura.identificacion" required>
                                                         </div>
                                                     </div>
 
@@ -140,7 +150,8 @@
                                                             <label>Nombre Completo: </label>
                                                         </div>
                                                         <div class="col form-group">
-                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.nombre"
+                                                            <input name="quantity" class="form-control"
+                                                                placeholder="Nombre" [(ngModel)]="newFactura.nombre"
                                                                 required>
                                                         </div>
                                                     </div>
@@ -150,7 +161,8 @@
                                                             <label>Teléfono: </label>
                                                         </div>
                                                         <div class="col form-group">
-                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.telefono"
+                                                            <input name="quantity" class="form-control"
+                                                                placeholder="Nombre" [(ngModel)]="newFactura.telefono"
                                                                 required>
                                                         </div>
                                                     </div>
@@ -160,8 +172,9 @@
                                                             <label>Correo: </label>
                                                         </div>
                                                         <div class="col form-group">
-                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.correoelectronico"
-                                                                required>
+                                                            <input name="quantity" class="form-control"
+                                                                placeholder="Nombre"
+                                                                [(ngModel)]="newFactura.correoelectronico" required>
                                                         </div>
                                                     </div>
 
@@ -170,7 +183,8 @@
                                                             <label>Provincia: </label>
                                                         </div>
                                                         <div class="col form-group">
-                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.provincia"
+                                                            <input name="quantity" class="form-control"
+                                                                placeholder="Nombre" [(ngModel)]="newFactura.provincia"
                                                                 required>
                                                         </div>
                                                     </div>
@@ -180,7 +194,8 @@
                                                             <label>Distrito: </label>
                                                         </div>
                                                         <div class="col form-group">
-                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.distrito"
+                                                            <input name="quantity" class="form-control"
+                                                                placeholder="Nombre" [(ngModel)]="newFactura.distrito"
                                                                 required>
                                                         </div>
                                                     </div>
@@ -190,7 +205,8 @@
                                                             <label>Cantón: </label>
                                                         </div>
                                                         <div class="col form-group">
-                                                            <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="newFactura.canton"
+                                                            <input name="quantity" class="form-control"
+                                                                placeholder="Nombre" [(ngModel)]="newFactura.canton"
                                                                 required>
                                                         </div>
                                                     </div>
@@ -198,11 +214,15 @@
 
 
                                                     <div class="col form-group">
-                                                        <button class="btn btn-primary btn-block" (click)="pay()">Comprar</button>
+                                                        <button class="btn btn-primary btn-block"
+                                                            (click)="pay()">Comprar</button>
                                                     </div>
                                                     <div class="col form-group">
-                                                        <button class="btn btn-primary btn-block"><a style="color: white;" [href]="fileURL" download="factura.xml">Descargar XML</a></button>
-                                                        <button class="btn btn-primary btn-block" (click)="downloadPDF()">Descargar PDF</button>
+                                                        <button class="btn btn-primary btn-block"><a
+                                                                style="color: white;" [href]="fileURL"
+                                                                download="factura.xml">Descargar XML</a></button>
+                                                        <button class="btn btn-primary btn-block"
+                                                            (click)="downloadPDF()">Descargar PDF</button>
                                                     </div>
                                                 </form>
                                             </div>

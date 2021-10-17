@@ -5,6 +5,9 @@ import * as JsonToXML from "js2xmlparser";
 import { environment } from 'src/environments/environment';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { jsPDF } from "jspdf";
+import { Compra } from '../Models/compra.Model';
+import { Asientoxfactura } from '../Models/asientoxfactura.model';
+import { Movie } from '../Models/movie.Model';
 
 
 
@@ -24,7 +27,7 @@ export class FacturacionManagementService {
     identificacion: 0,
     funcionid: "",
     facturaid: 0,
-    numerodeasiento: 1,
+    numerodeasiento: [],
     provincia: "",
     canton: "",
     distrito: ""
@@ -84,21 +87,23 @@ export class FacturacionManagementService {
     }
   };
 
-  
- 
- 
+  newAsientoXfactura: Asientoxfactura = {
+    numerodeasiento: 0,
+    facturaid: 0
+  }
+
 
   async getConsecutivo() {
 
   }
 
-  async generateXML(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura) {
+  async generateXML(sucursal: string, sala: string, proyeccion: string, pelicula: Movie, factura: Factura) {
     this.obj.Receptor.Nombre = factura.nombre
     this.obj.Receptor.Identificación.Numero = factura.identificacion
     this.obj.Receptor.Ubicación.Provincia = factura.provincia
     this.obj.Receptor.Ubicación.Cantón = factura.canton
     this.obj.Receptor.Ubicación.Distrito = factura.distrito
-    this.obj.DetalleServicio.LineaDetalle[0].Detalle = "Boleto para " + pelicula + ",sucursal " + sucursal +
+    this.obj.DetalleServicio.LineaDetalle[0].Detalle = "Boleto para " + pelicula.nombre + ",sucursal " + sucursal +
       ",sala " + sala + ",tanda " + proyeccion + ",asiento " + factura.numerodeasiento
     this.obj.DetalleServicio.LineaDetalle[0].PrecioUnitario = factura.monto
     this.obj.DetalleServicio.LineaDetalle[0].SubTotal = factura.monto
@@ -111,51 +116,67 @@ export class FacturacionManagementService {
     return JsonToXML.parse("FacturaElectronica", this.obj)
   }
 
-  async generatePDF(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura) {
+  async generatePDF(sucursal: string, sala: string, proyeccion: string, pelicula: Movie, factura: Factura) {
     var pdfHeader = [{
-      Descripcion: "Boleto para " + pelicula + ",sucursal " + sucursal +
-      ",sala " + sala + ",tanda " + proyeccion + ",asiento " + factura.numerodeasiento,
+      Descripcion: "Boleto para " + pelicula.nombre + ",sucursal " + sucursal +
+        ",sala " + sala + ",tanda " + proyeccion + ",asiento " + factura.numerodeasiento,
       PrecioUnit: factura.monto as unknown as string,
       Cantidad: "1",
       Impuesto: (factura.monto * 0.13) as unknown as string,
       Total: (factura.monto * 0.13 + factura.monto) as unknown as string
     }]
-    
+
     var doc = new jsPDF({ orientation: "landscape" })
-    var totalIVA = factura.monto*0.13+factura.monto
-    var IVA = factura.monto*0.13
+    var totalIVA = factura.monto * 0.13 + factura.monto
+    var IVA = factura.monto * 0.13
     doc.text("Factura Electrónica", 10, 20);
     doc.text("CineTEC S.A", 10, 26);
     doc.text("Cartago, Cartago, Oriental", 10, 32);
     doc.text("2014CD-000196-74900", 10, 38);
-    doc.text("Clave: "+ "22156403300003350660000" + factura.facturaid as unknown as string, 10, 44);
-    doc.text("Consecutivo: "+ "0000010000000000" + factura.facturaid as unknown as string, 10, 50);
-    doc.text("Fecha de Emisión: "+ (new Date()).toDateString(), 10, 56);
+    doc.text("Clave: " + "22156403300003350660000" + factura.facturaid as unknown as string, 10, 44);
+    doc.text("Consecutivo: " + "0000010000000000" + factura.facturaid as unknown as string, 10, 50);
+    doc.text("Fecha de Emisión: " + (new Date()).toDateString(), 10, 56);
     doc.setLineWidth(1);
     doc.line(10, 60, 190, 60);
-    doc.text("Nombre: "+ factura.nombre, 10, 66);
-    doc.text("Correo: "+ factura.correoelectronico, 10, 72);
-    doc.text("Teléfono: "+ factura.telefono, 10, 78);
-    doc.text("Direccion: "+ factura.provincia +" "+ factura.canton+ " "+factura.distrito, 10, 84);
+    doc.text("Nombre: " + factura.nombre, 10, 66);
+    doc.text("Correo: " + factura.correoelectronico, 10, 72);
+    doc.text("Teléfono: " + factura.telefono, 10, 78);
+    doc.text("Direccion: " + factura.provincia + " " + factura.canton + " " + factura.distrito, 10, 84);
 
-    doc.table(30, 90, pdfHeader, ["Descripcion", "PrecioUnit", "Cantidad", "Impuesto", "Total" ], { printHeaders: true });
-    doc.text("SubTotal: "+ factura.monto, 130, 120);
-    doc.text("Descuento: "+"0",130, 126);
-    doc.text("Impuesto: "+ IVA, 130, 132);
-    doc.text("TotalGrav: "+ totalIVA, 130, 138);
-    doc.text("TotalEx: "+"0", 130, 144);
-    doc.text("Total: "+totalIVA, 130, 150);
-
-  
-
+    doc.table(30, 90, pdfHeader, ["Descripcion", "PrecioUnit", "Cantidad", "Impuesto", "Total"], { printHeaders: true });
+    doc.text("SubTotal: " + factura.monto, 130, 120);
+    doc.text("Descuento: " + "0", 130, 126);
+    doc.text("Impuesto: " + IVA, 130, 132);
+    doc.text("TotalGrav: " + totalIVA, 130, 138);
+    doc.text("TotalEx: " + "0", 130, 144);
+    doc.text("Total: " + totalIVA, 130, 150);
     return doc
   }
 
-  async addFactura(sucursal: string, sala: string, proyeccion: string, pelicula: string, factura: Factura) {
-    await this.http.post(environment.api + "/factura", factura).toPromise().then(res => {
-      this.http.post(environment.api + "/factura/getFactura", factura).toPromise().then(res2 => {
+  async addFactura(sucursal: string, sala: string, proyeccion: string, pelicula: Movie, factura: Factura, compra: Compra) {
+    const body = {
+      monto: factura.monto,
+      nombre: factura.nombre,
+      telefono: factura.telefono,
+      correoelectronico: factura.correoelectronico,
+      identificacion: factura.identificacion,
+      funcionid: factura.funcionid,
+      facturaid: factura.facturaid,
+      numerodeasiento: factura.numerodeasiento[0],
+      provincia: factura.provincia,
+      canton: factura.canton,
+      distrito: factura.distrito
+    }
+    await this.http.post(environment.api + "/factura", body).toPromise().then(res => {
+      this.http.post(environment.api + "/factura/getFactura", body).toPromise().then(res2 => {
         this.newFactura = factura
         this.newFactura.facturaid = (res2 as Factura[])[0].facturaid
+        this.newAsientoXfactura.facturaid = this.newFactura.facturaid
+        factura.numerodeasiento.forEach(asiento => {
+          this.newAsientoXfactura.numerodeasiento = asiento
+          this.http.post(environment.api + "/asientoxfactura", this.newAsientoXfactura).toPromise().then(res3 => {
+          })
+        })
       })
     })
     return this.newFactura
@@ -163,5 +184,6 @@ export class FacturacionManagementService {
 
 
 }
+
 
 

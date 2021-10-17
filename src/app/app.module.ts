@@ -8,6 +8,7 @@ import { MoviesComponent } from './Administracion/movies/movies.component';
 import { LocationsComponent } from './Administracion/locations/locations.component';
 import { SalasComponent } from './Administracion/salas/salas.component';
 import { NavigationComponent } from './Others/navigation/navigation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavigationAdminComponent } from './Others/navigation-admin/navigation-admin.component';
 import { NavigationClientComponent } from './Others/navigation-client/navigation-client.component';
 import { LoginComponent } from './Others/login/login.component';
@@ -50,6 +51,7 @@ import { CompraComponent } from './Cliente/compra/compra.component';
     HttpClientModule,
     ToastrModule.forRoot(), // ToastrModule added
     FlatpickrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
