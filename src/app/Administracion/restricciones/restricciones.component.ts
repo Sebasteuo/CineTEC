@@ -14,16 +14,12 @@ export class RestriccionesComponent implements OnInit {
     //Servicios se deben invocar acá
     //VARIABLES. SINTAXIS= Nombre:Tipo = Valor
  }
-aforo: Aforo={
-  porcentaje:0
- 
-  
-}
+aforo: number=0
 
 
 ngOnInit(): void { //Función que se ejecuta de primero cuando carga componentes
   
-  this.aforoServices.getaforo().then(res=>this.aforo.porcentaje=res);
+  
  
 }
 
@@ -31,7 +27,7 @@ ngOnInit(): void { //Función que se ejecuta de primero cuando carga componentes
 
 //Envía los datos del aforoe modificados, pertenece al botón de "aceptar"
 submit(){
-  this.aforoServices.editaforo(this.aforo.porcentaje as unknown as number).then(res=>{this.aforo.porcentaje=res});
+  this.aforoServices.editaforo(this.aforo as unknown as number);
 }
 
 }

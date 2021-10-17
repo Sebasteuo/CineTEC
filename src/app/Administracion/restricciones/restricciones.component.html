@@ -18,11 +18,12 @@
                                                 <label>Aforo máximo permitido: </label>
                                             </div>
                                             <div class="col form-group">
-                                                <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="aforo.porcentaje"
+                                                <input name="quantity" class="form-control" placeholder="Nombre" [(ngModel)]="aforo"
                                                     required>
+                                                   
                                             </div>
                                         </div>
-
+<div class="form-row">  <label>Escriba el porcentaje en formato con decimales</label> </div>
                                         <div class="col form-groupform-group">
                                             <button class="btn btn-primary btn-block" (click)="submit()">Actualizar</button>
                                         </div>

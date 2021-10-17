@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { Aforo } from '../Models/aforo.Model';
 import { Sala } from '../Models/sala.Model';
@@ -19,7 +20,7 @@ export class SalaManagementService {
     capacidad: 0
   }
   
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, private toastr: ToastrService) { }
 
   async getsalas() {  //Función que obtiene salaes
     await this.http.get(environment.api + "/sala").toPromise().then(res => {
@@ -61,7 +62,9 @@ export class SalaManagementService {
 
 
   async editaforo(aforo: number) {
-    await this.http.put(environment.api + "/aforo", aforo).toPromise().then(res => { this.getaforo().then(result => { this.aforo = result }) })
+    await this.http.put(environment.api + "/sala/UpdateCapacidad/"+ aforo,aforo).toPromise().then(res => { 
+      this.toastr.success("Aforo actualizado")
+     }, error => { this.toastr.error("No se ha podido actualizar, use un número con decimales")  })
     return this.aforo
   }
 

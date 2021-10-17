@@ -13,13 +13,13 @@ namespace CineTEC_API.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class SalaController : ControllerBase
+  public class AsientoXFacturaController : ControllerBase
   {
     private string cadenaDeConexion = "PostgreSQLConnection"; //hace referencia a la cadena de conexion en appsettings.json
     private readonly IConfiguration _configuration;
 
     //el metodo constructor recibe como parametro una instancia de la interface Iconfiguration que permite la representacion de un conjunto de propiedades clave/valor
-    public SalaController(IConfiguration configuration)
+    public AsientoXFacturaController(IConfiguration configuration)
     {
       _configuration = configuration;
     }
@@ -30,8 +30,8 @@ namespace CineTEC_API.Controllers
     public JsonResult GetAll()
     {
       string query = @"
-          select salaid, columna, fila, capacidad, codigosucursal
-          from sala
+          select facturaid, numerodeasiento
+          from asientoxfactura
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -41,32 +41,6 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myReader = myComand.ExecuteReader();
-          table.Load(myReader);
-          myReader.Close();
-          myCon.Close();
-        }
-      }
-      return new JsonResult(table);
-    }
-
-    [HttpGet("[action]/{salaid}")]
-    public JsonResult GetSalasByLocation(string salaid)
-    {
-      string query = @"
-          select salaid, columna, fila, capacidad, codigosucursal
-          from sala
-          where codigosucursal = @codigosucursal
-          ";
-      DataTable table = new DataTable();
-      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
-      NpgsqlDataReader myReader;
-      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
-      {
-        myCon.Open();
-        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
-        {
-          myComand.Parameters.AddWithValue("@codigosucursal", salaid);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -82,9 +56,9 @@ namespace CineTEC_API.Controllers
     public JsonResult GetOne(string id)
     {
       string query = @"
-          select salaid, columna, fila, capacidad, codigosucursal
-          from sala
-          where salaid = @salaid
+          select facturaid, numerodeasiento
+          from asientoxfactura
+          where facturaid = @facturaid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -94,7 +68,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", id);
+          myComand.Parameters.AddWithValue("@facturaid", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -107,11 +81,11 @@ namespace CineTEC_API.Controllers
     //este metodo recibe como parametro un objeto con sus atributos para insertarlo como tupla en la tabla
     // POST api/<EmpleadoController>
     [HttpPost]
-    public JsonResult Create(Sala sala)
+    public JsonResult Create(AsientoXFactura asientoxfactura)
     {
       string query = @"
-          insert into sala(salaid, columna, fila, capacidad, codigosucursal)
-          values (@salaid, @columna, @fila, @capacidad, @codigosucursal)
+          insert into asientoxfactura(facturaid, numerodeasiento)
+          values (@facturaid, @numerodeasiento)
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -121,11 +95,8 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", sala.salaid);
-          myComand.Parameters.AddWithValue("@columna", sala.columna);
-          myComand.Parameters.AddWithValue("@fila", sala.fila);
-          myComand.Parameters.AddWithValue("@capacidad", sala.capacidad);
-          myComand.Parameters.AddWithValue("@codigosucursal", sala.codigosucursal);
+          myComand.Parameters.AddWithValue("@facturaid", asientoxfactura.facturaid);
+          myComand.Parameters.AddWithValue("@numerodeasiento", asientoxfactura.numerodeasiento);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -138,16 +109,13 @@ namespace CineTEC_API.Controllers
     //este metodo recibe como parametro un objeto que tiene como llave primaria la misma llave que en una tupla existente para actualizar todos los atributos igual a los del objeto
     // PUT api/<EmpleadoController>/5
     [HttpPut]
-    public JsonResult Update(Sala sala)
+    public JsonResult Update(AsientoXFactura asientoxfactura)
     {
       string query = @"
-          update sala
-          set salaid = @salaid,
-              columna = @columna,
-              fila = @fila,
-              capacidad = @capacidad,
-              codigosucursal = @codigosucursal
-            where salaid = @salaid
+          update asientoxfactura
+          set facturaid = @facturaid,
+              numerodeasiento = @numerodeasiento
+          where numerodeasiento = @numerodeasiento
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -157,40 +125,8 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", sala.salaid);
-          myComand.Parameters.AddWithValue("@columna", sala.columna);
-          myComand.Parameters.AddWithValue("@fila", sala.fila);
-          myComand.Parameters.AddWithValue("@capacidad", sala.capacidad);
-          myComand.Parameters.AddWithValue("@codigosucursal", sala.codigosucursal);
-          myReader = myComand.ExecuteReader();
-          table.Load(myReader);
-          myReader.Close();
-          myCon.Close();
-        }
-      }
-      return new JsonResult("Updated Successfully");
-    }
-
-
-    [HttpPut("[action]/{aforo}")]
-    public JsonResult UpdateCapacidad(double aforo)
-    {
-      string query = @"
-          update sala
-          set 
-              capacidad = @aforo * columna * fila
-    
-          ";
-      DataTable table = new DataTable();
-      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
-      NpgsqlDataReader myReader;
-      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
-      {
-        myCon.Open();
-        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
-        {
-          myComand.Parameters.AddWithValue("@aforo", aforo);
-          
+          myComand.Parameters.AddWithValue("@facturaid", asientoxfactura.facturaid);
+          myComand.Parameters.AddWithValue("@numerodeasiento", asientoxfactura.numerodeasiento);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -206,8 +142,8 @@ namespace CineTEC_API.Controllers
     public JsonResult Delete(string id)
     {
       string query = @"
-          delete from sala
-          where salaid = @salaid
+          delete from asientoxfactura
+          where numerodeasiento = @numerodeasiento
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -217,32 +153,7 @@ namespace CineTEC_API.Controllers
         myCon.Open();
         using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
         {
-          myComand.Parameters.AddWithValue("@salaid", id);
-          myReader = myComand.ExecuteReader();
-          table.Load(myReader);
-          myReader.Close();
-          myCon.Close();
-        }
-      }
-      return new JsonResult("Deleted Successfully");
-    }
-
-    [HttpDelete("[action]/{id}")]
-    public JsonResult DeleteBySucursal(string id)
-    {
-      string query = @"
-          delete from sala
-          where codigosucursal = @codigosucursal
-          ";
-      DataTable table = new DataTable();
-      string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
-      NpgsqlDataReader myReader;
-      using (NpgsqlConnection myCon = new NpgsqlConnection(sqlDataSource))
-      {
-        myCon.Open();
-        using (NpgsqlCommand myComand = new NpgsqlCommand(query, myCon))
-        {
-          myComand.Parameters.AddWithValue("@codigosucursal", id);
+          myComand.Parameters.AddWithValue("@numerodeasiento", id);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();
@@ -253,8 +164,3 @@ namespace CineTEC_API.Controllers
     }
   }
 }
-
-
-
-
-

@@ -115,6 +115,14 @@
                                                             (click)="loadSeatSelector()">Elegir asientos</button>
                                                     </div>
                                                 </div>
+                                                <div class="form-row">
+                                                    <div class="col form-group">
+                                                        <label>Aforo máximo permitido: {{capacidadMaxima}}</label>
+                                                        </div>
+                                                        <div class="col form-group">
+                                                            <label>Aforo disponible: {{capacidadDisponible}}</label>
+                                                            </div>
+                                                        </div>
                                                 <div *ngIf="showSeats">
                                                     <div class="row" *ngFor="let fila of rows; index as i;">
                                                         <div class="col" *ngFor="let column of columns; index as j;">

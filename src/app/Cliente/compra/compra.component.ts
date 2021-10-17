@@ -98,6 +98,8 @@ export class CompraComponent implements OnInit {
   selectedButaca: number[] = []
   doc = new jsPDF({ putOnlyUsedFonts: true })
   showSeats: boolean = false
+  capacidadMaxima: number =0
+  capacidadDisponible: number =0
 
   constructor(private compraService: CompraManagementService, private proyeccionService: ProyeccionManagementService,
     private salaService: SalaManagementService, private sanitizer: DomSanitizer, private toastr: ToastrService) { }
@@ -152,10 +154,12 @@ export class CompraComponent implements OnInit {
     await this.proyeccionService.getproyeccionsById(id as unknown as number).then(res => {
       this.salaService.getsalasById(res.salaid as unknown as string).then(res2 => {
         this.currentSala = res2
-        this.rows = Array(this.currentSala.fila - 1).fill(1)
-        this.columns = Array(this.currentSala.columna - 1).fill(1)
+        this.rows = Array(this.currentSala.fila).fill(1)
+        this.columns = Array(this.currentSala.columna).fill(1)
+        this.capacidadMaxima= this.currentSala.capacidad
         this.compraService.getSeats(id as unknown as number).then(res3 => {
           this.seats = res3
+        this.capacidadDisponible = this.capacidadMaxima-this.seats.length
         })
       })
     })
@@ -219,6 +223,7 @@ export class CompraComponent implements OnInit {
 
 
   selectSeat(i: number, j: number) {
+    if(this.capacidadDisponible != 0){
     if (((this.newCompra.asientoAdulto as unknown as number) + (this.newCompra.asientoNino as unknown as number) +
       (this.newCompra.asientoCiudadano as unknown as number)) > this.selectedButaca.length) {
       var image = document.getElementById('loc' + i + j) as HTMLImageElement;
@@ -227,6 +232,7 @@ export class CompraComponent implements OnInit {
         // previosSeat.src = "../assets/Img/asientoVerde.png";
         image.src = "../assets/Img/asientoRojo.png";
         this.selectedButaca.push(i * 10 + j);
+        this.capacidadDisponible--
       }
       else if (image.src.match("../assets/Img/asientoGris.png")) {
         this.toastr.warning("Asiento reservado")
@@ -234,12 +240,17 @@ export class CompraComponent implements OnInit {
       else {
         this.selectedButaca = this.selectedButaca.filter(obj => obj !== (i * 10 + j));
         image.src = "../assets/Img/asientoVerde.png";
+        this.capacidadDisponible++
       }
       console.log(this.selectedButaca)
     }
     else {
       this.toastr.warning("Todos los asiento seleccionados")
     }
+  }
+  else {
+    this.toastr.warning("Aforo máximo alcanzado")
+  }
 
   }
 }
