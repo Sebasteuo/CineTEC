@@ -58,7 +58,16 @@
                                             </div>
                                         </div>
 
-                            
+                                        <div class="form-row">
+                                            <div class="col form-group">
+                                                <label>Código de Sucursal: </label>
+                                            </div>
+                                            <div class="col form-group">
+                                                <input name="quantity" class="form-control" placeholder="Codigo sucursal" [(ngModel)]="newempleado.codigosucursal"
+                                                    required>
+                                            </div>
+                                        </div>
+
 
                                         <div class="form-row">
                                             <div class="col form-group">
@@ -169,8 +178,7 @@
                                                     <th>Fecha de Ingreso</th>
                                                     <th>Rol</th>
                                                     <th>Usuario</th>
-                                                    <th>Contrasena</th>
-
+                                                    <th>Sucursal</th>
                                                     
                                                     <th colspan="2"></th>
                                                 </tr>
@@ -218,10 +226,11 @@
                                                             <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.usuario}}"
                                                                 [(ngModel)]="selectedempleado.usuario" class="form-control"></td>
 
-                                                                <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.contrasenna}}</td>
-                                                            <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.contrasenna}}"
-                                                                [(ngModel)]="selectedempleado.contrasenna" class="form-control"></td>
-                                               
+                                                              
+
+                                                                <td *ngIf='editingID != empleado.cedulaempleado'>{{empleado.codigosucursal}}</td>
+                                                                <td *ngIf='editingID == empleado.cedulaempleado'><input value="{{selectedempleado.codigosucursal}"
+                                                                    [(ngModel)]="selectedempleado.codigosucursal" class="form-control"></td>
 
                                                         
 

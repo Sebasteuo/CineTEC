@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { Empleado } from 'src/app/Models/empleado.Model';
 import { Rol } from 'src/app/Models/rol.Model';
 import { EmpleadoManagementService } from 'src/app/services/empleado-management.service';
+import * as Crypto from "crypto-js"
 
 @Component({
   selector: 'app-empleado',
@@ -30,7 +31,8 @@ newempleado: Empleado={
   fechaingreso: new Date(),
   rol: "",
   usuario: "",
-  contrasenna: 0
+  contrasenna: "",
+  codigosucursal:""
    
  
  
@@ -49,7 +51,8 @@ selectedempleado: Empleado={
   fechaingreso: new Date(),
   rol: "",
   usuario: "",
-  contrasenna: 0
+  contrasenna: "",
+  codigosucursal:""
 }
 empleados: Empleado[]=[]
 editingID: number | undefined = 0;
@@ -86,6 +89,9 @@ submit(){
 
 //Envía los datos de un nuevo empleadoe al servicio
 add(){
+
+  var pass = (CryptoJS.MD5(this.newempleado.contrasenna as unknown as string) as unknown) as string;
+  this.newempleado.contrasenna= CryptoJS.enc.Base64.stringify(Crypto.SHA256(pass));
   this.newempleado.rol = this.selectedRol
   this.empleadoServices.addempleado(this.newempleado).then(res=>{this.empleados=res});
   this.newempleado = {
@@ -99,7 +105,8 @@ add(){
     fechaingreso: new Date(),
     rol: "",
     usuario: "",
-    contrasenna: 0
+    contrasenna: "",
+    codigosucursal: ""
   }
 }
 

@@ -9,5 +9,6 @@ export class Empleado {
     fechaingreso: Date | undefined
     rol: string  | undefined
     usuario: string | undefined
-    contrasenna: number | undefined
+    contrasenna: string | undefined
+    codigosucursal: string | undefined
 }

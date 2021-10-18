@@ -66,10 +66,15 @@ export class MoviesService {
   }
 
   async getProtagonistaById(id: string) {
+    var prot = ""
     await this.http.get(environment.api + "/Protagonista/" + id).toPromise().then(res => {
       this.protagonista = res as Protagonista[]
+      this.protagonista.forEach(name => {
+        prot = prot.concat(name.nombreprotagonista.toString() + ",")
+      })
     })
-    return this.protagonista
+    
+    return prot
   }
 
   async getClasificacionById(id: string) {
@@ -101,21 +106,21 @@ export class MoviesService {
         })
       })
     })
-
-
-
     return this.Movies
   }
 
   //Envía los datos modificados al API (esta función se comporta igual a la que account-management.service)
   async editMovie(Movie: Movie) {
     await this.http.put(environment.api + "/Pelicula", Movie).toPromise().then(res => {
-      this.newProtagonista.peliid = Movie.peliid as unknown as string
-      this.newProtagonista.nombreprotagonista = Movie.protagonistas as unknown as string
       try {
-        this.http.put(environment.api + '/Protagonista', this.newProtagonista).toPromise().then(res2 => {
-
+        this.http.delete(environment.api + '/Protagonista/' + Movie.peliid).toPromise().then(res => {
         })
+        var lines = (Movie.protagonistas as unknown as string).split(',')
+          lines.forEach(line => {
+            this.newProtagonista.peliid = Movie.peliid as unknown as string
+            this.newProtagonista.nombreprotagonista = line as unknown as string
+            this.http.post(environment.api + "/Protagonista", this.newProtagonista).toPromise().then(res4 => { })
+          })
       }
       catch { this.toastr.error("No se ha podido actualizar el protagonista") }
       this.newDirector.peliid = Movie.peliid as unknown as string
@@ -149,21 +154,25 @@ export class MoviesService {
     this.newDirector.nombredirector = Movie.director as unknown as string
     this.newClasificacion.peliid = Movie.peliid as unknown as string
     this.newClasificacion.descripcion = Movie.clasificacion as unknown as string
-    this.newProtagonista.peliid = Movie.peliid as unknown as string
-    this.newProtagonista.nombreprotagonista = Movie.protagonistas as unknown as string
-   
+
+
     await this.http.post(environment.api + "/Pelicula", Movie).toPromise().then(res => {
       this.http.post(environment.api + "/Director", this.newDirector).toPromise().then(res2 => {
-        this.http.post(environment.api + "/Protagonista", this.newProtagonista).toPromise().then(res3 => {
-          this.http.post(environment.api + "/Clasificacion", this.newClasificacion).toPromise().then(res4 => {
-              this.getMovies().then(result => { this.Movies = result })
+        this.http.post(environment.api + "/Clasificacion", this.newClasificacion).toPromise().then(res3 => {
+          var lines = (Movie.protagonistas as unknown as string).split(',')
+          lines.forEach(line => {
+            this.newProtagonista.peliid = Movie.peliid as unknown as string
+            this.newProtagonista.nombreprotagonista = line as unknown as string
+            this.http.post(environment.api + "/Protagonista", this.newProtagonista).toPromise().then(res4 => { })
           })
+          this.getMovies().then(result => { this.Movies = result })
         })
       })
     })
     return this.Movies;
   }
 }
+
 
 
 

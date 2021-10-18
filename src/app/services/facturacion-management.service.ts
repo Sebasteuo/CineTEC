@@ -117,18 +117,18 @@ export class FacturacionManagementService {
   }
 
   async generatePDF(sucursal: string, sala: string, proyeccion: string, pelicula: Movie, factura: Factura) {
+    var totalIVA = factura.monto * 0.13 + factura.monto as unknown as string
+    var IVA = factura.monto * 0.13 as unknown as string
     var pdfHeader = [{
-      Descripcion: "Boleto para " + pelicula.nombre + ",sucursal " + sucursal +
-        ",sala " + sala + ",tanda " + proyeccion + ",asiento " + factura.numerodeasiento,
-      PrecioUnit: factura.monto as unknown as string,
+      Descripcion: pelicula.nombre + sucursal +
+        ",sala " + sala  + proyeccion + ",asiento " + factura.numerodeasiento,
+      
       Cantidad: "1",
-      Impuesto: (factura.monto * 0.13) as unknown as string,
-      Total: (factura.monto * 0.13 + factura.monto) as unknown as string
+      Total: totalIVA
     }]
 
-    var doc = new jsPDF({ orientation: "landscape" })
-    var totalIVA = factura.monto * 0.13 + factura.monto
-    var IVA = factura.monto * 0.13
+    var doc = new jsPDF()
+    doc.setFontSize(10)
     doc.text("Factura Electrónica", 10, 20);
     doc.text("CineTEC S.A", 10, 26);
     doc.text("Cartago, Cartago, Oriental", 10, 32);
@@ -143,13 +143,19 @@ export class FacturacionManagementService {
     doc.text("Teléfono: " + factura.telefono, 10, 78);
     doc.text("Direccion: " + factura.provincia + " " + factura.canton + " " + factura.distrito, 10, 84);
 
-    doc.table(30, 90, pdfHeader, ["Descripcion", "PrecioUnit", "Cantidad", "Impuesto", "Total"], { printHeaders: true });
-    doc.text("SubTotal: " + factura.monto, 130, 120);
-    doc.text("Descuento: " + "0", 130, 126);
-    doc.text("Impuesto: " + IVA, 130, 132);
-    doc.text("TotalGrav: " + totalIVA, 130, 138);
-    doc.text("TotalEx: " + "0", 130, 144);
-    doc.text("Total: " + totalIVA, 130, 150);
+
+    doc.text("Descripcion" +  pelicula.nombre + sucursal +
+    ",sala " + sala  + proyeccion + ",asiento " + factura.numerodeasiento, 30, 114);
+
+    doc.text("Precio Adulto: " + pelicula.precioadulto + " CRC", 30, 120);
+    doc.text("Precio Niño: " + pelicula.precioninos + " CRC", 30, 126);
+    doc.text("Precio Ciudadano de Oro: " + pelicula.preciocidoro + " CRC", 30, 132);
+    doc.text("SubTotal: " + factura.monto + " CRC", 130, 150);
+    doc.text("Descuento: " + "0" + " CRC", 130, 156);
+    doc.text("Impuesto: " + IVA + " CRC", 130, 162);
+    doc.text("TotalGrav: " + totalIVA + "CRC", 130, 168);
+    doc.text("TotalEx: " + "0" + " CRC", 130, 174);
+    doc.text("Total: " + totalIVA + " CRC", 130, 180);
     return doc
   }
 

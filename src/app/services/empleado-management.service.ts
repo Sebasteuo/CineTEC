@@ -24,7 +24,8 @@ export class EmpleadoManagementService {
     fechaingreso: new Date(),
     rol: "",
     usuario: "",
-    contrasenna: 0
+    contrasenna: "",
+    codigosucursal:""
     
   }
   constructor(public http:HttpClient, private toastr: ToastrService) { }

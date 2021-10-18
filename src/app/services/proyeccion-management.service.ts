@@ -68,7 +68,7 @@ export class ProyeccionManagementService {
       funcionid: proyeccion.funcionid,
       peliid: proyeccion.peliid,
       salaid: proyeccion.salaid,
-      hora: formatISO(parseISO(proyeccion.hora.toString())),
+      hora: formatISO(parseISO(proyeccion.hora.toISOString())),
     }
     await this.http.put(environment.api + "/funcion", body).toPromise().then(res => { this.getproyeccions().then(result => { this.proyeccions = result }) })
     return this.proyeccions

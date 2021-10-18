@@ -146,6 +146,7 @@ namespace CineTEC_API.Controllers
               monto = @monto,
               funcionid = @funcionid,
               numerodeasiento = @numerodeasiento
+          where facturaid = @facturaid
           ";
       DataTable table = new DataTable();
       string sqlDataSource = _configuration.GetConnectionString(cadenaDeConexion);
@@ -159,6 +160,7 @@ namespace CineTEC_API.Controllers
           myComand.Parameters.AddWithValue("@monto", factura.monto);
           myComand.Parameters.AddWithValue("@funcionid", factura.funcionid);
           myComand.Parameters.AddWithValue("@numerodeasiento", factura.numerodeasiento);
+          myComand.Parameters.AddWithValue("@facturaid", factura.facturaid);
           myReader = myComand.ExecuteReader();
           table.Load(myReader);
           myReader.Close();

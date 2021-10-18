@@ -46,6 +46,7 @@ export class MoviesComponent implements OnInit {
   }
   Movies: Movie[] = []
   editingID: string | undefined = "";
+  names : string = ""
   ngOnInit(): void { //Función que se ejecuta de primero cuando carga componentes
 
     this.MovieServices.getMovies().then(res => {
@@ -55,7 +56,7 @@ export class MoviesComponent implements OnInit {
           this.Movies[index].director = response[0].nombredirector
         })
         this.MovieServices.getProtagonistaById(movie.peliid as unknown as string).then(response => {
-          this.Movies[index].protagonistas = response[0].nombreprotagonista
+          this.Movies[index].protagonistas = response
         })
         this.MovieServices.getClasificacionById(movie.peliid as unknown as string).then(response => {
           this.Movies[index].clasificacion = response[0].descripcion
@@ -101,9 +102,3 @@ export class MoviesComponent implements OnInit {
   }
 
 }
-
-
-
-
-
-
